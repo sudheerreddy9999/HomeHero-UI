@@ -23,12 +23,11 @@ const OtpFeilds = () => {
   }, []);
   return (
     <>
-      <div className="App">
-        <h1>OTP</h1>
+      <div className="App flex">
         {values.map((value: number, index: number) => (
           <input
             key={index}
-            className="m-3 px-10 border-2 rounded-md"
+            className="m-1 mx-2 px-3 w-10 h-10 text-center border-2 rounded-md"
             type="text"
             value={values[index]}
             ref={(value) => {
