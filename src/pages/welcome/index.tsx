@@ -1,24 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { useFormik } from "formik";
 import { IoArrowForwardOutline } from "react-icons/io5";
 import OtpFeilds from "@/components/otpFeilds";
 import { useSelector, useDispatch } from "react-redux";
+import Loader from "@/components/Loaders/loader";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
-import { sendEmailOtp, getBackToEnterEmail,resetOtpSendSuccessfully } from "@/store/actions/auth";
+import {
+  sendEmailOtp,
+  getBackToEnterEmail,
+  resetOtpSendSuccessfully,
+  verifyOtpAction,
+  resetInvalidOtp,
+  loginWithGoogle,
+} from "@/store/actions/auth";
 
 const Welcome = () => {
   const router = useRouter();
   const dispatch: any = useDispatch();
-  const { otpSentSuccessfully,resendotp } = useSelector((state: any) => state.auth);
+  const { otpSentSuccessfully, resendotp, userDetails, invalidOtp,loginSuccess } =
+    useSelector((state: any) => state.auth);
   const validationSchema = Yup.object().shape({
     email: Yup.string().email().required("Email is required"),
   });
   const [otpResendTimer, setOtpResendTimer] = useState(60);
+  const [resetTrigger, setResetTrigger] = useState(false);
+  const [enableVerifyBtn, setEnableVerifyBtn] = useState(false);
+  const [enableVerifyOtpText, setEnableVerifyBtnText] = useState(false);
   const [isResendOpt, setResendOtp] = useState<boolean>(false);
+  let otpRefValues = useRef<string[]>([]);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -31,7 +44,7 @@ const Welcome = () => {
           email: values.email,
         },
       };
-      dispatch(sendEmailOtp("inital",payload));
+      dispatch(sendEmailOtp("inital", payload));
     },
   });
   useEffect(() => {
@@ -48,13 +61,20 @@ const Welcome = () => {
       return () => clearInterval(interval);
     }
   }, [otpSentSuccessfully]);
-  useEffect(()=>{
-    if(resendotp){
-        setResendOtp(false);
+  useEffect(() => {
+    if (resendotp) {
+      setResendOtp(false);
+      setResetTrigger(true);
+      setTimeout(() => setResetTrigger(false), 0);
     }
-  },[resendotp])
+  }, [resendotp]);
   const handleLoginSuccess = (credentialResponse: any) => {
-    alert(`Login success`);
+    let payload: any = {
+      body: {
+        googletoken: credentialResponse.credential,
+      },
+    };
+    dispatch(loginWithGoogle(payload));
   };
   const handleErrorMessage = () => {
     alert(`Login Failed`);
@@ -66,19 +86,56 @@ const Welcome = () => {
   };
 
   const handleResendOtp = () => {
-    console.log("Resend Otp", formik.values.email);
     let payload: any = {
       headers: {
         email: formik.values.email || localStorage.getItem("email"),
       },
     };
     setOtpResendTimer(60);
-    dispatch(sendEmailOtp("resend",payload));
+    dispatch(sendEmailOtp("resend", payload));
     dispatch(resetOtpSendSuccessfully());
   };
+
+  const handleOtpChangeValues = useCallback((otp: string[]) => {
+    setEnableVerifyBtnText(false);
+    dispatch(resetInvalidOtp());
+    if (otp.every((value: string) => value !== "")) {
+      setEnableVerifyBtn(true);
+    } else {
+      setEnableVerifyBtn(false);
+    }
+    console.log(otp, "otp values are in callback");
+    otpRefValues.current = otp;
+  }, []);
+
+  const verifyOtp = () => {
+    const otpValue = otpRefValues.current.join("");
+    setEnableVerifyBtnText(true);
+    let payload: any = {
+      headers: {
+        email: formik.values.email || localStorage.getItem("email"),
+        otp: otpValue,
+      },
+    };
+    dispatch(verifyOtpAction(payload));
+  };
+
+  useEffect(() => {
+    if (invalidOtp) {
+      setEnableVerifyBtnText(false);
+      setEnableVerifyBtn(false)
+    }
+  }, [invalidOtp]);
+
+  useEffect(()=>{
+    if(loginSuccess){
+      router.push("/")
+    }
+  },[loginSuccess])
   return (
-    <div className="fixed inset-0 w-full bg-opacity-70 flex items-center justify-center z-50">
+    <div className="fixed inset-0 w-full mt-14 bg-opacity-70 flex items-center justify-center z-50">
       <div className="shadow-2xl  md:w-md p-8  rounded-md flex flex-col justify-center items-center space-y-3">
+        {/* <Loader/> */}
         <div className="flex justify-between w-full mb-6">
           {otpSentSuccessfully && (
             <IoChevronBackOutline
@@ -148,14 +205,33 @@ const Welcome = () => {
               <h1>{formik.values.email || localStorage.getItem("email")}</h1>
             </div>
             <div className="my-4">
-              <OtpFeilds />
+              <OtpFeilds
+                onOtpChange={handleOtpChangeValues}
+                restOtpTrigger={resetTrigger}
+              />
+              {invalidOtp && (
+                <div className="text-red-500 text-sm pt-1">
+                  Invalid OTP. Please enter a valid code.
+                </div>
+              )}
             </div>
-            <button className="py-1.5 rounded-md w-full text-white font-bold cursor-pointer bg-primary">
-              Verify
+            <button
+              className={`py-1.5 rounded-md w-full text-white font-bold  ${
+                enableVerifyBtn
+                  ? "bg-primary cursor-pointer"
+                  : "bg-[#a6f2ee] cursor-not-allowed"
+              }`}
+              disabled={!enableVerifyBtn}
+              onClick={verifyOtp}
+            >
+              {enableVerifyOtpText && (
+                <span className="loading loading-dots  loading-xl"></span>
+              )}{" "}
+              Verify{enableVerifyOtpText && <>ing Otp</>}
             </button>
             <hr className="text-gray-500 shadow-2xs my-3 w-full"></hr>
             {!isResendOpt ? (
-              <p className="text-[10px">Otp Resend In {otpResendTimer}</p>
+              <p className="text-sm">Otp Resend In {otpResendTimer}</p>
             ) : (
               <p className="text-sm">
                 <span

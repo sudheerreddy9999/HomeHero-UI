@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getIn } from "formik";
 
 const initialState ={
     count: 0,
     userDetails:null,
     otpSentSuccessfully :false,
+    loginSuccess:false,
+    invalidOtp:false,
     resendotp:false
 }
 
@@ -17,14 +20,19 @@ export const authSlice = createSlice({
         },
         getUserDetails:(state,action)=>{
             state.userDetails = action.payload;
+            state.loginSuccess= true;
         },
         getOtpSendSuccessfully:(state,action)=>{
             state.otpSentSuccessfully  = action.payload.status;
             state.resendotp = action.payload.resend;
+        },
+        getInvalidOtp:(state,action)=>{
+            console.log("Invalid otp is ",action.payload.status)
+            state.invalidOtp = action.payload.status;
         }
     }
 })
 
-export const {getIncreaseCountValue,getUserDetails,getOtpSendSuccessfully} = authSlice.actions;
+export const {getIncreaseCountValue,getUserDetails,getOtpSendSuccessfully,getInvalidOtp} = authSlice.actions;
 
 export default authSlice.reducer;

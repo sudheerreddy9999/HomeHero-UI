@@ -1,6 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 
-const OtpFeilds = () => {
+interface OptProps {
+  onOtpChange: (otp: string[]) => void;
+  restOtpTrigger:boolean;
+}
+
+const OtpFeilds = ({onOtpChange,restOtpTrigger }:OptProps) => {
   const inputCount = 5;
   const [values, setValues] = useState<any>(new Array(inputCount).fill(""));
   const refArr = useRef<any>([]);
@@ -21,6 +26,15 @@ const OtpFeilds = () => {
   useEffect(() => {
     refArr.current[0]?.focus();
   }, []);
+  useEffect(()=>{
+      onOtpChange(values);
+  },[values,onOtpChange])
+  useEffect(()=>{
+    if(restOtpTrigger){
+      setValues(new Array(inputCount).fill(""));
+      refArr.current[0]?.focus();
+    }
+  },[restOtpTrigger])
   return (
     <>
       <div className="App flex">
