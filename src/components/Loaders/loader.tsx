@@ -1,13 +1,18 @@
 import React from "react";
+import Image from "../Image/image";
+import Icon from "../../assets/home-hero-icon.png";
 
 const Loader = () => {
   return (
     <>
-      <div className="fixed inset-0 w-full mt-14 bg-opacity-90 flex items-center justify-center z-50">
-            <div className="flex justify-center items-center">
+      <div className="fixed inset-0 w-full bg-opacity-90 flex items-center justify-center z-50">
+        <div className="flex flex-col justify-center items-center">
+          <Image src={Icon} className="w-20  animate-bounce" />
+          <div className="flex">
+            <p className="text-xl text-gray-600 px-2 font-semibold">Loading</p>
             <span className="loading loading-dots  loading-xl"></span>
-                <p> Verifying Otp </p>
-            </div>
+          </div>
+        </div>
       </div>
     </>
   );

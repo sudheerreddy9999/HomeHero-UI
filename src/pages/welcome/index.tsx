@@ -21,8 +21,13 @@ import {
 const Welcome = () => {
   const router = useRouter();
   const dispatch: any = useDispatch();
-  const { otpSentSuccessfully, resendotp, userDetails, invalidOtp,loginSuccess } =
-    useSelector((state: any) => state.auth);
+  const {
+    otpSentSuccessfully,
+    resendotp,
+    userDetails,
+    invalidOtp,
+    loginSuccess,
+  } = useSelector((state: any) => state.auth);
   const validationSchema = Yup.object().shape({
     email: Yup.string().email().required("Email is required"),
   });
@@ -123,15 +128,15 @@ const Welcome = () => {
   useEffect(() => {
     if (invalidOtp) {
       setEnableVerifyBtnText(false);
-      setEnableVerifyBtn(false)
+      setEnableVerifyBtn(false);
     }
   }, [invalidOtp]);
 
-  useEffect(()=>{
-    if(loginSuccess){
-      router.push("/")
+  useEffect(() => {
+    if (loginSuccess) {
+      router.push("/");
     }
-  },[loginSuccess])
+  }, [loginSuccess]);
   return (
     <div className="fixed inset-0 w-full mt-14 bg-opacity-70 flex items-center justify-center z-50">
       <div className="shadow-2xl  md:w-md p-8  rounded-md flex flex-col justify-center items-center space-y-3">

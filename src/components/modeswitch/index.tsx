@@ -1,70 +1,120 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { IoSunny } from "react-icons/io5";
-import { IoMoonSharp } from "react-icons/io5";
+import ThemeLight from "../../assets/theme.png";
+import ThemeDark from "../../assets/theme-dark.png"
+import Image from "../Image/image";
+import { IoClose, IoSunny, IoMoonSharp } from "react-icons/io5";
+import { motion, AnimatePresence } from "framer-motion";
 
-type Mode = "Light" | "Dark";
+type Mode = "Light" | "Dark" | "System Default";
+
 const ModeToggleSwitch = () => {
   const [currentMode, setCurrentMode] = useState<Mode>("Light");
-  const [hasMounted,setHasMounted] = useState<boolean>(false);
+  const [hasMounted, setHasMounted] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
   const handleToggleChange = (value: Mode) => {
     setCurrentMode(value);
-    localStorage.setItem("theme",value);
+    localStorage.setItem("theme", value);
+    setOpenModal(!openModal)
   };
+
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as Mode;
-    if (savedTheme) {
-      setCurrentMode(savedTheme);
+    const saved = localStorage.getItem("theme");
+    if (["Light", "Dark", "System Default"].includes(saved ?? "")) {
+      setCurrentMode(saved as Mode);
     }
     setHasMounted(true);
-  },[]);
+  }, []);
+
   useEffect(() => {
     const root = window.document.documentElement;
-    if (currentMode == "Dark") {
+    if (currentMode === "Dark") {
       root.classList.add("dark");
-    } else {
+    } else if (currentMode === "Light") {
       root.classList.remove("dark");
+    } else {
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      root.classList.toggle("dark", prefersDark);
     }
   }, [currentMode]);
-  if(!hasMounted) return null
+
+  if (!hasMounted) return null;
+
   return (
     <>
-      <button className="w-24 h-9 flex justify-between items-center border-[1px] border-gray-900 rounded-4xl px-3 cursor-pointer">
-        <div
-          className={` ${
-            currentMode == "Light" && "bg-gray-100"
-          } group relative  p-1.5 rounded-3xl`}
-          onClick={() => handleToggleChange("Light")}
-        >
-          <IoSunny
-            size={16}
-            className={` ${
-              currentMode == "Light" ? "text-amber-500" : "text-gray-100"
-            }`}
-          />
-          <div className="absolute hidden group-hover:block -translate-x-1/4 translate-y-7/12 px-4 py-1 bg-gray-200 rounded-sm text-sm">
-            Light
-          </div>
+      <div className="relative group inline-block">
+        <Image
+          onClick={() => setOpenModal(!openModal)}
+          alt="Image"
+          src={currentMode === "Dark" ? ThemeDark : ThemeLight}
+          className="size-7 cursor-pointer text-white hover:-translate-y-0.5 transition-transform"
+        />
+        <div className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-gray-200 text-black text-xs px-2 py-1.5 rounded shadow-md z-[999]">
+          Theme
         </div>
-        <div
-          className={` ${
-            currentMode == "Dark" && "bg-gray-800"
-          } p-1.5 relative group rounded-3xl`}
-          onClick={() => handleToggleChange("Dark")}
-        >
-          <IoMoonSharp
-            size={15}
-            className={` ${
-              currentMode == "Dark" ? "text-gray-100" : "text-gray-800"
-            }`}
-          />
-          <div className="absolute hidden group-hover:block -translate-x-1/4 translate-y-7/12 px-4 py-1 bg-gray-200 rounded-sm text-sm">
-            Dark
-          </div>
-        </div>
-      </button>
+      </div>
+
+      <AnimatePresence>
+        {openModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0  w-full z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm mt-16"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.3 }}
+              className="flex flex-col justify-center items-start w-xs shadow-2xs rounded-[10px] bg-gray-100 p-3"
+            >
+              <div className="w-full flex justify-end">
+                <IoClose
+                  className="cursor-pointer text-3xl text-gray-700 hover:text-black transition"
+                  onClick={() => setOpenModal(false)}
+                />
+              </div>
+
+              {["Light", "Dark", "System Default"].map((mode, index) => (
+                <motion.div
+                  key={mode}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  className="p-3 py-4 border-b w-full last:border-b-0"
+                >
+                  <label className="text-[16px] flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="theme"
+                      value={mode}
+                      checked={currentMode === mode}
+                      onChange={(e) =>
+                        handleToggleChange(e.target.value as Mode)
+                      }
+                      className="scale-125 accent-black cursor-pointer"
+                    />
+                    {mode === "Light" && (
+                      <IoSunny className="text-yellow-500" />
+                    )}
+                    {mode === "Dark" && (
+                      <IoMoonSharp className="text-black" />
+                    )}
+                    {mode}
+                  </label>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };
+
 export default ModeToggleSwitch;
