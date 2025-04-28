@@ -27,7 +27,6 @@ function InnerApp({ Component, pageProps }: AppPropsWithLayout) {
   useEffect(() => {
     dispatch(userDetailsAction());
   }, [dispatch]);
-
   if (isLoading) {
     return <Loader />;
   }

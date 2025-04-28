@@ -1,21 +1,23 @@
-import AuthorizedLayout from "@/layout/authorizedLayout"
-import { increaseCountValue } from "@/store/actions/auth";
+import AuthorizedLayout from "@/layout/authorizedLayout";
+import Services from "@/components/services";
+import Image from "@/components/Image/image";
+import ServicesImg from "@/assets/services-Image.png"
 import { useDispatch, useSelector } from "react-redux";
 export default function Home() {
-    const dispatch:any = useDispatch()
-    const {count}=useSelector((state:any)=> state.auth);
-    console.log(count);
-    const handleButtonClick=()=>{
-        dispatch(increaseCountValue())
-    }
-    return(
-        <>
-        <h1 className="text-blue-600">Hello i am on the default function I am inside Home Page How can i do it </h1>
-        <h2>Count Value: {count}</h2>
-        <button className="bg-amber-300 text-9xl"  onClick={()=>handleButtonClick()}>click</button>
-        </>
-    )
+  const dispatch: any = useDispatch();
+  return (
+    <>
+      <div className="flex justify-center items-center">
+        <div className="w-1/2">
+          <Services />
+        </div>
+        <div className="w-1/2 p-2 flex justify-center items-center">
+        <Image src={ServicesImg} className="rounded-lg w-11/12 h-[520px]"/>
+        </div>
+      </div>
+    </>
+  );
 }
 Home.getLayout = function getLayout(page: React.ReactElement) {
-    return <AuthorizedLayout>{page}</AuthorizedLayout>
-}
+  return <AuthorizedLayout>{page}</AuthorizedLayout>;
+};
