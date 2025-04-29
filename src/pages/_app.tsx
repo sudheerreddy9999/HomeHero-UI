@@ -1,5 +1,3 @@
-// pages/_app.tsx
-
 import React, { useEffect } from "react";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";

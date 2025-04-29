@@ -4,14 +4,14 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme{
-  --color-primary: #53c9c2; 
-  --color-secondary: #6c757d;
-  --color-fadeprimary:"bef7f4";
-  ---first:"2a6f97"
+@theme {
+  --color-primary: #53c9c2;
+  --color-secondary: #0a0a0a;
+  --color-fadeprimary: "bef7f4";
+  ---first: "2a6f97";
 }
 
 html {
   transition: background-color 0.3s, color 0.3s;
-  font-family: sans-serif,'Times New Roman', Times, serif;
-} 
+  font-family: sans-serif, "Times New Roman", Times, serif;
+}
