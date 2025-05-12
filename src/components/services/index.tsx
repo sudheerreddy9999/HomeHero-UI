@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import CarService from "@/assets/icons/Car-Service.png";
 import HomeService from "@/assets/icons/Home-Service.png";
 import PlumbingService from "@/assets/icons/Pipe-Repair.png";
@@ -6,52 +6,24 @@ import AcService from "@/assets/icons/Ac-Service.png";
 import ElectricalServices from "@/assets/icons/maintenance.svg";
 import Items from "./Items";
 
-const serviceList = [
-  {
-    title: "AC Repair Services",
-    description:
-      "Quick, reliable fixes to keep your home perfectly cool year-round.",
-    imageUrl: AcService,
-  },
-  {
-    title: "Cab Services",
-    description: "Safe and affordable rides whenever you need them.",
-    imageUrl: CarService,
-  },
-  {
-    title: "Home Cleaning",
-    description: "Professional cleaning for a spotless, refreshing home.",
-    imageUrl: HomeService,
-  },
-  {
-    title: "Plumbing Services",
-    description:
-      "Expert plumbing solutions for leaks, repairs, and installations.",
-    imageUrl: PlumbingService,
-  },
-  {
-    title: "Electrical Services",
-    description:
-      "Safe, certified electrical repairs and installations at your convenience.",
-    imageUrl: ElectricalServices,
-  },
-];
-
 const Services = () => {
-  const headings = [
-    {
-      static: "Everything You Need,",
-      dynamic: "All in One Place.",
-    },
-    {
-      static: "Trusted Services,",
-      dynamic: "Right at Your Doorstep.",
-    },
-    {
-      static: "Reliable Help",
-      dynamic: "for Every Need.",
-    },
-  ];
+  const headings = useMemo(
+    () => [
+      {
+        static: "Everything You Need,",
+        dynamic: "All in One Place.",
+      },
+      {
+        static: "Trusted Services,",
+        dynamic: "Right at Your Doorstep.",
+      },
+      {
+        static: "Reliable Help",
+        dynamic: "for Every Need.",
+      },
+    ],
+    []
+  );
   const [headingIndex, setHeadingIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [typedText, setTypedText] = useState("");
@@ -83,8 +55,41 @@ const Services = () => {
       }, 1500);
       return () => clearTimeout(timeout);
     }
-  }, [charIndex, headingIndex, loopCompleted]);
+  }, [charIndex, headingIndex, loopCompleted, headings]);
 
+  const serviceList = useMemo(
+    () => [
+      {
+        title: "AC Repair Services",
+        description:
+          "Quick, reliable fixes to keep your home perfectly cool year-round.",
+        imageUrl: AcService,
+      },
+      {
+        title: "Cab Services",
+        description: "Safe and affordable rides whenever you need them.",
+        imageUrl: CarService,
+      },
+      {
+        title: "Home Cleaning",
+        description: "Professional cleaning for a spotless, refreshing home.",
+        imageUrl: HomeService,
+      },
+      {
+        title: "Plumbing Services",
+        description:
+          "Expert plumbing solutions for leaks, repairs, and installations.",
+        imageUrl: PlumbingService,
+      },
+      {
+        title: "Electrical Services",
+        description:
+          "Safe, certified electrical repairs and installations at your convenience.",
+        imageUrl: ElectricalServices,
+      },
+    ],
+    []
+  );
   return (
     <div className="flex flex-col space-y-6 justify-center items-center py-6 ">
       <div className=" text-sm lg:text-2xl dark:text-white md:text-2xl font-semibold text-center mt-10 text-gray-700">

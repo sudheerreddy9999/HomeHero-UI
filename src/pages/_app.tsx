@@ -4,11 +4,13 @@ import type { NextPage } from "next";
 import DefaultLayout from "../layout/defaultLayout";
 import AuthorizedLayout from "@/layout/authorizedLayout";
 import Loader from "@/components/Loaders/loader";
-import { Provider, useDispatch, useSelector } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import "../styles/globals.css";
 import store from "../store/config/store";
 import { userDetailsAction } from "@/store/actions/user";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import type { AppDispatch } from "@/store/config/store";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;
@@ -19,8 +21,8 @@ type AppPropsWithLayout = AppProps & {
 };
 
 function InnerApp({ Component, pageProps }: AppPropsWithLayout) {
-  const dispatch: any = useDispatch();
-  const { userDetails, isLoading } = useSelector((state: any) => state.user);
+  const dispatch = useDispatch<AppDispatch>();
+  const { userDetails, isLoading } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(userDetailsAction());

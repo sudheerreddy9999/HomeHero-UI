@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { UserDetailsType } from "@/types/user";
 
-const initialState = {
-    userDetails: null,
+interface userState {
+    userDetails:UserDetailsType|null;
+    isLoading:boolean;
+}
+
+const initialState:userState = {
+    userDetails:null,
     isLoading:true
 }
 
@@ -13,7 +19,7 @@ export const userSlice = createSlice({
             state.userDetails = action.payload;
             state.isLoading = false;
         },
-        getUserDetailsError: (state, action) => {
+        getUserDetailsError: (state) => {
             state.userDetails = null;
             state.isLoading=false;
         }

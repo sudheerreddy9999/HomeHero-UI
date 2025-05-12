@@ -5,8 +5,11 @@ import Logo from "../assets/Home-HeroLogo.png";
 import LogoIcon from "../assets/home-hero-icon.png";
 import ModeToggleSwitch from "@/components/modeswitch";
 import { FaRegCircleUser } from "react-icons/fa6";
-import { useSelector, useDispatch } from "react-redux";
+import {  useDispatch } from "react-redux";
+import type { AppDispatch } from '@/store/config/store';
 import { handleUserLogout } from "@/store/actions/user";
+import { useAppSelector } from '@/hooks/useAppSelector';
+
 
 export default function AuthorizedLayout({
   children,
@@ -15,9 +18,9 @@ export default function AuthorizedLayout({
 }) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const { userDetails } = useSelector((state: any) => state.user);
-  const dispatch: any = useDispatch();
-  console.log(userDetails, " User Deatils Values are ");
+  const  userDetails  = useAppSelector((state) => state.user.userDetails);
+  const dispatch = useDispatch<AppDispatch>();
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -62,10 +65,10 @@ export default function AuthorizedLayout({
               <div className="absolute w-28  left-1/12 border-b-1  mt-2 -translate-x-1/2 bg-gray-100 p-2 rounded-[10px] ">
                 <p className="border-b-1 py-2">
                   {" "}
-                  {userDetails.first_name || userDetails.email}{" "}
-                  {userDetails.last_name}
+                  {userDetails?.first_name || userDetails?.email}{" "}
+                  {userDetails?.last_name}
                 </p>
-                <p
+                <p  
                   className="py-1 cursor-pointer"
                   onClick={() => handleLogoutClick()}
                 >

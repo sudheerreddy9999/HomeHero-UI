@@ -2,26 +2,35 @@ import Cookies from "js-cookie";
 import {getUserDetails,getUserDetailsError} from "../reducers/user";
 import {get} from "../../utils/constants";
 import {apiEndpoints} from "../../utils/apiEndpoints";
+import { AppDispatch } from "../config/store";
 
-export const userDetailsAction = ()=> async(dispatch:any)=>{
+
+export const userDetailsAction = ()=> async(dispatch:AppDispatch)=>{
     try {
         const token = Cookies.get("token"); 
         if(!token){
-            return dispatch(getUserDetailsError(null))
+            return dispatch(getUserDetailsError())
         }
-        const data =await get(apiEndpoints.USER_DETAILS);
-        if(data.status === 200){
-            dispatch(getUserDetails(data.data.data[0]));
+        const response =await get(apiEndpoints.USER_DETAILS);
+        if(response &&response.status === 200){
+            dispatch(getUserDetails(response.data.data[0]));
         }else{
-            dispatch(getUserDetailsError(null));
+            dispatch(getUserDetailsError());
         }
-    } catch (error:any) {
-        console.log(error.message);
+    } catch (error:unknown) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        } else {
+            console.log("Unexpected error", error);
+          }
     }
 }
 
-export const handleUserLogout = ()=>{
-    Cookies.remove("token");
-    localStorage.removeItem("email");
-    location.reload();
-}
+
+export const handleUserLogout = () => {
+    return () => {
+      Cookies.remove("token");
+      localStorage.removeItem("email");
+      location.reload();
+    };
+  };

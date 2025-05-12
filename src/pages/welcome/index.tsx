@@ -2,12 +2,14 @@ import React, { useEffect, useState, useCallback, useRef } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { useFormik } from "formik";
 import { IoArrowForwardOutline } from "react-icons/io5";
+import { useAppSelector } from "@/hooks/useAppSelector";
 import OtpFeilds from "@/components/otpFeilds";
-import { useSelector, useDispatch } from "react-redux";
-import Loader from "@/components/Loaders/loader";
+import {  useDispatch } from "react-redux";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import { useRouter } from "next/router";
+import type { AppDispatch } from "@/store/config/store";
+import { CredentialResponse } from '@react-oauth/google';
 import * as Yup from "yup";
 import {
   sendEmailOtp,
@@ -20,14 +22,13 @@ import {
 
 const Welcome = () => {
   const router = useRouter();
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const {
     otpSentSuccessfully,
     resendotp,
-    userDetails,
     invalidOtp,
     loginSuccess,
-  } = useSelector((state: any) => state.auth);
+  } = useAppSelector((state) => state.auth);
   const validationSchema = Yup.object().shape({
     email: Yup.string().email().required("Email is required"),
   });
@@ -36,7 +37,7 @@ const Welcome = () => {
   const [enableVerifyBtn, setEnableVerifyBtn] = useState(false);
   const [enableVerifyOtpText, setEnableVerifyBtnText] = useState(false);
   const [isResendOpt, setResendOtp] = useState<boolean>(false);
-  let otpRefValues = useRef<string[]>([]);
+  const otpRefValues = useRef<string[]>([]);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -44,7 +45,7 @@ const Welcome = () => {
     validationSchema,
     enableReinitialize: true,
     onSubmit: async (values) => {
-      let payload: any = {
+      const payload = {
         headers: {
           email: values.email,
         },
@@ -73,14 +74,18 @@ const Welcome = () => {
       setTimeout(() => setResetTrigger(false), 0);
     }
   }, [resendotp]);
-  const handleLoginSuccess = (credentialResponse: any) => {
-    let payload: any = {
-      body: {
-        googletoken: credentialResponse.credential,
-      },
+  const handleLoginSuccess = (credentialResponse: CredentialResponse) => {
+      if (credentialResponse.credential) {
+        const payload = {
+          body: {
+            googletoken: credentialResponse.credential,
+          },
+        };
+        dispatch(loginWithGoogle(payload));
+      } else {
+        console.error("Google credential is undefined");
+      }
     };
-    dispatch(loginWithGoogle(payload));
-  };
   const handleErrorMessage = () => {
     alert(`Login Failed`);
   };
@@ -91,13 +96,17 @@ const Welcome = () => {
   };
 
   const handleResendOtp = () => {
-    let payload: any = {
+    const payload = {
       headers: {
-        email: formik.values.email || localStorage.getItem("email"),
+        email: formik.values.email || localStorage.getItem("email") || "",
       },
     };
     setOtpResendTimer(60);
-    dispatch(sendEmailOtp("resend", payload));
+    if (payload.headers.email) {
+      dispatch(sendEmailOtp("resend", payload));
+    } else {
+      console.error("Email is required to resend OTP");
+    }
     dispatch(resetOtpSendSuccessfully());
   };
 
@@ -111,14 +120,14 @@ const Welcome = () => {
     }
     console.log(otp, "otp values are in callback");
     otpRefValues.current = otp;
-  }, []);
+  }, [dispatch]);
 
   const verifyOtp = () => {
     const otpValue = otpRefValues.current.join("");
     setEnableVerifyBtnText(true);
-    let payload: any = {
+    const payload = {
       headers: {
-        email: formik.values.email || localStorage.getItem("email"),
+        email: formik.values.email || localStorage.getItem("email") || "",
         otp: otpValue,
       },
     };
@@ -136,7 +145,7 @@ const Welcome = () => {
     if (loginSuccess) {
       router.push("/");
     }
-  }, [loginSuccess]);
+  }, [loginSuccess,router]);
   return (
     <div className="fixed inset-0 w-full mt-14 bg-opacity-70 flex items-center justify-center z-50">
       <div className="shadow-2xl  md:w-md p-8  rounded-md flex flex-col justify-center items-center space-y-3">

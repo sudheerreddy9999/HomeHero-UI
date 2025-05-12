@@ -1,4 +1,6 @@
-import axios from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
+import type { InternalAxiosRequestConfig } from "axios";
+
 import Cookies from "js-cookie";
 
 export const constants = {
@@ -9,54 +11,87 @@ export const ApiUrlType = {
   Auth: "AUTH",
   Monetization: "MONETIZATION",
   Post: "POST",
-};
-const axiosInstance: any = axios.create();
+} as const;
+
+// type ApiType = keyof typeof ApiUrlType;
+
+interface RequestParams {
+  headers?: Record<string, string>;
+  params?: Record<string, unknown>;
+}
+
+const axiosInstance: AxiosInstance = axios.create();
+
 axiosInstance.interceptors.request.use(
-  async (config: any) => {
+  async (config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
     config.baseURL = constants.apibaseurl;
-    const token = Cookies.get("token"); 
-    if(token){
-      config.headers.Authorization = `Bearer ${token}`;
+    const token = Cookies.get("token");
+    if (token) {
+      config.headers.set("Authorization", `Bearer ${token}`);
     }
     return config;
   },
-  (error: any) => {
+  (error: unknown): Promise<never> => {
     return Promise.reject(error);
   }
 );
-export const get = async (url: any, params?: any, apiType?: any) => {
+
+export const get = async (
+  url: string,
+  params?: RequestParams,
+  // apiType?: ApiType
+): Promise<AxiosResponse | undefined> => {
   try {
     const response = await axiosInstance.get(url, {
-      headers: params?.headers ?? {},
-      params: params?.params ?? {},
-      baseURL: "",
-      apiType: apiType,
+      headers: params?.headers,
+      params: params?.params,
     });
     return response;
-  } catch (error: any) {
-    console.error(error.message ?? "");
+  } catch (error:unknown) {
+    if(error instanceof Error){
+      console.error(error.message ?? "");
+    }else{
+      console.log(error,"Unknown Error Found")
+    }
   }
 };
 
-export const post = async (url: any, body?: any, params?: any) => {
+export const post = async (
+  url: string,
+  body?: unknown,
+  params?: RequestParams
+): Promise<AxiosResponse | undefined> => {
   try {
     const response = await axiosInstance.post(url, body, {
-      headers: params?.headers ?? {},
-      params: params?.params ?? {},
+      headers: params?.headers,
+      params: params?.params,
     });
     return response;
-  } catch (error: any) {
-    console.error(error.message ?? "");
+  } catch (error:unknown) {
+    if(error instanceof Error){
+      console.error(error.message ?? "");
+    }else{
+      console.log(error,"Unknown Error Found")
+    }
   }
 };
-export const put = async (url: any, body?: any, params?: any) => {
+
+export const put = async (
+  url: string,
+  body?: unknown,
+  params?: RequestParams
+): Promise<AxiosResponse | undefined> => {
   try {
     const response = await axiosInstance.put(url, body, {
-      headers: params?.headers ?? {},
-      params: params?.params ?? {},
+      headers: params?.headers,
+      params: params?.params,
     });
     return response;
-  } catch (error: any) {
-    console.error(error.message ?? "");
+  } catch (error:unknown) {
+    if(error instanceof Error){
+      console.error(error.message ?? "");
+    }else{
+      console.log(error,"Unknown Error Found")
+    }
   }
-}
+};

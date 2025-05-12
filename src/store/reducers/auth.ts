@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getIn } from "formik";
 
 const initialState ={
     count: 0,

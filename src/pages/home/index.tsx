@@ -2,9 +2,9 @@ import AuthorizedLayout from "@/layout/authorizedLayout";
 import Services from "@/components/services";
 import Image from "@/components/Image/image";
 import ServicesImg from "@/assets/services-Image.png"
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch } from "react-redux";
 export default function Home() {
-  const dispatch: any = useDispatch();
+  // const dispatch: any = useDispatch();
   return (
     <>
       <div className="flex justify-center flex-col-reverse mt-20  lg:flex-row  items-center dark:bg-black min-h-screen ">
