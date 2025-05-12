@@ -12,7 +12,7 @@ export default function Home() {
           <Services />
         </div>
         <div className="w-full  lg:w-1/2 p-2 flex justify-center items-center">
-        <Image src={ServicesImg} className="rounded-lg  w-11/12 h-[300px] lg:h-[520px]"/>
+        <Image src={ServicesImg} alt="services img" className="rounded-lg  w-11/12 h-[300px] lg:h-[520px]"/>
         </div>
       </div>
     </>
