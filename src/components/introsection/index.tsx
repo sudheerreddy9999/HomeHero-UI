@@ -1,4 +1,3 @@
-import AuthorizedLayout from "@/layout/authorizedLayout";
 import Services from "@/components/services";
 import Image from "@/components/Image/image";
 import ServicesImg from "@/assets/services-Image.png"
