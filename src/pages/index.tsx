@@ -4,6 +4,7 @@ import { userDetailsAction } from "@/store/actions/user";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import type { AppDispatch } from "@/store/config/store";
+import IntroSection from "@/components/introsection";
 
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,8 +16,12 @@ export default function Home() {
   }, [dispatch]);
   useEffect(() => {
     if (userDetails) {
-      router.push("/home");
+      // router.push("/home");
     }
   }, [userDetails, router]);
-  return <></>;
+  return (
+    <>
+      <IntroSection />
+    </>
+  );
 }

@@ -51,7 +51,7 @@ export const get = async (
     if(error instanceof Error){
       console.error(error.message ?? "");
     }else{
-      console.log(error,"Unknown Error Found")
+      console.error(error,"Unknown Error Found")
     }
   }
 };
@@ -71,7 +71,7 @@ export const post = async (
     if(error instanceof Error){
       console.error(error.message ?? "");
     }else{
-      console.log(error,"Unknown Error Found")
+      console.error(error,"Unknown Error Found")
     }
   }
 };
@@ -91,7 +91,7 @@ export const put = async (
     if(error instanceof Error){
       console.error(error.message ?? "");
     }else{
-      console.log(error,"Unknown Error Found")
+      console.error(error,"Unknown Error Found")
     }
   }
 };

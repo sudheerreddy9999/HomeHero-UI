@@ -7,7 +7,7 @@ import Image from "@/components/Image/image";
 const NavBar = () => {
     const router = useRouter();
   return (
-    <div className="shadow-2xs dark:border-[1px] dark:border-b-white w-full h-16  flex items-center justify-between px-10">
+    <div className="shadow-2xs dark:border-[1px] bg-white dark:border-b-white w-full h-16  flex items-center justify-between px-10 fixed top-0 left-0 z-50">
       <div>
         <Image src={Logo} alt="Main-Logo" className="h-10 w-44" />
       </div>

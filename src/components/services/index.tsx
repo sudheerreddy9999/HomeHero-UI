@@ -62,29 +62,29 @@ const Services = () => {
       {
         title: "AC Repair Services",
         description:
-          "Quick, reliable fixes to keep your home perfectly cool year-round.",
+          "Quick, reliable fixes to keep your home.",
         imageUrl: AcService,
       },
       {
         title: "Cab Services",
-        description: "Safe and affordable rides whenever you need them.",
+        description: "Safe and affordable rides.",
         imageUrl: CarService,
       },
       {
         title: "Home Cleaning",
-        description: "Professional cleaning for a spotless, refreshing home.",
+        description: "Professional cleaning for a spotless.",
         imageUrl: HomeService,
       },
       {
         title: "Plumbing Services",
         description:
-          "Expert plumbing solutions for leaks, repairs, and installations.",
+          "Expert plumbing solutions for leaks, repairs.",
         imageUrl: PlumbingService,
       },
       {
         title: "Electrical Services",
         description:
-          "Safe, certified electrical repairs and installations at your convenience.",
+          "Safe, certified electrical repairs and installations.",
         imageUrl: ElectricalServices,
       },
     ],

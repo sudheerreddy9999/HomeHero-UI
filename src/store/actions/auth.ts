@@ -23,14 +23,12 @@ export const getBackToEnterEmail = ()=>async (dispatch:AppDispatch)=>{
 }
 
 export const sendEmailOtp = (type: string, payload?: SendOtpPayload) => async (dispatch: AppDispatch) => {
-  console.log("Resend Otp Enteredrrrrrrrrrrrrrr",payload,"jjjjjjjjjjjjjjjjjjjjjjj")
   try {
     const response = await get(apiEndpoints.SEND_OTP, payload);
     if (response && response.status == 200) {
       if (payload?.headers?.email) {
         localStorage.setItem("email", payload.headers.email);
       }
-      console.log("Resend otp Success")
       if(type == "inital"){
         dispatch(getOtpSendSuccessfully({status:true,resend:false}));
       }if(type == "resend"){
@@ -41,13 +39,12 @@ export const sendEmailOtp = (type: string, payload?: SendOtpPayload) => async (d
     if(error instanceof Error){
       console.error(error.message);
     }else{
-      console.log("Unexpected error", error);
+      console.error("Unexpected error", error);
     }
   }
 };
 
 export const verifyOtpAction = (payload:VerifyOtpPayload) => async (dispatch: AppDispatch) => {
-  console.log(payload,"Vregehejejjejejejj")
   try {
     const response = await get(apiEndpoints.VERIFY_OTP,payload);
     if(response?.status===400){
@@ -68,7 +65,7 @@ export const verifyOtpAction = (payload:VerifyOtpPayload) => async (dispatch: Ap
     if(error instanceof Error){
       console.error(error.message);
     }else{
-      console.log("Unexpected error", error);
+      console.error("Unexpected error", error);
     }
   }
 };

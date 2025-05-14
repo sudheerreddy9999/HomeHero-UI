@@ -5,11 +5,10 @@ import Logo from "../assets/Home-HeroLogo.png";
 import LogoIcon from "../assets/home-hero-icon.png";
 import ModeToggleSwitch from "@/components/modeswitch";
 import { FaRegCircleUser } from "react-icons/fa6";
-import {  useDispatch } from "react-redux";
-import type { AppDispatch } from '@/store/config/store';
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "@/store/config/store";
 import { handleUserLogout } from "@/store/actions/user";
-import { useAppSelector } from '@/hooks/useAppSelector';
-
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 export default function AuthorizedLayout({
   children,
@@ -18,7 +17,7 @@ export default function AuthorizedLayout({
 }) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const  userDetails  = useAppSelector((state) => state.user.userDetails);
+  const userDetails = useAppSelector((state) => state.user.userDetails);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -34,7 +33,6 @@ export default function AuthorizedLayout({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
   const handleLogoutClick = () => {
-    console.log("Logout button is clicked");
     dispatch(handleUserLogout());
   };
   return (
@@ -56,7 +54,10 @@ export default function AuthorizedLayout({
           <div>
             <ModeToggleSwitch />
           </div>
-          <div className="  relative inline-block" ref={dropdownRef}>
+          <div
+            className="text-gray-700  relative inline-block"
+            ref={dropdownRef}
+          >
             <FaRegCircleUser
               className="size-6 dark:text-blue-400 cursor-pointer"
               onClick={() => setOpen(!open)}
@@ -68,7 +69,7 @@ export default function AuthorizedLayout({
                   {userDetails?.first_name || userDetails?.email}{" "}
                   {userDetails?.last_name}
                 </p>
-                <p  
+                <p
                   className="py-1 cursor-pointer"
                   onClick={() => handleLogoutClick()}
                 >
