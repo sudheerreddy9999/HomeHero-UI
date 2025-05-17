@@ -37,7 +37,7 @@ export default function AuthorizedLayout({
   };
   return (
     <>
-      <div className="shadow-2xs text-white dark:bg-black dark:border-b-[1px]  w-full h-16  flex items-center justify-between pr-4 sm:px-10 fixed top-0 left-0 z-50 ">
+      <div className="shadow-2xs bg-white text-white dark:bg-black dark:border-b-[1px]  w-full h-16  flex items-center justify-between pr-4 sm:px-10 fixed top-0 left-0 z-50 ">
         <div>
           <Image
             src={Logo}

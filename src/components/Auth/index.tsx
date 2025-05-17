@@ -4,12 +4,13 @@ import { useFormik } from "formik";
 import { IoArrowForwardOutline } from "react-icons/io5";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import OtpFeilds from "@/components/otpFeilds";
-import {  useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import { useRouter } from "next/router";
 import type { AppDispatch } from "@/store/config/store";
-import { CredentialResponse } from '@react-oauth/google';
+import { CredentialResponse } from "@react-oauth/google";
+import Loader from "@/components/Loaders/loader";
 import * as Yup from "yup";
 import {
   sendEmailOtp,
@@ -20,15 +21,15 @@ import {
   loginWithGoogle,
 } from "@/store/actions/auth";
 
-const Welcome = () => {
+type AuthProps = {
+  onAuthClose: () => void;
+};
+
+const Welcome = ({ onAuthClose }: AuthProps) => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    otpSentSuccessfully,
-    resendotp,
-    invalidOtp,
-    loginSuccess,
-  } = useAppSelector((state) => state.auth);
+  const { otpSentSuccessfully, resendotp, invalidOtp, loginSuccess } =
+    useAppSelector((state) => state.auth);
   const validationSchema = Yup.object().shape({
     email: Yup.string().email().required("Email is required"),
   });
@@ -36,6 +37,7 @@ const Welcome = () => {
   const [resetTrigger, setResetTrigger] = useState(false);
   const [enableVerifyBtn, setEnableVerifyBtn] = useState(false);
   const [enableVerifyOtpText, setEnableVerifyBtnText] = useState(false);
+  const [loader, setLoader] = useState(false);
   const [isResendOpt, setResendOtp] = useState<boolean>(false);
   const otpRefValues = useRef<string[]>([]);
   const formik = useFormik({
@@ -75,17 +77,18 @@ const Welcome = () => {
     }
   }, [resendotp]);
   const handleLoginSuccess = (credentialResponse: CredentialResponse) => {
-      if (credentialResponse.credential) {
-        const payload = {
-          body: {
-            googletoken: credentialResponse.credential,
-          },
-        };
-        dispatch(loginWithGoogle(payload));
-      } else {
-        console.error("Google credential is undefined");
-      }
-    };
+    setLoader(true);
+    if (credentialResponse.credential) {
+      const payload = {
+        body: {
+          googletoken: credentialResponse.credential,
+        },
+      };
+      dispatch(loginWithGoogle(payload));
+    } else {
+      console.error("Google credential is undefined");
+    }
+  };
   const handleErrorMessage = () => {
     alert(`Login Failed`);
   };
@@ -110,19 +113,22 @@ const Welcome = () => {
     dispatch(resetOtpSendSuccessfully());
   };
 
-  const handleOtpChangeValues = useCallback((otp: string[]) => {
-    setEnableVerifyBtnText(false);
-    dispatch(resetInvalidOtp());
-    if (otp.every((value: string) => value !== "")) {
-      setEnableVerifyBtn(true);
-    } else {
-      setEnableVerifyBtn(false);
-    }
-    console.log(otp, "otp values are in callback");
-    otpRefValues.current = otp;
-  }, [dispatch]);
+  const handleOtpChangeValues = useCallback(
+    (otp: string[]) => {
+      setEnableVerifyBtnText(false);
+      dispatch(resetInvalidOtp());
+      if (otp.every((value: string) => value !== "")) {
+        setEnableVerifyBtn(true);
+      } else {
+        setEnableVerifyBtn(false);
+      }
+      otpRefValues.current = otp;
+    },
+    [dispatch]
+  );
 
   const verifyOtp = () => {
+    setLoader(true);
     const otpValue = otpRefValues.current.join("");
     setEnableVerifyBtnText(true);
     const payload = {
@@ -135,21 +141,33 @@ const Welcome = () => {
   };
 
   useEffect(() => {
+    console.log(invalidOtp," Set invalid otp value is $$$$$$$$$$$$$4")
     if (invalidOtp) {
       setEnableVerifyBtnText(false);
       setEnableVerifyBtn(false);
+      setLoader(false);
     }
   }, [invalidOtp]);
 
   useEffect(() => {
     if (loginSuccess) {
-      router.push("/");
+      onAuthClose();
     }
-  }, [loginSuccess,router]);
+  }, [loginSuccess, router,onAuthClose]);
+  useEffect(() => {
+    console.log(invalidOtp, "Helkoo Invalid otp is ");
+    if (invalidOtp) {
+      setLoader(false);
+    }
+  }, [invalidOtp]);
+
+  const handleCloseAuth = () => {
+    onAuthClose();
+  };
   return (
-    <div className="fixed inset-0 w-full mt-14 bg-opacity-70 flex items-center justify-center z-50">
-      <div className="shadow-2xl  md:w-md p-8  rounded-md flex flex-col justify-center items-center space-y-3">
-        {/* <Loader/> */}
+    <div className="fixed inset-0 w-full mt-14 bg-opacity-90 backdrop-blur-[2px] flex items-center justify-center z-50">
+      <div className="shadow-2xl bg-white  md:w-md p-8  rounded-md flex flex-col justify-center items-center space-y-3">
+        {loader && <Loader message="Signing in with Google" />}
         <div className="flex justify-between w-full mb-6">
           {otpSentSuccessfully && (
             <IoChevronBackOutline
@@ -162,7 +180,7 @@ const Welcome = () => {
           <IoClose
             size={28}
             className="text-xl font-bold cursor-pointer"
-            onClick={() => router.push("/")}
+            onClick={() => handleCloseAuth()}
           />
         </div>
         {!otpSentSuccessfully ? (

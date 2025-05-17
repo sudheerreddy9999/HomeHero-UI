@@ -1,16 +1,20 @@
 import React from "react";
 import Image from "../Image/image";
-import Icon from "../../assets/home-hero-icon.png";
+import HeroIcon from "../../assets/heroicon.svg"
 
-const Loader = () => {
+type LoaderProps = {
+  message:string;
+}
+
+const Loader = ({message}:LoaderProps) => {
   return (
     <>
       <div className="fixed inset-0 w-full bg-opacity-90 flex items-center justify-center z-50">
-        <div className="flex flex-col justify-center items-center">
-          <Image src={Icon} className="w-20  animate-bounce" alt="Loader" />
+        <div className="flex flex-col justify-center w-[20%] h-4/12 rounded-md shadow-2xl bg-white items-center">
+          <Image src={HeroIcon} className="w-20  animate-bounce" alt="Loader" />
           <div className="flex">
-            <p className="text-xl text-gray-600 px-2 font-semibold">Loading</p>
-            <span className="loading loading-dots  loading-xl"></span>
+            <p className="text-md text-gray-600 px-2 font-semibold">{message}</p>
+            <span className="loading loading-dots  loading-md"></span>
           </div>
         </div>
       </div>

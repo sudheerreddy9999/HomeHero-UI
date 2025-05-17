@@ -17,20 +17,17 @@ export const authSlice = createSlice({
         getIncreaseCountValue:(state)=>{
             state.count += 1;
         },
-        getUserDetails:(state,action)=>{
-            state.userDetails = action.payload;
-            state.loginSuccess= true;
-        },
         getOtpSendSuccessfully:(state,action)=>{
             state.otpSentSuccessfully  = action.payload.status;
             state.resendotp = action.payload.resend;
         },
         getInvalidOtp:(state,action)=>{
+            console.log("Helo I ajaaaaaaaaaaaaaaaaa jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj(((((((((((((((((((((((((((((((((((((((")
             state.invalidOtp = action.payload.status;
         }
     }
 })
 
-export const {getIncreaseCountValue,getUserDetails,getOtpSendSuccessfully,getInvalidOtp} = authSlice.actions;
+export const {getIncreaseCountValue,getOtpSendSuccessfully,getInvalidOtp} = authSlice.actions;
 
 export default authSlice.reducer;

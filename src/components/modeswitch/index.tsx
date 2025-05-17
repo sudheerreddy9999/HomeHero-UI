@@ -51,7 +51,7 @@ const ModeToggleSwitch = () => {
           onClick={() => setOpenModal(!openModal)}
           alt="Image"
           src={currentMode === "Dark" ? ThemeDark : ThemeLight}
-          className="size-7 cursor-pointer text-white hover:-translate-y-0.5 transition-transform"
+          className="size-6 cursor-pointer text-white hover:-translate-y-0.5 transition-transform lg:mt-1.5"
         />
         <div className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-gray-200 text-black text-xs px-2 py-1.5 rounded shadow-md z-[999]">
           Theme
@@ -86,7 +86,7 @@ const ModeToggleSwitch = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className="p-3 py-4 border-b w-full last:border-b-0"
+                  className="p-3 py-4 border-b text-gray-700 w-full last:border-b-0"
                 >
                   <label className="text-[16px] flex items-center gap-3 cursor-pointer">
                     <input

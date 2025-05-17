@@ -48,10 +48,13 @@ export const get = async (
     });
     return response;
   } catch (error:unknown) {
-    if(error instanceof Error){
+    if (axios.isAxiosError(error)) {
       console.error(error.message ?? "");
-    }else{
-      console.error(error,"Unknown Error Found")
+      return error.response;
+    } else if (error instanceof Error) {
+      console.error(error.message ?? "");
+    } else {
+      console.error(error, "Unknown Error Found");
     }
   }
 };
