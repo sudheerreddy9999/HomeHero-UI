@@ -7,7 +7,7 @@ export default function IntroSection() {
   // const dispatch: any = useDispatch();
   return (
     <>
-      <div className="flex justify-center flex-col-reverse mt-12  lg:flex-row  items-center dark:bg-black  ">
+      <div className="flex justify-center flex-col-reverse mt-20  lg:flex-row  items-center dark:bg-black  ">
         <div className="w-1/2">
           <Services />
         </div>
