@@ -43,10 +43,9 @@ const Services = () => {
     } else {
       const timeout = setTimeout(() => {
         if (headingIndex === headings.length - 1) {
-          // End of loop: reset to first and stop
           setHeadingIndex(0);
           setTypedText(headings[0].dynamic);
-          setLoopCompleted(true); // prevents future useEffect runs
+          setLoopCompleted(true);
         } else {
           setHeadingIndex((prev) => prev + 1);
           setCharIndex(0);
@@ -93,7 +92,7 @@ const Services = () => {
   return (
     <div className="flex flex-col space-y-6 justify-center items-center py-6 ">
       <div className=" text-sm lg:text-2xl dark:text-white md:text-2xl font-semibold text-center mt-10 text-gray-700">
-        {headings[headingIndex].static}{" "}
+        {headings[headingIndex].static}{" "} 
         <span>
           {typedText}
           {!loopCompleted && (

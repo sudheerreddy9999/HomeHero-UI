@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 // import { useRouter } from "next/router";
-import ModeToggleSwitch from "@/components/modeswitch";
-import Logo from "../../assets/Home-HeroLogo.png";
+import ModeToggleSwitch from "@/components/Nav";
+import Logo from "@/assets/Home-HeroLogo.png";
 import Image from "@/components/Image/image";
-import Welcome from "../Auth";
+import Location from "../location";
+import Welcome from "../../Auth";
 
 const NavBar = () => {
   // const router = useRouter();
@@ -18,7 +19,8 @@ const NavBar = () => {
         <div>
           <Image src={Logo} alt="Main-Logo" className="h-10 w-44" />
         </div>
-        <div className="flex gap-2 text-sm">
+        <div className="flex gap-2 text-sm justify-center items-center">
+          <Location/>
           <ModeToggleSwitch />
           <button
             className="w-24 h-9 flex justify-center items-center border-[1px] border-[#53c9c2] rounded-4xl px-3 cursor-pointer hover:-translate-y-0.5 dark:text-white"

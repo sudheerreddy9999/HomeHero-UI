@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "@/components/Image/image";
 import Logo from "../assets/Home-HeroLogo.png";
 import LogoIcon from "../assets/home-hero-icon.png";
-import ModeToggleSwitch from "@/components/modeswitch";
+import ModeToggleSwitch from "@/components/Nav";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/store/config/store";

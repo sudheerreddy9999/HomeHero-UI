@@ -1,27 +1,11 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { userDetailsAction } from "@/store/actions/user";
-import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/hooks/useAppSelector";
-import type { AppDispatch } from "@/store/config/store";
-import IntroSection from "@/components/introsection";
+import React from "react";
+import IntroSection from "@/components/MainSection/introsection";
 
 export default function Home() {
-  const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
-  const userDetails = useAppSelector((state) => state.user.userDetails);
 
-  useEffect(() => {
-    dispatch(userDetailsAction());
-  }, [dispatch]);
-  useEffect(() => {
-    if (userDetails) {
-      // router.push("/home");
-    }
-  }, [userDetails, router]);
   return (
-    <>
+    <div className="p-4">
       <IntroSection />
-    </>
+    </div>
   );
 }
