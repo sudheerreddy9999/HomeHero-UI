@@ -13,25 +13,27 @@ export default function useGeolocation() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchNearbyTowns = async (lat: number, lng: number) => {
-  const username = process.env.NEXT_PUBLIC_GEONAMES_USERNAME;
+    const username = process.env.NEXT_PUBLIC_GEONAMES_USERNAME;
 
-  try {
-    const res = await fetch(
-      `https://secure.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${lng}&username=${username}`
-    );
-    const data = await res.json();
+    try {
+      const res = await fetch(
+        `https://secure.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${lng}&username=${username}`
+      );
+      const data = await res.json();
 
-    const towns: string[] =
-  data.geonames?.map((place: any) => `${place.name}, ${place.countryName} ,${place.adminName1}`) || [];
-    const uniqueTowns = Array.from(new Set(towns)).slice(0, 5);
-    setNearbyTowns(uniqueTowns);
-  } catch (err) {
-    console.error("Failed to fetch nearby towns:", err);
-    setNearbyTowns([]);
-  }
-};
+      const towns: string[] =
+        data.geonames?.map(
+          (place: { name: string; countryName: string; adminName1: string }) =>
+            `${place.name}, ${place.countryName}, ${place.adminName1}`
+        ) || [];
 
-
+      const uniqueTowns = Array.from(new Set(towns)).slice(0, 5);
+      setNearbyTowns(uniqueTowns);
+    } catch (err) {
+      console.error("Failed to fetch nearby towns:", err);
+      setNearbyTowns([]);
+    }
+  };
 
   useEffect(() => {
     if (!navigator.geolocation) {
