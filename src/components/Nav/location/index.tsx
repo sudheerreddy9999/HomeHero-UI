@@ -1,24 +1,90 @@
-import React from "react";
+import React, {  useEffect, useState } from "react";
 import useGeolocation from "@/hooks/useGeolocation";
+import Image from "@/components/Image/image";
+import locationIcon from "@/assets/icons/location-pin.png";
+import DropDownArrow from "@/assets/icons/DropDown-Arrow.png";
+import LocationSearch from "@/components/Nav/location/LocationSerach";
 
 const Location = () => {
-       const { location, address, error } = useGeolocation();
-       console.log(address, "address");
-    return(
-        <>
-              {location ? (
-        <div className=" p-4 rounded text-sm mt-2">
-          {/* <p>Latitude: {location.latitude}</p>
-          <p>Longitude: {location.longitude}</p>
-          <p>Accuracy: {location.accuracy.toFixed(2)} meters</p> */}
-          {/* <p className="mt-2 font-medium">Address:</p> */}
-          <p>{address || 'Loading address...'}</p>
+  const { location, address, error } = useGeolocation();
+  const [preciseLocation, setPreciseLocation] = useState("");
+  const [openSearch, setOpenSearch] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const [selectedLocation, setSelectedLocation] = useState<{
+    address: string;
+  } | null>(null);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (selectedLocation) {
+      const parts = selectedLocation.address.split(",");
+      if (isMobile) {
+        if (openSearch) {
+          setOpenSearch(false);
+        }
+        return setPreciseLocation(parts[0]);
+      }
+      setPreciseLocation(selectedLocation.address);
+      if (openSearch) {
+        setOpenSearch(false);
+      }
+    }
+  }, [selectedLocation,isMobile,openSearch]);
+  const getPreciseLocation = (address: string | null | undefined) => {
+    if (!address) return "";
+    const parts = address.split(",");
+    if (isMobile) {
+      return parts[0];
+    }
+    return parts.length >= 2 ? `${parts[0]}, ${parts[1]}` : address;
+  };
+
+  useEffect(() => {
+    if (address) {
+      const precise = getPreciseLocation(address);
+      setPreciseLocation(precise);
+    }
+  }, [location, address,getPreciseLocation]);
+
+  if (error) {
+    return <p className="text-red-500">Error: {error}</p>;
+  }
+
+  return (
+    <div className="p-4 rounded text-sm ">
+      {location ? (
+        <div className="flex justify-center items-center space-x-2 p-3 border-[1px] border-[#53c9c2] rounded-md">
+          <Image src={locationIcon} alt="locationIcon" className="size-4.5" />
+          <p className="text-[13px]">
+            {preciseLocation || "Loading address..."}
+          </p>
+          <Image
+            src={DropDownArrow}
+            alt="locationIcon"
+            className="size-4.5 cursor-pointer"
+            onClick={() => setOpenSearch(!openSearch)}
+          />
         </div>
       ) : (
-        !error && <p>Getting your location...</p>
+        <p>Getting your location...</p>
       )}
-        </>
-    )
-}
+      {openSearch && (
+        <LocationSearch
+          onSelectLocation={(address) => {
+            setSelectedLocation({ address });
+          }}
+          onclose={() => setOpenSearch(false)}
+        />
+      )}
+    </div>
+  );
+};
 
 export default Location;

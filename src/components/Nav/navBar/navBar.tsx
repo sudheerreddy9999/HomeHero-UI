@@ -15,7 +15,7 @@ const NavBar = () => {
   return (
     <>
       {openAuth && <Welcome onAuthClose ={handlecloseAuth} />}
-      <div className="shadow-2xs dark:border-[1px] bg-white dark:border-b-white w-full h-16  flex items-center justify-between px-10 fixed top-0 left-0 z-50">
+      <div className="shadow-2xs  dark:bg-black dark:text-white dark:border-b-[1px] bg-white dark:border-b-gray-800 border-t-0 border-l-none w-full h-16  flex items-center justify-between px-10 fixed top-0 left-0 z-50">
         <div>
           <Image src={Logo} alt="Main-Logo" className="h-10 w-44" />
         </div>
