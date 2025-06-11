@@ -48,7 +48,7 @@ const LocationSearch = ({ onSelectLocation, onclose }: LocationSearchProps) => {
     }, 500);
 
     return () => clearTimeout(delayDebounce);
-  }, [query,handleSearch]);
+  }, [query]);
 
   return (
     <div className="fixed inset-0 w-full bg-opacity-90 flex items-center justify-center z-50">
@@ -58,7 +58,7 @@ const LocationSearch = ({ onSelectLocation, onclose }: LocationSearchProps) => {
             src={CloseIcon}
             alt="CloseIcon"
             className="size-7 cursor-pointer"
-            onClick={onclose}
+            onClick={()=>onclose}
           />
         </div>
         <div className="p-4 w-full">

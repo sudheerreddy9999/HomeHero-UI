@@ -36,7 +36,7 @@ const Location = () => {
         setOpenSearch(false);
       }
     }
-  }, [selectedLocation,isMobile,openSearch]);
+  }, [selectedLocation,isMobile]);
   const getPreciseLocation = (address: string | null | undefined) => {
     if (!address) return "";
     const parts = address.split(",");
@@ -51,7 +51,7 @@ const Location = () => {
       const precise = getPreciseLocation(address);
       setPreciseLocation(precise);
     }
-  }, [location, address,getPreciseLocation]);
+  }, [location, address]);
 
   if (error) {
     return <p className="text-red-500">Error: {error}</p>;
@@ -69,7 +69,7 @@ const Location = () => {
             src={DropDownArrow}
             alt="locationIcon"
             className="size-4.5 cursor-pointer"
-            onClick={() => setOpenSearch(!openSearch)}
+            onClick={() => setOpenSearch(true)}
           />
         </div>
       ) : (
