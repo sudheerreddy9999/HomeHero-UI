@@ -17,7 +17,6 @@ const LocationSearch = ({ onSelectLocation, onclose }: LocationSearchProps) => {
   const [loading, setLoading] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
 
-
   const handleSearch = async () => {
     setLoading(true);
     try {
@@ -37,7 +36,7 @@ const LocationSearch = ({ onSelectLocation, onclose }: LocationSearchProps) => {
     }
   };
 
-    useEffect(() => {
+  useEffect(() => {
     const delayDebounce = setTimeout(() => {
       if (query.trim().length > 2) {
         handleSearch();
@@ -58,7 +57,7 @@ const LocationSearch = ({ onSelectLocation, onclose }: LocationSearchProps) => {
             src={CloseIcon}
             alt="CloseIcon"
             className="size-7 cursor-pointer"
-            onClick={()=>onclose}
+            onClick={onclose}
           />
         </div>
         <div className="p-4 w-full">
@@ -66,7 +65,7 @@ const LocationSearch = ({ onSelectLocation, onclose }: LocationSearchProps) => {
             <input
               type="text"
               placeholder="Search location..."
-              className="outline-none border-none text-[16px] px-3  w-full mb-1"
+              className="outline-none border-none text-[16px] px-3  w-full mb-1 dark:text-black"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />

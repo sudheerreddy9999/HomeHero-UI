@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
-import CarService from "@/assets/icons/Car-Service.png";
-import HomeService from "@/assets/icons/Home-Service.png";
-import PlumbingService from "@/assets/icons/Pipe-Repair.png";
-import AcService from "@/assets/icons/Ac-Service.png";
-import ElectricalServices from "@/assets/icons/maintenance.svg";
+import CarService from "@/assets/icons/Car-Repair.png";
+import HomeService from "@/assets/icons/Home-Repair.png";
+import PlumbingService from "@/assets/icons/plumbing-repair.png";
+import AcService from "@/assets/icons/ac-reapir-icon.png";
+import ElectricalServices from "@/assets/icons/electrical-repair.png";
 import Items from "./Items";
 
 const Services = () => {
@@ -65,11 +65,6 @@ const Services = () => {
         imageUrl: AcService,
       },
       {
-        title: "Cab Services",
-        description: "Safe and affordable rides.",
-        imageUrl: CarService,
-      },
-      {
         title: "Home Cleaning",
         description: "Professional cleaning for a spotless.",
         imageUrl: HomeService,
@@ -86,12 +81,17 @@ const Services = () => {
           "Safe, certified electrical repairs and installations.",
         imageUrl: ElectricalServices,
       },
+            {
+        title: "Cab Services",
+        description: "Safe and affordable rides repairs and installations.",
+        imageUrl: CarService,
+      },
     ],
     []
   );
   return (
-    <div className="flex flex-col space-y-6 justify-center items-center py-6 ">
-      <div className=" text-sm lg:text-2xl dark:text-white md:text-2xl font-semibold text-center mt-10 text-gray-700">
+    <div className="flex flex-col space-y-6 justify-center items-center  ">
+      <div className=" text-[16px] text-[#174479] lg:text-2xl dark:text-gray-100 md:text-2xl font-semibold text-center mt-4 sm:mt-10 ">
         {headings[headingIndex].static}{" "} 
         <span>
           {typedText}

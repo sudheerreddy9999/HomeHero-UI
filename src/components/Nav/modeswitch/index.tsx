@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import ThemeLight from "../../assets/theme.png";
-import ThemeDark from "../../assets/theme-dark.png"
-import Image from "../Image/image";
+import ThemeLight from "@/assets/theme.png";
+import ThemeDark from "@/assets/theme-dark.png";
+import Image from "@/components/Image/image"
 import { IoClose, IoSunny, IoMoonSharp } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -17,7 +17,7 @@ const ModeToggleSwitch = () => {
   const handleToggleChange = (value: Mode) => {
     setCurrentMode(value);
     localStorage.setItem("theme", value);
-    setOpenModal(!openModal)
+    setOpenModal(!openModal);
   };
 
   useEffect(() => {
@@ -41,6 +41,8 @@ const ModeToggleSwitch = () => {
       root.classList.toggle("dark", prefersDark);
     }
   }, [currentMode]);
+
+
 
   if (!hasMounted) return null;
 
@@ -102,9 +104,7 @@ const ModeToggleSwitch = () => {
                     {mode === "Light" && (
                       <IoSunny className="text-yellow-500" />
                     )}
-                    {mode === "Dark" && (
-                      <IoMoonSharp className="text-black" />
-                    )}
+                    {mode === "Dark" && <IoMoonSharp className="text-black" />}
                     {mode}
                   </label>
                 </motion.div>

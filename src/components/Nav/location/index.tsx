@@ -60,15 +60,15 @@ const Location = () => {
   return (
     <div className="p-4 rounded text-sm ">
       {location ? (
-        <div className="flex justify-center items-center space-x-2 p-3 border-[1px] border-[#53c9c2] rounded-md">
-          <Image src={locationIcon} alt="locationIcon" className="size-4.5" />
+        <div className={`flex justify-center items-center space-x-2 ${isMobile?"p-1":"p-3"} border-[1px] border-[#53c9c2] rounded-md dark:bg-white dark:text-black`}>
+          <Image src={locationIcon} alt="locationIcon" className={`${isMobile?"size-3":"size-4.5"} cursor-pointer`} />
           <p className="text-[13px]">
             {preciseLocation || "Loading address..."}
           </p>
           <Image
             src={DropDownArrow}
             alt="locationIcon"
-            className="size-4.5 cursor-pointer"
+            className={`${isMobile?"size-3":"size-4.5"} cursor-pointer`}
             onClick={() => setOpenSearch(true)}
           />
         </div>
