@@ -25,7 +25,7 @@ const NavBar = () => {
   return (
     <>
       {openAuth && <Welcome onAuthClose={handlecloseAuth} />}
-      <div className="shadow-2xs  dark:bg-black dark:text-white dark:border-b-[1px] bg-white dark:border-b-gray-800 border-t-0 border-l-none w-full h-16  flex items-center justify-between px-4 sm:px-10 fixed top-0 left-0 z-50">
+      <div className=" dark:bg-black dark:text-white   w-full h-16  flex items-center justify-between px-4 sm:px-10 fixed top-0 left-0 z-50">
         <div>
           <Image
             src={Logo}
@@ -34,9 +34,11 @@ const NavBar = () => {
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           />
           <Image
-            src={ isMobile ?mobileDarkThemeLogo: DarkThemeLogo}
+            src={isMobile ? mobileDarkThemeLogo : DarkThemeLogo}
             alt="Main-Logo-Dark"
-            className={` ${isMobile?"size-7":" h-32 w-44"} hidden dark:block cursor-pointer`}
+            className={` ${
+              isMobile ? "size-7" : " h-32 w-44"
+            } hidden dark:block cursor-pointer`}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           />
         </div>
@@ -44,7 +46,9 @@ const NavBar = () => {
           <Location />
           <ModeToggleSwitch />
           <button
-            className={` ${isMobile?" w-14 h-7":" w-24 h-9 text-xs"} flex justify-center items-center border-[1px] border-[#53c9c2] rounded-4xl px-3 cursor-pointer hover:-translate-y-0.5 dark:text-black  dark:font-[500]  dark:bg-white`}
+            className={` ${
+              isMobile ? " w-14 h-7" : " w-24 h-9 text-xs"
+            } bg-white flex justify-center items-center border-[1px] border-[#53c9c2] rounded-4xl px-3 cursor-pointer hover:-translate-y-0.5 dark:text-black  dark:font-[500]  dark:bg-white`}
             onClick={() => setOpenAuth(!openAuth)}
           >
             Login
