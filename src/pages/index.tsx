@@ -1,6 +1,6 @@
 import React from "react";
 import BannerSection from "@/components/BannerSection";
-import IntroSection from "@/components/MainSection/introsection";
+// import IntroSection from "@/components/MainSection/introsection";
 import Services from "@/components/services";
 
 export default function Home() {

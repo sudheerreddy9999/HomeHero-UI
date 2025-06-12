@@ -141,7 +141,6 @@ const Welcome = ({ onAuthClose }: AuthProps) => {
   };
 
   useEffect(() => {
-    console.log(invalidOtp," Set invalid otp value is $$$$$$$$$$$$$4")
     if (invalidOtp) {
       setEnableVerifyBtnText(false);
       setEnableVerifyBtn(false);
@@ -165,7 +164,7 @@ const Welcome = ({ onAuthClose }: AuthProps) => {
     onAuthClose();
   };
   return (
-    <div className="fixed inset-0 w-full mt-14 bg-opacity-90 backdrop-blur-[2px] flex items-center justify-center z-50">
+    <div className="fixed inset-0 w-full   bg-opacity-90 backdrop-blur-[2px] flex items-center justify-center z-50">
       <div className="shadow-2xl bg-white  md:w-md p-8  rounded-md flex flex-col justify-center items-center space-y-3">
         {loader && <Loader message="Signing in with Google" />}
         <div className="flex justify-between w-full mb-6">

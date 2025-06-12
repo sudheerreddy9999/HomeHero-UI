@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useGeolocation from "@/hooks/useGeolocation";
 import Image from "@/components/Image/image";
 import locationIcon from "@/assets/icons/location-pin.png";
@@ -25,33 +25,33 @@ const Location = () => {
   useEffect(() => {
     if (selectedLocation) {
       const parts = selectedLocation.address.split(",");
+
       if (isMobile) {
-        if (openSearch) {
-          setOpenSearch(false);
-        }
+        // if (openSearch) {
+        //   setOpenSearch(false);
+        // }
         return setPreciseLocation(parts[0]);
       }
+
       setPreciseLocation(selectedLocation.address);
-      if (openSearch) {
-        setOpenSearch(false);
-      }
+      // if (openSearch) {
+      //   setOpenSearch(false);
+      // }
     }
-  }, [selectedLocation,isMobile]);
-  const getPreciseLocation = (address: string | null | undefined) => {
-    if (!address) return "";
-    const parts = address.split(",");
-    if (isMobile) {
-      return parts[0];
-    }
-    return parts.length >= 2 ? `${parts[0]}, ${parts[1]}` : address;
-  };
+  }, [selectedLocation, isMobile]);
 
   useEffect(() => {
     if (address) {
-      const precise = getPreciseLocation(address);
+      const parts = address.split(",");
+      const precise = isMobile
+        ? parts[0]
+        : parts.length >= 2
+        ? `${parts[0]}, ${parts[1]}`
+        : address;
+
       setPreciseLocation(precise);
     }
-  }, [location, address]);
+  }, [location, address, isMobile]);
 
   if (error) {
     return <p className="text-red-500">Error: {error}</p>;
@@ -60,15 +60,23 @@ const Location = () => {
   return (
     <div className="p-4 rounded  text-sm ">
       {location ? (
-        <div className={`flex justify-center bg-white items-center space-x-2 ${isMobile?"p-1":"p-3"} border-[1px] border-[#53c9c2] rounded-full dark:bg-white dark:text-black`}>
-          <Image src={locationIcon} alt="locationIcon" className={`${isMobile?"size-3":"size-4.5"} cursor-pointer`} />
+        <div
+          className={`flex justify-center bg-white items-center space-x-2 ${
+            isMobile ? "p-1" : "p-3"
+          } border-[1px] border-[#53c9c2] rounded-full dark:bg-white dark:text-black`}
+        >
+          <Image
+            src={locationIcon}
+            alt="locationIcon"
+            className={`${isMobile ? "size-3" : "size-4.5"} cursor-pointer`}
+          />
           <p className="text-[13px]">
             {preciseLocation || "Loading address..."}
           </p>
           <Image
             src={DropDownArrow}
             alt="locationIcon"
-            className={`${isMobile?"size-3":"size-4.5"} cursor-pointer`}
+            className={`${isMobile ? "size-3" : "size-4.5"} cursor-pointer`}
             onClick={() => setOpenSearch(true)}
           />
         </div>
@@ -79,6 +87,7 @@ const Location = () => {
         <LocationSearch
           onSelectLocation={(address) => {
             setSelectedLocation({ address });
+            setOpenSearch(false);
           }}
           onclose={() => setOpenSearch(false)}
         />

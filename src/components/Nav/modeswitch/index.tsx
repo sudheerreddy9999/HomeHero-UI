@@ -66,7 +66,7 @@ const ModeToggleSwitch = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0  w-full z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm mt-16"
+            className="fixed inset-0  w-full z-50 flex items-center justify-center bg-black/30 backdrop-blur-xs "
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}

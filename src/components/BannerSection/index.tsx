@@ -2,13 +2,15 @@ import React from "react";
 import { CiSearch } from "react-icons/ci";
 import { FiArrowUpRight } from "react-icons/fi";
 import DynamicText from "./DynamicText";
+import Image from "../Image/image";
+import sofaImage from "@/assets/sofa.jpeg"
 
 const BannerSection = () => {
   return (
     <>
       <div className="relative w-full h-[65vh]">
-        <img
-          src="https://i.pinimg.com/736x/a3/28/6e/a3286e2e0d3a9cb8f9c50599f8ee9e46.jpg"
+        <Image
+          src={sofaImage}
           className="w-full h-full object-fill rounded-b-2xl"
           alt="Background"
         />
@@ -29,7 +31,7 @@ const BannerSection = () => {
               placeholder='Search for Services, "AC Repair", "Plumber", "Electrician"'
               className="w-full pl-12 mt-2 pr-4 py-3 bg-white border border-gray-300 rounded-full focus:outline-none"
             />
-            <div className="bg-blue-400  p-2 rounded-full absolute right-1 top-1/2 transform -translate-y-1/2">
+            <div className="bg-blue-400  p-2 rounded-full absolute right-1 -bottom-4 transform -translate-y-1/2">
               <FiArrowUpRight
                 size={24}
                 className="rounded-full  text-white z-10"

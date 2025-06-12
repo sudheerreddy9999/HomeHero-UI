@@ -17,33 +17,34 @@ const LocationSearch = ({ onSelectLocation, onclose }: LocationSearchProps) => {
   const [loading, setLoading] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
 
-  const handleSearch = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch(
-        `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
-          query
-        )}&key=${process.env.NEXT_PUBLIC_GEO_LOCATION}`
-      );
-      const data = await res.json();
-      setResults(data.results || []);
-      setSearchPerformed(true);
-    } catch (err) {
-      console.error("Location search failed:", err);
-      setResults([]);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
-      if (query.trim().length > 2) {
-        handleSearch();
-      } else {
-        setResults([]);
-        setSearchPerformed(false);
-      }
+      const fetchData = async () => {
+        if (query.trim().length > 2) {
+          setLoading(true);
+          try {
+            const res = await fetch(
+              `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
+                query
+              )}&key=${process.env.NEXT_PUBLIC_GEO_LOCATION}`
+            );
+            const data = await res.json();
+            setResults(data.results || []);
+            setSearchPerformed(true);
+          } catch (err) {
+            console.error("Location search failed:", err);
+            setResults([]);
+          } finally {
+            setLoading(false);
+          }
+        } else {
+          setResults([]);
+          setSearchPerformed(false);
+        }
+      };
+
+      fetchData();
     }, 500);
 
     return () => clearTimeout(delayDebounce);
