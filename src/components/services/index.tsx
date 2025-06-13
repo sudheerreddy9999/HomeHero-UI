@@ -6,6 +6,7 @@ import AcService from "@/assets/icons/ac-reapir-icon.png";
 import ElectricalServices from "@/assets/icons/electrical-repair.png";
 import Image from "../Image/image";
 
+
 const Services = () => {
   const serviceList = useMemo(
     () => [
@@ -39,24 +40,24 @@ const Services = () => {
   );
   return (
     <div>
-      <div className="flex gap-6">
+      <div className="flex ml-24 gap-6">
         {serviceList.map((service, index) => (
           <div
             key={index}
-            className="flex p-1  py-5 bg-white hover:bg-white/70 hover:backdrop-invert hover:backdrop-opacity-10  dark:bg-[#1e1e26]  dark:text-white flex-col justify-center items-center w-28 lg:w-52  rounded-3xl shadow-2xl  space-y-2 hover:-translate-y-3 hover:shadow-xl transition-all cursor-pointer"
+            className="flex sm:p-1 py-2   sm:py-5 bg-white hover:bg-white/70 hover:backdrop-invert hover:backdrop-opacity-10  dark:bg-[#1e1e26]  dark:text-white flex-col justify-center items-center w-36 lg:w-52  rounded-3xl shadow-2xl  space-y-2 hover:-translate-y-3 hover:shadow-xl transition-all cursor-pointer"
           >
-            <div className="p-2 bg-amber-50 rounded-full ">
+            <div className="p-1 sm:p-2 bg-amber-50 rounded-full ">
               <Image
                 src={service.imageUrl}
                 alt={service.title}
-                className=" w-10 h-10 lg:w-7 lg:h-7 rounded-lg"
+                className=" w-6 h-6 lg:w-7 lg:h-7 rounded-lg"
               />
             </div>
             <div className=" w-full rounded-br-lg rounded-bl-lg h-full  space-y-1 p-1 ">
-              <p className=" text-lg dark:text-sm   text-center lg:text-sm dark:text-gray-300 font-semibold dark:font-medium">
+              <p className=" sm:text-lg dark:text-sm   text-center lg:text-sm dark:text-gray-300 font-semibold dark:font-medium">
                 {service.title}
               </p>
-              <p className="text-[12.5px] text-gray-400  text-center dark:text-gray-300 hidden sm:block ">
+              <p className="text-[12.5px] text-gray-400  text-center dark:text-gray-300">
                 {service.description}
               </p>
             </div>
