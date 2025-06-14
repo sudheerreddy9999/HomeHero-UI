@@ -52,7 +52,7 @@ const LocationSearch = ({ onSelectLocation, onclose }: LocationSearchProps) => {
 
   return (
     <div className="fixed inset-0 w-full bg-opacity-90 flex items-center justify-center z-50">
-      <div className="flex flex-col justify-center w-[75%] sm:w-[34%] h-6/12 rounded-md shadow-2xl bg-white items-center">
+      <div className="flex flex-col  w-[95%] sm:w-[34%] overflow-scroll h-6/12 rounded-md shadow-2xl bg-white items-center">
         <div className="flex justify-end w-full p-3">
           <Image
             src={CloseIcon}
