@@ -41,7 +41,7 @@ const MobileServices = () => {
   return (
     <div>
       <p className="text-xl font-semibold px-2 dark:text-white mb-4">
-        Top Services You Can Count On
+        Top-Rated Services
       </p>
       <div className="flex flex-col text-start items-center gap-6">
         <div className="flex justify-center items-center gap-4">

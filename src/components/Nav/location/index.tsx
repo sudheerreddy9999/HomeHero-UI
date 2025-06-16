@@ -70,7 +70,7 @@ const Location = () => {
             alt="locationIcon"
             className={`${isMobile ? "size-3" : "size-4.5"} cursor-pointer`}
           />
-          <p className="text-[13px]">
+          <p className=" text-gray-900 text-[13px]">
             {preciseLocation || "Loading address..."}
           </p>
           <Image

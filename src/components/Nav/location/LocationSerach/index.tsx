@@ -66,7 +66,7 @@ const LocationSearch = ({ onSelectLocation, onclose }: LocationSearchProps) => {
             <input
               type="text"
               placeholder="Search location..."
-              className="outline-none border-none text-[16px] px-3  w-full mb-1 dark:text-black"
+              className="outline-none border-none text-[16px] px-3 text-gray-900  w-full mb-1 dark:text-black"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />

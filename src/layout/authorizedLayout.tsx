@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/store/config/store";
 import { handleUserLogout } from "@/store/actions/user";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import Location from "@/components/Nav/location";
 
 export default function AuthorizedLayout({
   children,
@@ -37,21 +38,24 @@ export default function AuthorizedLayout({
   };
   return (
     <>
-      <div className="shadow-2xs bg-white text-white dark:bg-black dark:border-b-[1px]  w-full h-16  flex items-center justify-between pr-4 sm:px-10 fixed top-0 left-0 z-50 ">
+      <div className=" text-white   w-full h-16  flex items-center justify-between px-4 sm:px-10 fixed top-0 left-0 z-50 ">
         <div>
           <Image
             src={Logo}
             alt="Main-Logo"
-            className="h-10 w-44 hidden sm:block"
+            className="h-8 w-36 hidden sm:block"
           />
           <Image
             src={LogoIcon}
             alt="Mobile Logo"
-            className=" block sm:hidden w-14 h-14"
+            className=" block sm:hidden size-7"
           />
         </div>
-        <div className="flex items-center justify-center space-x-4 sm:gap-4 gap-10 text-sm">
-          <div>
+        <div className="flex items-center justify-center space-x-4 sm:gap-4 gap-4 text-sm">
+          <div className="">
+            <Location />
+          </div>
+          <div className="mt-2">
             <ModeToggleSwitch />
           </div>
           <div

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import ModeToggleSwitch from "@/components/Nav/modeswitch";
 import Logo from "@/assets/Home-HeroLogo.png";
 import Image from "@/components/Image/image";
-import MobileLogo from "@/assets/home-hero-icon.png"
+import MobileLogo from "@/assets/home-hero-icon.png";
 import Location from "../location";
 import Welcome from "../../Auth";
 import DarkThemeLogo from "@/assets/DarkThemeLogo.png";
@@ -29,9 +29,11 @@ const NavBar = () => {
       <div className="  dark:text-white   w-full h-16  flex items-center justify-between px-4 sm:px-10 fixed top-0 left-0 z-50">
         <div>
           <Image
-            src={isMobile? MobileLogo: Logo}
+            src={isMobile ? MobileLogo : Logo}
             alt="Main-Logo"
-            className={` ${isMobile?"size-7":"h-10 w-44"} block dark:hidden cursor-pointer`}
+            className={` ${
+              isMobile ? "size-7" : "h-8 w-36"
+            } block dark:hidden cursor-pointer`}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           />
           <Image

@@ -4,11 +4,13 @@ import BannerSection from "@/components/BannerSection";
 import MobileServices from "@/components/services/MobileServices";
 import Services from "@/components/services";
 import useIsMobile from "@/hooks/useIsMobile";
+import MostBookedServices from "@/components/MostBookedServices";
+import Footer from "@/components/footer";
 
 export default function Home() {
   const isMobile = useIsMobile();
   return (
-    <div className="">
+    <div className="dark:bg-gray-900  min-h-screen">
       <div className="relative">
         <div>
           <BannerSection />
@@ -24,6 +26,10 @@ export default function Home() {
         )}
       </div>
       {/* <IntroSection /> */}
+      <div className="mt-6 xs:mt-24 md:mt-24 flex items-start">
+        <MostBookedServices/>
+      </div>
+      <Footer />
     </div>
   );
 }
