@@ -13,7 +13,7 @@ const Search = ({ heading, seachPlaceholder }: seachProps) => {
   return (
     <>
       {isMobile ? (
-        <div className="w-full flex justify-between items-center relative mb-4">
+        <div className="w-full  flex justify-between items-center relative mb-4">
             <div className="flex items-center justify-between space-x-3">
                 <Link href="/">
                 <IoArrowBack size={30}/>

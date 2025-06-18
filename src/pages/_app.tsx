@@ -27,7 +27,6 @@ function InnerApp({ Component, pageProps }: AppPropsWithLayout) {
   const { userDetails, isLoading } = useAppSelector((state) => state.user);
 
   console.log(userDetails," User details Value is ")
-
   useEffect(() => {
     dispatch(userDetailsAction());
   }, [dispatch]);
