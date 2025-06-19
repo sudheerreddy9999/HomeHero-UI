@@ -22,7 +22,6 @@ export const authSlice = createSlice({
             state.resendotp = action.payload.resend;
         },
         getInvalidOtp:(state,action)=>{
-            console.log("Helo I ajaaaaaaaaaaaaaaaaa jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj(((((((((((((((((((((((((((((((((((((((")
             state.invalidOtp = action.payload.status;
         }
     }

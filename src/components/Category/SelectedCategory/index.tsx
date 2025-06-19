@@ -1,12 +1,24 @@
 import React from "react";
 import { ACService } from "@/Jsons/acServives";
 import Image from "@/components/Image/image";
+import { FaPlus } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/config/store";
+import { addToCartAction } from "@/store/actions/cart";
 
 type SelectedCategoryProps = {
   selectedItems: ACService[];
 };
 
 const SelectedCategory = ({ selectedItems }: SelectedCategoryProps) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const handleAddToCart = async (item: ACService) => {
+    try {
+      await dispatch(addToCartAction(item));
+    } catch (error) {
+      console.log("Error from component:", error);
+    }
+  };
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4  h-[78vh] sm:h-[72vh] overflow-scroll no-scrollbar">
       {selectedItems.map((item) => (
@@ -43,8 +55,11 @@ const SelectedCategory = ({ selectedItems }: SelectedCategoryProps) => {
               <p className="text-xs text-gray-600 mt-1">
                 You save ₹{item.saved}
               </p>
-              <button className="mt-1 w-1/4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-1 rounded-lg transition">
-                Add +
+              <button
+                className="mt-1 w-1/4 flex justify-center items-center p-2  bg-blue-500 hover:bg-blue-700  text-white text-sm font-medium py-1.5 rounded-lg transition cursor-pointer"
+                onClick={() => handleAddToCart(item)}
+              >
+                Add <FaPlus className="ml-1.5" />
               </button>
             </div>
           </div>

@@ -1,9 +1,24 @@
 import React from "react";
+// import { useDispatch } from "react-redux";
 import shopingCart from "@/assets/Categories/shopingCart.png";
+import { useAppSelector } from "@/hooks/useAppSelector";
 import Image from "@/components/Image/image";
-import { HelpCircle,  ShieldCheck } from "lucide-react";
+import { HelpCircle, ShieldCheck } from "lucide-react";
 
 const CartSection = () => {
+  // const dispatch = useDispatch();
+  const { cartItems, totalAmount, totalQuantity } = useAppSelector(
+    (state) => state.cart
+  );
+
+  console.log(
+    cartItems,
+    "Cart Items are ",
+    totalAmount,
+    "Total Amount is ",
+    totalQuantity,
+    "Total Quantity is "
+  );
   const offers = [
     "🔥 Get 10% off on orders above ₹1000",
     "💳 Use code SAVE50 to get ₹50 off",
@@ -13,10 +28,20 @@ const CartSection = () => {
   return (
     <div className="w-full sm:p-3 bgpt-0">
       <div className="flex flex-col  sm:p-5 md:p-0 pt-0 gap-4 max-w-6xl mx-auto">
-        <div className="w-full flex flex-col items-center justify-center h-44 shadow-2xl rounded-2xl bg-white p-6 text-center">
-          <Image src={shopingCart} alt="emptyShopingCart" className="size-16" />
-          <p className="mt-2 text-gray-500 font-medium">No items in the cart</p>
-        </div>
+        {cartItems.length > 0 ? (
+          <div></div>
+        ) : (
+          <div className="w-full flex flex-col items-center justify-center h-44 shadow-2xl rounded-2xl bg-white p-6 text-center">
+            <Image
+              src={shopingCart}
+              alt="emptyShopingCart"
+              className="size-16"
+            />
+            <p className="mt-2 text-gray-500 font-medium">
+              No items in the cart
+            </p>
+          </div>
+        )}
         <div className="w-full shadow-xl rounded-2xl bg-white p-4 space-y-3">
           <h2 className="text-lg font-bold">Available Offers</h2>
           <ul className="list-disc text-sm list-inside space-y-1 px-2  text-gray-700">
