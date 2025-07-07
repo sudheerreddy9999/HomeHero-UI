@@ -23,9 +23,9 @@ const Search = ({ heading, seachPlaceholder }: seachProps) => {
             <div><CiSearch className="cursor-pointer" size={25} /></div>
         </div>
       ) : (
-        <div className="w-full flex flex-col-reverse  sm:flex-row justify-between items-end sm:items-center">
+        <div className=" flex flex-col-reverse w-[97%]  sm:flex-row justify-between items-end sm:items-center">
           <h2 className="text-2xl font-semibold text-center">{heading}</h2>
-          <div className="relative w-[50%] sm:w-[20%] flex items-center">
+          <div className="relative w-[70%] sm:w-[20%] flex items-center">
             <CiSearch className="absolute left-2" size={20} />
             <input
               type="text"

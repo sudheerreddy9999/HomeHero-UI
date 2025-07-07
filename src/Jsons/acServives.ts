@@ -17,7 +17,7 @@ export interface ACService {
 
 export const acServices: ACService[] = [
   {
-    id: "ac-001",
+    id: "ac1",
     image: image1,
     serviceName: "AC General Service",
     description: "Basic AC servicing with filter and coil cleaning to ensure smooth airflow.",
@@ -27,7 +27,7 @@ export const acServices: ACService[] = [
     saved: 240
   },
   {
-    id: "ac-002",
+    id: "ac2",
     image: image2,
     serviceName: "AC Repair",
     description: "Repair for cooling issues, noise problems, or electrical faults.",
@@ -37,7 +37,7 @@ export const acServices: ACService[] = [
     saved: 250
   },
   {
-    id: "ac-003",
+    id: "ac3",
      image: image3,
     serviceName: "AC Gas Refill",
     description: "Top-up refrigerant gas for enhanced cooling performance.",
@@ -47,7 +47,7 @@ export const acServices: ACService[] = [
     saved: 300
   },
   {
-    id: "ac-004",
+    id: "ac4",
      image: image4,
     serviceName: "AC Installation",
     description: "Professional installation of window and split AC units.",
@@ -57,7 +57,7 @@ export const acServices: ACService[] = [
     saved: 270
   },
   {
-    id: "ac-005",
+    id: "ac5",
      image: image1,
     serviceName: "AC Uninstallation",
     description: "Safe removal of AC units with proper disconnection and handling.",
@@ -67,7 +67,7 @@ export const acServices: ACService[] = [
     saved: 180
   },
   {
-    id: "ac-006",
+    id: "ac6",
     image: image1,
     serviceName: "AC Wet Service",
     description: "Deep water-based cleaning for coils and filters.",
@@ -77,7 +77,7 @@ export const acServices: ACService[] = [
     saved: 252
   },
   {
-    id: "ac-007",
+    id: "ac7",
    image: image1,
     serviceName: "AC Dry Service",
     description: "Dry cleaning of internal components without water.",
@@ -87,7 +87,7 @@ export const acServices: ACService[] = [
     saved: 126
   },
   {
-    id: "ac-008",
+    id: "ac8",
     image: image1,
     serviceName: "AC Jet Pump Cleaning",
     description: "High-pressure cleaning of indoor and outdoor units.",
@@ -97,9 +97,9 @@ export const acServices: ACService[] = [
     saved: 455
   },
   {
-    id: "ac-009",
+    id: "ac9",
      image: image1,
-    serviceName: "AC AMC (Annual Maintenance)",
+    serviceName: "AC Annual Maintenance",
     description: "Year-round maintenance including 3 services and minor fixes.",
     discountPercent: 40,
     beforePrice: 2999,
@@ -107,7 +107,7 @@ export const acServices: ACService[] = [
     saved: 1200
   },
   {
-    id: "ac-010",
+    id: "ac10",
      image: image1,
     serviceName: "AC PCB Board Repair",
     description: "Repair or replacement of AC circuit (PCB) boards for proper functioning.",

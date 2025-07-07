@@ -1,13 +1,17 @@
 import React from "react";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import shopingCart from "@/assets/Categories/shopingCart.png";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import Image from "@/components/Image/image";
 import { HelpCircle, ShieldCheck } from "lucide-react";
+import { FaMinus } from "react-icons/fa";
+import type { AppDispatch } from "@/store/config/store";
+import { removeItemFromCart } from "@/store/actions/cart";
+
 
 const CartSection = () => {
-  // const dispatch = useDispatch();
-  const { cartItems, totalAmount, totalQuantity } = useAppSelector(
+    const dispatch = useDispatch<AppDispatch>();
+  const { cartItems, totalAmount, totalQuantity,subtotal,taxAmount } = useAppSelector(
     (state) => state.cart
   );
 
@@ -25,11 +29,84 @@ const CartSection = () => {
     "🎁 Free home service on your 3rd booking",
   ];
 
+  const handleRemoveItem = (item:string)=>{
+    dispatch(removeItemFromCart(item));
+  }
+
   return (
     <div className="w-full sm:p-3 bgpt-0">
-      <div className="flex flex-col  sm:p-5 md:p-0 pt-0 gap-4 max-w-6xl mx-auto">
+      <div className="flex flex-col  w-full sm:p-5 md:p-0 pt-0 gap-4 max-w-6xl mx-auto ">
         {cartItems.length > 0 ? (
-          <div></div>
+          <div className="w-full flex  flex-col shadow-2xl rounded-2xl bg-white p-3">
+            <h1 className="py-2 font-bold text-lg">Products</h1>
+            <div className="">
+              <table className="w-full table-auto border-separate border-spacing-y-2">
+                <thead className="bg-gray-100 ">
+                  <tr>
+                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                      Id
+                    </th>
+                    <th></th>
+                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                      Product
+                    </th>
+                    {/* <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                      Quantity
+                    </th> */}
+                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                      Price
+                    </th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cartItems.map((item) => (
+                    <tr
+                      key={item.id}
+                      className=" hover:bg-gray-50   transition-colors"
+                    >
+                      <td className="px-4 py-2 text-sm text-gray-800">
+                        {item.id}
+                      </td>
+                      <td>
+                        <Image
+                          src={item.image}
+                          alt="CartImages"
+                          className="w-10 h-10 rounded-md"
+                        />
+                      </td>
+                      <td className="px-4 text-sm py-2  text-gray-800">
+                        {item.serviceName}
+                      </td>
+                      {/* <td className="px-4 py-2 text-sm text-gray-800">
+                        {item.discountPercent}
+                      </td> */}
+                      <td className="px-4 py-2 text-sm text-gray-800">
+                        ${item.afterPrice}
+                      </td>
+                      <td>
+                        <button className=" py-1.5 p-3.5 rounded-md bg-gray-200 cursor-pointer" onClick={()=>handleRemoveItem(item.id)}>
+                          <FaMinus className="size-3" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="h-[1px] bg-gray-500 mt-3"></div>
+            <div className="p-4 py-3 space-y-2">
+              <div className="w-full flex  justify-between items-center">
+                <h1>Sub Total : </h1> <h1>{subtotal}</h1>
+              </div>
+              <div className="w-full flex  justify-between items-center">
+                <h1>Tax : </h1> <h1>{taxAmount}</h1>
+              </div>
+              <div className="w-full flex  justify-between items-center">
+                <h1> Grand Total : </h1> <h1>{totalAmount}</h1>
+              </div>
+            </div>
+          </div>
         ) : (
           <div className="w-full flex flex-col items-center justify-center h-44 shadow-2xl rounded-2xl bg-white p-6 text-center">
             <Image
