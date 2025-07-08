@@ -4,11 +4,12 @@ import { IoArrowBack } from "react-icons/io5";
 import useIsMobile from "@/hooks/useIsMobile";
 import Link from "next/link";
 type seachProps = {
-  heading: string;
+  heading?: string;
+  place?: string;
   seachPlaceholder: string;
 };
 
-const Search = ({ heading, seachPlaceholder }: seachProps) => {
+const Search = ({ heading, seachPlaceholder,place }: seachProps) => {
   const isMobile = useIsMobile();
   return (
     <>
@@ -23,14 +24,14 @@ const Search = ({ heading, seachPlaceholder }: seachProps) => {
             <div><CiSearch className="cursor-pointer" size={25} /></div>
         </div>
       ) : (
-        <div className=" flex flex-col-reverse w-[97%]  sm:flex-row justify-between items-end sm:items-center">
+        <div className=" flex flex-col-reverse w-[97%] ml-28  sm:flex-row justify-between items-end sm:items-center">
           <h2 className="text-2xl font-semibold text-center">{heading}</h2>
-          <div className="relative w-[70%] sm:w-[20%] flex items-center">
-            <CiSearch className="absolute left-2" size={20} />
+          <div className={`relative w-[70%] ${place=="navbar"?'sm:w-full rounded-3xl':'sm:w-[20%]'}  flex items-center`}>
+            <CiSearch className={`absolute left-2 ${place =="navbar"?'text-black':''} `} size={20} />
             <input
               type="text"
               placeholder={seachPlaceholder}
-              className="w-full p-2 pl-9 border rounded-lg border-gray-300  focus:outline-none focus:ring-1"
+              className={`w-full border text-black ${place==="navbar"?'rounded-full focus:outline-none  p-2.5 pl-9': 'rounded-lg  p-2 pl-9'} border-gray-300  focus:outline-none focus:ring-1`}
             />
           </div>
         </div>

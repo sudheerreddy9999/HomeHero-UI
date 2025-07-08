@@ -6,9 +6,11 @@ import Services from "@/components/services";
 import useIsMobile from "@/hooks/useIsMobile";
 import MostBookedServices from "@/components/MostBookedServices";
 import Footer from "@/components/footer";
+import useDarkMode from '@/hooks/useDarkMode';
 
 export default function Home() {
   const isMobile = useIsMobile();
+    const isDarkMode = useDarkMode();
   return (
     <div className="dark:bg-gray-900  min-h-screen">
       <div className="relative">
@@ -25,6 +27,9 @@ export default function Home() {
           </div>
         )}
       </div>
+      <div>
+      <p>{isDarkMode ? '🌙 Dark mode is on' : '☀️ Light mode is on'}</p>
+    </div>
       {/* <IntroSection /> */}
       <div className="mt-6 xs:mt-24 md:mt-24 flex items-start">
         <MostBookedServices/>

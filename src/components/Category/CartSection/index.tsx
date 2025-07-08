@@ -34,7 +34,7 @@ const CartSection = () => {
   }
 
   return (
-    <div className="w-full sm:p-3 bgpt-0">
+    <div className="w-full  pt-0">
       <div className="flex flex-col  w-full sm:p-5 md:p-0 pt-0 gap-4 max-w-6xl mx-auto ">
         {cartItems.length > 0 ? (
           <div className="w-full flex  flex-col shadow-2xl rounded-2xl bg-white p-3">

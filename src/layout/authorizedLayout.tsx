@@ -6,6 +6,8 @@ import LogoIcon from "../assets/home-hero-icon.png";
 import ModeToggleSwitch from "@/components/Nav/modeswitch";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
+import Search from "@/components/Search";
+import { usePathname } from "next/navigation";
 import type { AppDispatch } from "@/store/config/store";
 import { handleUserLogout } from "@/store/actions/user";
 import { useAppSelector } from "@/hooks/useAppSelector";
@@ -17,10 +19,24 @@ export default function AuthorizedLayout({
   children: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const [scrollPercent, setScrollPercent] = useState(0);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const userDetails = useAppSelector((state) => state.user.userDetails);
   const dispatch = useDispatch<AppDispatch>();
 
+  const pathName = usePathname();
+  const isHome = pathName === "/";
+
+  const handleHomeClick = () => {
+    if (isHome) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      window.location.href = "/";
+    }
+  };
+  const handleLogoutClick = () => {
+    dispatch(handleUserLogout());
+  };
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -33,23 +49,48 @@ export default function AuthorizedLayout({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-  const handleLogoutClick = () => {
-    dispatch(handleUserLogout());
-  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const windowHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = (scrollTop / windowHeight) * 100;
+      setScrollPercent(scrolled);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  console.log("Scroll Percent:", scrollPercent);
+
   return (
     <>
-      <div className=" text-white   w-full h-16  flex items-center justify-between px-4 sm:px-10 fixed top-0 left-0 z-50 ">
+      <div
+        className={` text-white ${
+          scrollPercent > 59 && "bg-gray-50 shadow-2xl"
+        }  w-full h-16  flex items-center justify-between px-4 sm:px-10 fixed top-0 left-0 z-50 `}
+      >
         <div>
           <Image
             src={Logo}
             alt="Main-Logo"
-            className="h-8 w-36 hidden sm:block"
+            className="h-8 w-36 hidden sm:block cursor-pointer "
+            onClick={() => handleHomeClick()}
           />
           <Image
             src={LogoIcon}
             alt="Mobile Logo"
             className=" block sm:hidden size-7"
           />
+        </div>
+        <div className="w-[35%] flex items-center justify-center">
+          {(scrollPercent > 59 || !isHome) && (
+            <Search
+              seachPlaceholder="Search for services, products, etc."
+              place="navbar"
+            />
+          )}
         </div>
         <div className="flex items-center justify-center space-x-4 sm:gap-4 gap-4 text-sm">
           <div className="">

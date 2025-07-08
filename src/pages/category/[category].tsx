@@ -19,11 +19,11 @@ const CategoryPage = () => {
           seachPlaceholder="Search for AC services, repair, etc."
         />
       </div> */}
-      <div className="w-full flex flex-col sm:flex-row justify-between  mt-10">
-        <div className="w-full sm:w-[67%] ">
+      <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 justify-between  mt-10">
+        <div className=" w-full md:w-[67%] ">
           <SelectedCategory selectedItems={acServices} />
         </div>
-        <div className="sm:w-[30%] ">
+        <div className="w-full md:w-[30%] ">
           <div className="w-full hidden sm:block ">
           <CartSection />
         </div>
