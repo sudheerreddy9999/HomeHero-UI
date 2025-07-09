@@ -14,37 +14,61 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isSystemDefault, setIsSystemDefault] = useState(false);
   useEffect(() => {
-    const storedTheme = JSON.parse(localStorage.getItem("theme") || '{}');
+    let storedTheme: { Theme?: string; system?: string } = {};
+
+    try {
+      const raw = localStorage.getItem("theme");
+      storedTheme = raw ? JSON.parse(raw) : {};
+    } catch (error) {
+      console.error("Invalid theme JSON in localStorage:", error);
+      localStorage.removeItem("theme");
+    }
+
     if (storedTheme?.Theme === "Dark") {
       setIsDarkMode(true);
+      setIsSystemDefault(storedTheme.system === "true");
     } else if (storedTheme?.Theme === "Light") {
       setIsDarkMode(false);
+      setIsSystemDefault(storedTheme.system === "true");
     } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
       setIsDarkMode(prefersDark);
+      setIsSystemDefault(true);
       localStorage.setItem(
         "theme",
-        JSON.stringify({ Theme: prefersDark ? "Dark" : "Light", system: "true" })
+        JSON.stringify({
+          Theme: prefersDark ? "Dark" : "Light",
+          system: "true",
+        })
       );
-      setIsSystemDefault(true);
     }
   }, []);
 
   const toggleMode = (mode: Mode) => {
-    if( mode === "System Default") {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;   
-        setIsDarkMode(prefersDark);
-        setIsSystemDefault(true);
-        localStorage.setItem("theme", JSON.stringify({ Theme: mode, system: "true" }));
-        return;
+    if (mode === "System Default") {
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      setIsDarkMode(prefersDark);
+      setIsSystemDefault(true);
+      localStorage.setItem(
+        "theme",
+        JSON.stringify({ Theme: mode, system: "true" })
+      );
+      return;
     }
     setIsDarkMode(mode === "Dark");
-    setIsSystemDefault(false)
-    localStorage.setItem("theme", JSON.stringify({ Theme: mode, system: "false" }));
+    setIsSystemDefault(false);
+    localStorage.setItem(
+      "theme",
+      JSON.stringify({ Theme: mode, system: "false" })
+    );
   };
 
   return (
-    <ThemeContext.Provider value={{ isDarkMode,isSystemDefault, toggleMode }}>
+    <ThemeContext.Provider value={{ isDarkMode, isSystemDefault, toggleMode }}>
       {children}
     </ThemeContext.Provider>
   );
