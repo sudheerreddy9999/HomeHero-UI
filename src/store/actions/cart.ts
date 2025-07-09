@@ -4,7 +4,6 @@ import {ACService} from "@/Jsons/acServives";
 
 export const addToCartAction = (item:ACService) => async (dispatch: AppDispatch) => {
     try {
-        console.log("Adding item to cart:", item);
         dispatch(addToCartReducer(item));
     } catch (error) {
         console.error("Error adding item to cart:", error);

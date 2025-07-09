@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from "react";
 import ThemeLight from "@/assets/theme.png";
 import ThemeDark from "@/assets/theme-dark.png";
-import Image from "@/components/Image/image"
+import Image from "@/components/Image/image";
 import { IoClose, IoSunny, IoMoonSharp } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "@/context/ThemeContext";
 
 type Mode = "Light" | "Dark" | "System Default";
 
@@ -13,36 +14,52 @@ const ModeToggleSwitch = () => {
   const [currentMode, setCurrentMode] = useState<Mode>("Light");
   const [hasMounted, setHasMounted] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-
+  const { isDarkMode,isSystemDefault, toggleMode } = useTheme();
   const handleToggleChange = (value: Mode) => {
     setCurrentMode(value);
-    localStorage.setItem("theme", value);
+    toggleMode(value)
+    // localStorage.setItem(
+    //   "theme",
+    //   JSON.stringify({ Theme: value, system: "false" })
+    // );
     setOpenModal(!openModal);
   };
 
   useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    if (["Light", "Dark", "System Default"].includes(saved ?? "")) {
-      setCurrentMode(saved as Mode);
+    // const saved = JSON.parse(localStorage.getItem("theme") || "{}");
+    // if (saved.system) {
+    //   setCurrentMode("System Default");
+    // } else if (saved.Theme === "Dark" && !saved.system) {
+    //   setCurrentMode("Dark");
+    // } else if (saved.Theme === "Light" && !saved.system) {
+    //   setCurrentMode("Light");
+    // }
+    // if (["Light", "Dark", "System Default"].includes(saved ?? "")) {
+    //   setCurrentMode(saved as Mode);
+    // }
+    if(isSystemDefault){
+      setCurrentMode("System Default");
+    }else if (isDarkMode) {
+      setCurrentMode("Dark");
+    }else{
+      setCurrentMode("Light");
     }
     setHasMounted(true);
-  }, []);
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    if (currentMode === "Dark") {
-      root.classList.add("dark");
-    } else if (currentMode === "Light") {
-      root.classList.remove("dark");
-    } else {
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      root.classList.toggle("dark", prefersDark);
-    }
   }, [currentMode]);
 
-
+  // useEffect(() => {
+  //   const root = window.document.documentElement;
+  //   if (currentMode === "Dark") {
+  //     root.classList.add("dark");
+  //   } else if (currentMode === "Light") {
+  //     root.classList.remove("dark");
+  //   } else {
+  //     const prefersDark = window.matchMedia(
+  //       "(prefers-color-scheme: dark)"
+  //     ).matches;
+  //     root.classList.toggle("dark", prefersDark);
+  //   }
+  // }, [currentMode]);
 
   if (!hasMounted) return null;
 

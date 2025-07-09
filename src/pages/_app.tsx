@@ -12,7 +12,9 @@ import "../styles/globals.css";
 import store from "../store/config/store";
 import { userDetailsAction } from "@/store/actions/user";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import { ThemeProvider } from "@/context/ThemeContext";
 import type { AppDispatch } from "@/store/config/store";
+import useDarkMode from "@/hooks/useDarkMode";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;
@@ -25,8 +27,6 @@ type AppPropsWithLayout = AppProps & {
 function InnerApp({ Component, pageProps }: AppPropsWithLayout) {
   const dispatch = useDispatch<AppDispatch>();
   const { userDetails, isLoading } = useAppSelector((state) => state.user);
-
-  console.log(userDetails," User details Value is ")
   useEffect(() => {
     dispatch(userDetailsAction());
   }, [dispatch]);
@@ -58,14 +58,33 @@ function InnerApp({ Component, pageProps }: AppPropsWithLayout) {
 }
 
 export default function App(props: AppPropsWithLayout) {
+  const isDarkMode = useDarkMode();
   const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
   if (!clientId) throw new Error("Google Client ID is not defined.");
-
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("theme") === null) {
+        if (isDarkMode) {
+          localStorage.setItem(
+            "theme",
+            JSON.stringify({ Theme: "Dark", system: "true" })
+          );
+        } else {
+          localStorage.setItem(
+            "theme",
+            JSON.stringify({ Theme: "Light", system: "true" })
+          );
+        }
+      }
+    }
+  }, []);
   return (
     <GoogleOAuthProvider clientId={clientId}>
-      <Provider store={store}>
-        <InnerApp {...props} />
-      </Provider>
+      <ThemeProvider>
+        <Provider store={store}>
+          <InnerApp {...props} />
+        </Provider>
+      </ThemeProvider>
     </GoogleOAuthProvider>
   );
 }

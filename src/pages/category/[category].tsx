@@ -7,7 +7,6 @@ import CartSection from "@/components/Category/CartSection";
 import CartMobileView from "@/components/Category/CartMobile.tsx";
 
 const CategoryPage = () => {
-  console.log(acServices, "Ac Services are ");
   // const router = useRouter();
   // const { category } = router.query;
 

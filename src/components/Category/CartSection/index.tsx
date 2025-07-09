@@ -14,15 +14,6 @@ const CartSection = () => {
   const { cartItems, totalAmount, totalQuantity,subtotal,taxAmount } = useAppSelector(
     (state) => state.cart
   );
-
-  console.log(
-    cartItems,
-    "Cart Items are ",
-    totalAmount,
-    "Total Amount is ",
-    totalQuantity,
-    "Total Quantity is "
-  );
   const offers = [
     "🔥 Get 10% off on orders above ₹1000",
     "💳 Use code SAVE50 to get ₹50 off",

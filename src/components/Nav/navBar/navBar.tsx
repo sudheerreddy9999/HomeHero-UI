@@ -7,11 +7,13 @@ import MobileLogo from "@/assets/home-hero-icon.png";
 import Location from "../location";
 import Welcome from "../../Auth";
 import DarkThemeLogo from "@/assets/DarkThemeLogo.png";
+import useDarkMode from "@/hooks/useDarkMode";
 import mobileDarkThemeLogo from "@/assets/icons/mobile-drak-ThemeLogo.png";
 
 const NavBar = () => {
   // const router = useRouter();
   const [openAuth, setOpenAuth] = useState(false);
+  const isDarkMode = useDarkMode();
   const [isMobile, setIsMobile] = useState(false);
   const handlecloseAuth = () => {
     setOpenAuth(!openAuth);
@@ -50,8 +52,8 @@ const NavBar = () => {
           <ModeToggleSwitch />
           <button
             className={` ${
-              isMobile ? " w-14 h-7" : " w-24 h-9 text-xs"
-            } bg-white flex justify-center items-center border-[1px] border-[#53c9c2] rounded-4xl px-3 cursor-pointer hover:-translate-y-0.5 dark:text-black  dark:font-[500]  dark:bg-white`}
+              isMobile ? " w-16 h-8" : " w-24 h-9 text-xs"
+            } border-[1px] ${isDarkMode?'bg-gray-800 text-white':'bg-white border-[#53c9c2]'}  flex justify-center items-center  rounded-4xl px-3 cursor-pointer hover:-translate-y-0.5 dark:text-black  dark:font-[500]  dark:bg-white`}
             onClick={() => setOpenAuth(!openAuth)}
           >
             Login

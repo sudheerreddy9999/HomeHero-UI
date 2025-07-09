@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import { useRouter } from "next/router";
+import useDarkMode from "@/hooks/useDarkMode";
 import type { AppDispatch } from "@/store/config/store";
 import { CredentialResponse } from "@react-oauth/google";
 import Loader from "@/components/Loaders/loader";
@@ -27,6 +28,7 @@ type AuthProps = {
 
 const Welcome = ({ onAuthClose }: AuthProps) => {
   const router = useRouter();
+  const isDarkMode = useDarkMode();
   const dispatch = useDispatch<AppDispatch>();
   const { otpSentSuccessfully, resendotp, invalidOtp, loginSuccess } =
     useAppSelector((state) => state.auth);
@@ -152,9 +154,8 @@ const Welcome = ({ onAuthClose }: AuthProps) => {
     if (loginSuccess) {
       onAuthClose();
     }
-  }, [loginSuccess, router,onAuthClose]);
+  }, [loginSuccess, router, onAuthClose]);
   useEffect(() => {
-    console.log(invalidOtp, "Helkoo Invalid otp is ");
     if (invalidOtp) {
       setLoader(false);
     }
@@ -165,7 +166,11 @@ const Welcome = ({ onAuthClose }: AuthProps) => {
   };
   return (
     <div className="fixed inset-0 w-full   bg-opacity-90 backdrop-blur-[2px] flex items-center justify-center z-50">
-      <div className="shadow-2xl bg-white w-[95%]  md:w-md p-8  rounded-md flex flex-col justify-center items-center space-y-3">
+      <div
+        className={`shadow-2xl ${
+          isDarkMode ? "bg-gray-800 text-white" : "bg-white"
+        } w-[95%]  md:w-md p-8  rounded-md flex flex-col justify-center items-center space-y-3`}
+      >
         {loader && <Loader message="Signing in with Google" />}
         <div className="flex justify-between w-full mb-6">
           {otpSentSuccessfully && (

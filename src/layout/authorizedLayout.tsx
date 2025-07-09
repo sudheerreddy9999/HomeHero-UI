@@ -62,8 +62,6 @@ export default function AuthorizedLayout({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  console.log("Scroll Percent:", scrollPercent);
-
   return (
     <>
       <div

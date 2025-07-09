@@ -9,9 +9,6 @@ export default function DefaultLayout({ children }: { children: ReactNode }) {
   const isMobile = useIsMobile();
 
   const isHome = pathname === "/";
-  console.log(pathname," patName is ")
-  console.log(isHome," Is Home is ")
-
   return (
     <div className="w-full dark:bg-black">
       {(isHome || !isMobile) && <NavBar />}
