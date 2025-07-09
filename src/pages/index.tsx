@@ -15,7 +15,7 @@ export default function Home() {
   // const isDarkMode = useCurrentMode();
   const { isDarkMode } = useTheme();
   return (
-    <div className={`${isDarkMode?'bg-gray-900 text-white':''}  min-h-screen`}>
+    <div className={`${isDarkMode?'bg-gray-900 text-white':'bg-white'}  min-h-screen`}>
       <div className="relative">
         <div>
           <BannerSection />
