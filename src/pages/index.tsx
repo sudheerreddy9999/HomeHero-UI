@@ -15,7 +15,7 @@ export default function Home() {
   // const isDarkMode = useCurrentMode();
   const { isDarkMode } = useTheme();
   return (
-    <div className="dark:bg-gray-900  min-h-screen">
+    <div className={`${isDarkMode?'bg-gray-900 text-white':''}  min-h-screen`}>
       <div className="relative">
         <div>
           <BannerSection />
@@ -32,7 +32,7 @@ export default function Home() {
       </div>
       <div>
     </div>
-    <h1>cuetnt mode value is {isDarkMode?'Dark':'Light'}</h1>
+    <h1>current mode value is {isDarkMode?'Dark':'Light'}</h1>
       {/* <IntroSection /> */}
       <div className="mt-6 xs:mt-24 md:mt-24 flex items-start">
         <MostBookedServices/>

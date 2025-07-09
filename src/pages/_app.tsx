@@ -14,7 +14,7 @@ import { userDetailsAction } from "@/store/actions/user";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { ThemeProvider } from "@/context/ThemeContext";
 import type { AppDispatch } from "@/store/config/store";
-import useDarkMode from "@/hooks/useDarkMode";
+// import useDarkMode from "@/hooks/useDarkMode";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;
@@ -58,26 +58,26 @@ function InnerApp({ Component, pageProps }: AppPropsWithLayout) {
 }
 
 export default function App(props: AppPropsWithLayout) {
-  const isDarkMode = useDarkMode();
+  // const isDarkMode = useDarkMode();
   const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
   if (!clientId) throw new Error("Google Client ID is not defined.");
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (localStorage.getItem("theme") === null) {
-        if (isDarkMode) {
-          localStorage.setItem(
-            "theme",
-            JSON.stringify({ Theme: "Dark", system: "true" })
-          );
-        } else {
-          localStorage.setItem(
-            "theme",
-            JSON.stringify({ Theme: "Light", system: "true" })
-          );
-        }
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     if (localStorage.getItem("theme") === null) {
+  //       if (isDarkMode) {
+  //         localStorage.setItem(
+  //           "theme",
+  //           JSON.stringify({ Theme: "Dark", system: "true" })
+  //         );
+  //       } else {
+  //         localStorage.setItem(
+  //           "theme",
+  //           JSON.stringify({ Theme: "Light", system: "true" })
+  //         );
+  //       }
+  //     }
+  //   }
+  // }, []);
   return (
     <GoogleOAuthProvider clientId={clientId}>
       <ThemeProvider>

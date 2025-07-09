@@ -45,7 +45,7 @@ const ModeToggleSwitch = () => {
       setCurrentMode("Light");
     }
     setHasMounted(true);
-  }, [currentMode]);
+  }, [currentMode,isDarkMode,isSystemDefault]);
 
   // useEffect(() => {
   //   const root = window.document.documentElement;

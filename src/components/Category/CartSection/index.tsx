@@ -11,7 +11,7 @@ import { removeItemFromCart } from "@/store/actions/cart";
 
 const CartSection = () => {
     const dispatch = useDispatch<AppDispatch>();
-  const { cartItems, totalAmount, totalQuantity,subtotal,taxAmount } = useAppSelector(
+  const { cartItems, totalAmount,subtotal,taxAmount } = useAppSelector(
     (state) => state.cart
   );
   const offers = [
