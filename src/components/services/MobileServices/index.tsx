@@ -5,6 +5,7 @@ import HomeService from "@/assets/services/Home-Service.png";
 import PlumbingService from "@/assets/services/plumber.png";
 import ElectricalService from "@/assets/services/electrical.png";
 import CabService from "@/assets/services/cabServices.png";
+import { useTheme } from "@/context/ThemeContext";
 import Image from "@/components/Image/image";
 import Link from "next/link";
 
@@ -44,6 +45,7 @@ const MobileServices = () => {
     ],
     []
   );
+  const { isDarkMode } = useTheme();
   return (
     <div>
       <p className="text-xl font-semibold px-2 dark:text-white mb-4">
@@ -55,7 +57,7 @@ const MobileServices = () => {
             <Link
             href={service.route}
               key={index}
-              className="bg-[#C0C9EE] dark:bg-gray-100 rounded-lg w-28 h-24 shadow-lg flex flex-col justify-center hover:-translate-y-1 items-center space-y-2"
+              className={`${isDarkMode?'bg-gray-800':'bg-gray-50'}   rounded-lg w-28 h-24 shadow-lg flex flex-col justify-center hover:-translate-y-1 items-center space-y-2`}
             >
               <Image
                 src={service.imageUrl}
@@ -71,7 +73,7 @@ const MobileServices = () => {
           {serviceList.slice(3).map((service, index) => (
             <div
               key={index + 3}
-              className="bg-[#C0C9EE] dark:bg-gray-100 rounded-lg w-28 h-24 shadow-lg hover:-translate-y-1 flex flex-col justify-center items-center space-y-2"
+              className={`${isDarkMode?'bg-gray-800':'bg-gray-50'}  dark:bg-gray-100 rounded-lg w-28 h-24 shadow-lg hover:-translate-y-1 flex flex-col justify-center items-center space-y-2`}
             >
               <Image
                 src={service.imageUrl}

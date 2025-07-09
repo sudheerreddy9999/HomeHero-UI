@@ -8,10 +8,10 @@ import { useDispatch } from "react-redux";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import { useRouter } from "next/router";
-import useDarkMode from "@/hooks/useDarkMode";
 import type { AppDispatch } from "@/store/config/store";
 import { CredentialResponse } from "@react-oauth/google";
 import Loader from "@/components/Loaders/loader";
+import { useTheme } from "@/context/ThemeContext";
 import * as Yup from "yup";
 import {
   sendEmailOtp,
@@ -28,7 +28,7 @@ type AuthProps = {
 
 const Welcome = ({ onAuthClose }: AuthProps) => {
   const router = useRouter();
-  const isDarkMode = useDarkMode();
+  const {isDarkMode} = useTheme();
   const dispatch = useDispatch<AppDispatch>();
   const { otpSentSuccessfully, resendotp, invalidOtp, loginSuccess } =
     useAppSelector((state) => state.auth);
@@ -165,7 +165,7 @@ const Welcome = ({ onAuthClose }: AuthProps) => {
     onAuthClose();
   };
   return (
-    <div className="fixed inset-0 w-full   bg-opacity-90 backdrop-blur-[2px] flex items-center justify-center z-50">
+    <div className="fixed inset-0 w-full   bg-opacity-90 backdrop-blur-[2px] flex items-center justify-center z-999">
       <div
         className={`shadow-2xl ${
           isDarkMode ? "bg-gray-800 text-white" : "bg-white"
@@ -190,6 +190,7 @@ const Welcome = ({ onAuthClose }: AuthProps) => {
         {!otpSentSuccessfully ? (
           <>
             <GoogleLogin
+              theme={isDarkMode ? "filled_black" : undefined}
               onSuccess={handleLoginSuccess}
               onError={handleErrorMessage}
             />

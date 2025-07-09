@@ -6,16 +6,14 @@ import Services from "@/components/services";
 import useIsMobile from "@/hooks/useIsMobile";
 import MostBookedServices from "@/components/MostBookedServices";
 import Footer from "@/components/footer";
-// import useCurrentMode from "@/hooks/useCurrentMode";
 import { useTheme } from "@/context/ThemeContext";
 
 
 export default function Home() {
   const isMobile = useIsMobile();
-  // const isDarkMode = useCurrentMode();
   const { isDarkMode } = useTheme();
   return (
-    <div className={`${isDarkMode?'bg-gray-900 text-white':'bg-white'}  min-h-screen`}>
+    <div className={`${isDarkMode?'bg-gray-900 text-white':'bg-white text-gray-800'}  min-h-screen`}>
       <div className="relative">
         <div>
           <BannerSection />
@@ -32,7 +30,6 @@ export default function Home() {
       </div>
       <div>
     </div>
-    <h1>current mode value is {isDarkMode?'Dark':'Light'}</h1>
       {/* <IntroSection /> */}
       <div className="mt-6 xs:mt-24 md:mt-24 flex items-start">
         <MostBookedServices/>

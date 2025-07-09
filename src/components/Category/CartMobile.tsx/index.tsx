@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
 import CartSection from "../CartSection";
+import { useTheme } from "@/context/ThemeContext";
 
 const CartMobileView = () => {
   const [showOverlay, setShowOverlay] = useState(false);
+  const { isDarkMode } = useTheme();
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 bg-white  shadow-md z-30 flex justify-between items-center px-4 py-3">
+      <div className={`fixed bottom-0 left-0 right-0  ${isDarkMode?'text-gray-100 bg-gray-800':'text-gray-800 bg-white'}  shadow-md z-30 flex justify-between items-center px-4 py-3`}>
         <div className="font-semibold">Amount ₹0</div>
         <button
           className="bg-blue-600 px-4 py-2 rounded-2xl text-white font-medium"
@@ -18,8 +20,8 @@ const CartMobileView = () => {
       </div>
 
       {showOverlay && (
-        <div className="fixed inset-0 bg-black/50 z-40 flex items-end sm:items-center justify-center">
-          <div className="bg-white w-full sm:w-[400px] rounded-t-2xl sm:rounded-2xl p-6 shadow-lg relative max-h-[90vh] overflow-y-auto">
+        <div className={`fixed inset-0 ${isDarkMode?'text-gray-100':'text-gray-800'} bg-black/50 z-40 flex items-end sm:items-center justify-center`}>
+          <div className={`${isDarkMode?'bg-gray-800':'bg-white'}  w-full sm:w-[400px] rounded-t-2xl sm:rounded-2xl p-6 shadow-lg relative max-h-[90vh] overflow-y-auto`}>
     
             <button
               className="absolute top-3 right-3 text-gray-600 hover:text-black"

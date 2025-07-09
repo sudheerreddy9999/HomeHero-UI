@@ -4,14 +4,14 @@ import Image from "@/components/Image/image";
 import locationIcon from "@/assets/icons/location-pin.png";
 import DropDownArrow from "@/assets/icons/DropDown-Arrow.png";
 import LocationSearch from "@/components/Nav/location/LocationSerach";
-import useDarkMode from "@/hooks/useDarkMode";
+import { useTheme } from "@/context/ThemeContext";
 
 const Location = () => {
   const { location, address, error } = useGeolocation();
   const [preciseLocation, setPreciseLocation] = useState("");
   const [openSearch, setOpenSearch] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const isDarkMode = useDarkMode();
+  const { isDarkMode } = useTheme();
 
   const [selectedLocation, setSelectedLocation] = useState<{
     address: string;
@@ -60,10 +60,10 @@ const Location = () => {
   }
 
   return (
-    <div className="p-4 rounded  text-sm ">
+    <div className="p-4 rounded  text-sm  ">
       {location ? (
         <div
-          className={`flex justify-center  border-[1px] ${isDarkMode ?'bg-gray-800 text-white':'bg-white border-[#53c9c2]'}  items-center space-x-2 ${
+          className={`flex justify-center   border-[1px] ${isDarkMode ?'bg-gray-800 text-white':'bg-white border-[#53c9c2]'}  items-center space-x-2 ${
             isMobile ? "p-1.5" : "p-3"
           }  rounded-full dark:bg-white `}
         >

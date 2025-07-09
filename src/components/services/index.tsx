@@ -6,8 +6,9 @@ import AcService from "@/assets/icons/ac-reapir-icon.png";
 import ElectricalServices from "@/assets/icons/electrical-repair.png";
 import Link from "next/link";
 import Image from "../Image/image";
-
+import { useTheme } from "@/context/ThemeContext";
 const Services = () => {
+  const { isDarkMode } = useTheme();
   const serviceList = useMemo(
     () => [
       {
@@ -50,7 +51,7 @@ const Services = () => {
           <Link
             href={service.route}
             key={index}
-            className="flex sm:p-1 py-2   sm:py-5 bg-white hover:bg-white/70 dark:hover:bg-gray-700/50 hover:backdrop-invert hover:backdrop-opacity-10 dark:text-black  dark:bg-gray-800  flex-col justify-center items-center w-36 lg:w-52  rounded-3xl shadow-2xl  space-y-2 hover:-translate-y-3 hover:shadow-xl transition-all cursor-pointer"
+            className={`flex sm:p-1 py-2   sm:py-5 ${isDarkMode?'dark:hover:bg-gray-700/50 bg-gray-800':'bg-white hover:bg-white/70'}    hover:backdrop-invert hover:backdrop-opacity-10 dark:text-black  dark:bg-gray-800  flex-col justify-center items-center w-36 lg:w-52  rounded-3xl shadow-2xl  space-y-2 hover:-translate-y-3 hover:shadow-xl transition-all cursor-pointer`}
           >
             <div className="p-1 sm:p-2 bg-amber-50 rounded-full ">
               <Image

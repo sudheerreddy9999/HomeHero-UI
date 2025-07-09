@@ -5,15 +5,27 @@ import DynamicText from "./DynamicText";
 import Image from "../Image/image";
 import useIsMobile from "@/hooks/useIsMobile";
 import sofaImage from "@/assets/sofa.jpeg";
-import MobileViewSofa from "@/assets/sofa-mobile.jpeg"
+import MobileViewSofa from "@/assets/sofa-mobile.jpeg";
+import darkModeSofaImage from "@/assets/darkSofa.webp";
+import darkMobileSOfa from "@/assets/sofadarkMb.webp";
+import { useTheme } from "@/context/ThemeContext";
 
 const BannerSection = () => {
   const isMobile = useIsMobile();
+  const { isDarkMode } = useTheme();
+  const getSofaImage = () => {
+    if (isMobile) {
+      if (isDarkMode) return darkMobileSOfa;
+      return MobileViewSofa;
+    }
+    if (isDarkMode) return darkModeSofaImage;
+    return sofaImage;
+  };
   return (
     <>
-      <div className="relative w-full h-[55vh] sm:h-[65vh]">
+      <div className="relative  w-full h-[55vh] sm:h-[65vh]">
         <Image
-          src={isMobile?MobileViewSofa: sofaImage}
+          src={getSofaImage()}
           className="w-full h-full object-center sm:rounded-b-2xl"
           alt="Background"
         />
@@ -28,18 +40,25 @@ const BannerSection = () => {
           <div className="relative w-3/4 sm:w-[36%] mt-4">
             <CiSearch
               size={24}
-              className="absolute left-4 top-8 sm:top-1/2 transform -translate-y-1/2 text-gray-500 z-10"
+              className={`absolute left-4 ${
+                isDarkMode ? "text-white" : "text-gray-700"
+              }  top-1/2 transform -translate-y-1/2  z-20`}
             />
             <input
               type="text"
-              placeholder={` ${isMobile?'How Can We Help You Today?':'Search for Services, "AC Repair", "Plumber", "Electrician" etc...'}`}
-              className="w-full text-sm sm:text-[16px] pl-12 mt-2 pr-4 py-3 bg-white border border-gray-300 rounded-full focus:outline-none"
+              placeholder={
+                isMobile
+                  ? "How Can We Help You Today?"
+                  : 'Search for Services, "AC Repair", "Plumber", "Electrician" etc...'
+              }
+              className={`w-full text-sm sm:text-[15px] pl-12 pr-4 py-3 mt-0 rounded-full focus:outline-none ${
+                isDarkMode
+                  ? "bg-gray-800 text-white"
+                  : " bg-white border border-gray-300 text-gray-700"
+              } z-10 relative`}
             />
-            <div className="bg-blue-400  p-2 rounded-full absolute right-1 -bottom-4.5 sm:-bottom-4  transform -translate-y-1/2">
-              <FiArrowUpRight
-                size={24}
-                className="rounded-full  text-white z-10"
-              />
+            <div className="bg-blue-400 p-2 rounded-full absolute right-1 top-1/2 transform -translate-y-1/2 z-20">
+              <FiArrowUpRight size={24} className="text-white" />
             </div>
           </div>
         </div>

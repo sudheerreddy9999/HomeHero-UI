@@ -7,6 +7,7 @@ import waterPurifier from "@/assets/MostBookedServices/water-purifier.jpg";
 import tapFix from "@/assets/MostBookedServices/tap-fix.jpg";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Image from "../Image/image";
+import { useTheme } from "@/context/ThemeContext";
 
 const services = [
   {
@@ -55,6 +56,7 @@ const MostBookedServices = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const { isDarkMode } = useTheme();
 
   const checkScroll = () => {
     const el = scrollRef.current;
@@ -79,14 +81,18 @@ const MostBookedServices = () => {
   };
 
   return (
-    <div className="relative w-full px-4 py-6">
-      <h2 className="text-2xl font-semibold mb-4 dark:text-gray-100 text-gray-700">
-        Most Booked Services
-      </h2>
+    <div
+      className={`relative w-full px-4 py-6 ${
+        isDarkMode ? " text-white" : " text-gray-800"
+      }`}
+    >
+      <h2 className="text-2xl font-semibold mb-4 ">Most Booked Services</h2>
       {canScrollLeft && (
         <button
           onClick={() => scroll("left")}
-          className="hidden sm:flex absolute left-2 top-1/2 z-10 -translate-y-1/2 bg-white shadow-md p-2 rounded-full cursor-pointer"
+          className={`hidden sm:flex absolute left-2 top-1/2 z-10 -translate-y-1/2 ${
+            isDarkMode ? "bg-black" : "bg-white"
+          } shadow-md p-2 rounded-full cursor-pointer`}
         >
           <FaChevronLeft />
         </button>
@@ -94,7 +100,9 @@ const MostBookedServices = () => {
       {canScrollRight && (
         <button
           onClick={() => scroll("right")}
-          className="hidden sm:flex absolute right-2 top-1/2 z-10 -translate-y-1/2 bg-white shadow-md p-2 rounded-full hover:p-2.5 cursor-pointer"
+          className={`hidden sm:flex absolute right-2 top-1/2 z-10 -translate-y-1/2 ${
+            isDarkMode ? "bg-black" : "bg-white"
+          } shadow-md p-2 rounded-full hover:p-2.5 cursor-pointer`}
         >
           <FaChevronRight />
         </button>
@@ -109,7 +117,9 @@ const MostBookedServices = () => {
         {services.map((service) => (
           <div
             key={service.id}
-            className="flex-shrink-0 w-[190px] sm:w-[280px] md:w-[300px] snap-start rounded-lg hover:-translate-y-1 transition-transform duration-200 ease-in-out"
+            className={`flex-shrink-0 w-[190px] sm:w-[280px] md:w-[300px] snap-start rounded-lg hover:-translate-y-1 transition-transform duration-200 ease-in-out ${
+              isDarkMode ? " text-gray-200" : " text-gray-800"
+            }`}
           >
             <div className="h-36 sm:h-48 relative">
               <Image
@@ -118,7 +128,7 @@ const MostBookedServices = () => {
                 className="rounded-t-lg w-full h-full object-cover"
               />
             </div>
-            <div className="p-2 text-gray-800 dark:text-gray-300">
+            <div className="p-2 ">
               <h3 className="mb-1 text-sm sm:text-medium font-semibold ">
                 {service.name}
               </h3>
@@ -127,9 +137,9 @@ const MostBookedServices = () => {
                   <IoStar className="text-yellow-500" />
                   {service.rating} / 5
                 </p>
-                <p className="text-gray-500">
+                <p className="">
                   <span className="line-through mr-1">₹{service.price}</span>
-                  <span className="font-semibold text-xs md:text-[16px] pl-1 text-gray-800 dark:text-gray-300">
+                  <span className="font-semibold text-xs md:text-[16px] pl-1">
                     ₹{service.offerPrice}
                   </span>
                 </p>

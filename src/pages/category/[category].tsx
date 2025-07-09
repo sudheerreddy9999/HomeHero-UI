@@ -5,13 +5,14 @@ import SelectedCategory from "@/components/Category/SelectedCategory";
 import { acServices } from "@/Jsons/acServives";
 import CartSection from "@/components/Category/CartSection";
 import CartMobileView from "@/components/Category/CartMobile.tsx";
-
+import { useTheme } from "@/context/ThemeContext";
 const CategoryPage = () => {
   // const router = useRouter();
   // const { category } = router.query;
+  const { isDarkMode } = useTheme();
 
   return (
-    <div className="sm:mt-10 sm:py-6  p-3   sm:mx-10" >
+    <div className={`sm:pt-14 sm:py-6  p-3 sm:px-10 ${isDarkMode?'bg-gray-900':'bg-white'}  min-h-screen`} >
       {/* <div className="fixed w-full pr-4  md:pr-20">
         <Search
           heading="AC Service and Repair"

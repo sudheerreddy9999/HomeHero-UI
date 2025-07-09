@@ -72,7 +72,7 @@ const ModeToggleSwitch = () => {
           src={currentMode === "Dark" ? ThemeDark : ThemeLight}
           className="size-6 cursor-pointer text-white hover:-translate-y-0.5 transition-transform lg:mt-1.5"
         />
-        <div className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-gray-200 text-black text-xs px-2 py-1.5 rounded shadow-md z-[999]">
+        <div className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-gray-200 text-black text-xs px-2 py-1.5 rounded shadow-md ">
           Theme
         </div>
       </div>
@@ -83,18 +83,18 @@ const ModeToggleSwitch = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0  w-full z-50 flex items-center justify-center bg-black/30 backdrop-blur-xs "
+            className="fixed inset-0  w-full  flex items-center justify-center bg-black/30 backdrop-blur-xs  z-50"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3 }}
-              className="flex flex-col justify-center items-start w-xs shadow-2xs rounded-[10px] bg-gray-100 p-3"
+              className={`flex flex-col justify-center items-start w-xs shadow-2xs rounded-[10px] ${isDarkMode?'bg-gray-800 text-white':'bg-gray-100 text-gray-800'}  p-3`}
             >
               <div className="w-full flex justify-end">
                 <IoClose
-                  className="cursor-pointer text-3xl text-gray-700 hover:text-black transition"
+                  className="cursor-pointer text-3xl  hover:text-black transition"
                   onClick={() => setOpenModal(false)}
                 />
               </div>
@@ -105,7 +105,7 @@ const ModeToggleSwitch = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className="p-3 py-4 border-b text-gray-700 w-full last:border-b-0"
+                  className="p-3 py-4 border-b  w-full last:border-b-0"
                 >
                   <label className="text-[16px] flex items-center gap-3 cursor-pointer">
                     <input
