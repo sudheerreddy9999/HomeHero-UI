@@ -117,7 +117,7 @@ const MostBookedServices = () => {
         {services.map((service) => (
           <div
             key={service.id}
-            className={`flex-shrink-0 w-[190px] sm:w-[280px] md:w-[300px] snap-start rounded-lg hover:-translate-y-1 transition-transform duration-200 ease-in-out ${
+            className={`most-booked flex-shrink-0 w-[190px] sm:w-[280px] md:w-[300px] snap-start rounded-lg hover:-translate-y-1 transition-transform duration-200 ease-in-out ${
               isDarkMode ? " text-gray-200" : " text-gray-800"
             }`}
           >
@@ -129,7 +129,7 @@ const MostBookedServices = () => {
               />
             </div>
             <div className="p-2 ">
-              <h3 className="mb-1 text-sm sm:text-medium font-semibold ">
+              <h3 className="service-name mb-1 text-sm sm:text-medium font-semibold ">
                 {service.name}
               </h3>
               <div className="flex justify-between items-center text-sm">
@@ -138,7 +138,7 @@ const MostBookedServices = () => {
                   {service.rating} / 5
                 </p>
                 <p className="">
-                  <span className="line-through mr-1">₹{service.price}</span>
+                  <span className="price line-through mr-1">₹{service.price}</span>
                   <span className="font-semibold text-xs md:text-[16px] pl-1">
                     ₹{service.offerPrice}
                   </span>
