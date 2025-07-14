@@ -26,9 +26,10 @@ const SelectedCategory = ({ selectedItems }: SelectedCategoryProps) => {
       {selectedItems.map((item) => (
         <div
           key={item.id}
-          className={`relative ${
+          className={`service-card relative ${
             isDarkMode ? "bg-gray-700" : "bg-white"
           }  rounded-2xl h-60 shadow-xl overflow-hidden transition-transform duration-300 hover:scale-[1.02]`}
+
         >
           <Image
             src={item.image}
