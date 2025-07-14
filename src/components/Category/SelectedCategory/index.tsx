@@ -44,7 +44,7 @@ const SelectedCategory = ({ selectedItems }: SelectedCategoryProps) => {
             }    backdrop-blur-md rounded-2xl p-4 pb-2 shadow-md`}
           >
             <div className="flex justify-between items-center">
-              <h3 className=" font-semibold  dark:text-white mb-1">
+              <h3 className="title font-semibold  dark:text-white mb-1">
                 {item.serviceName}
               </h3>
               <span className="text-green-600 text-xs font-medium">
@@ -55,7 +55,7 @@ const SelectedCategory = ({ selectedItems }: SelectedCategoryProps) => {
             <p className="text-xs mb-1">{item.description}</p>
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
-                <span className=" font-semibold">₹{item.afterPrice}</span>
+                <span className="description font-semibold">₹{item.afterPrice}</span>
                 <span className="line-through text-gray-400 text-sm">
                   ₹{item.beforePrice}
                 </span>
