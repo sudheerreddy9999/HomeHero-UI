@@ -55,7 +55,7 @@ const NavBar = () => {
         setComparePercent(20);
       }
     }
-  }, [scrollPercent,isMobile]);
+  }, [scrollPercent, isMobile]);
   return (
     <>
       {openAuth && <Welcome onAuthClose={handlecloseAuth} />}
@@ -66,26 +66,29 @@ const NavBar = () => {
               ? "bg-gray-800"
               : "bg-white"
             : ""
-        } w-full h-16  flex items-center justify-between px-4 sm:px-10 fixed top-0 left-0 z-50`}
+        } w-full h-16  flex items-center justify-between sm:px-10 fixed top-0 left-0 z-50`}
       >
-        <div>
-          <Image
-            src={isMobile ? MobileLogo : Logo}
-            alt="Main-Logo"
-            className={` ${
-              isMobile ? "size-7" : "h-8 w-36"
-            } block dark:hidden cursor-pointer`}
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          />
-          <Image
-            src={isMobile ? mobileDarkThemeLogo : DarkThemeLogo}
-            alt="Main-Logo-Dark"
-            className={` ${
-              isMobile ? "size-7" : " h-32 w-44"
-            } hidden dark:block cursor-pointer`}
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          />
-        </div>
+        {!isMobile && (
+          <div>
+            <Image
+              src={isMobile ? MobileLogo : Logo}
+              alt="Main-Logo"
+              className={` ${
+                isMobile ? "size-7" : "h-8 w-36"
+              } block dark:hidden cursor-pointer`}
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            />
+            <Image
+              src={isMobile ? mobileDarkThemeLogo : DarkThemeLogo}
+              alt="Main-Logo-Dark"
+              className={` ${
+                isMobile ? "size-7" : " h-32 w-44"
+              } hidden dark:block cursor-pointer`}
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            />
+          </div>
+        )}
+
         {!isMobile && (
           <div className="w-[35%] flex items-center justify-center ml-32">
             {(scrollPercent > 59 || !isHome) && (
@@ -96,21 +99,27 @@ const NavBar = () => {
             )}
           </div>
         )}
-        <div className="flex gap-4   text-sm justify-center items-center">
+        <div
+          className={`flex gap-4 ${
+            isMobile && "w-full pr-2"
+          }  text-sm justify-between items-center`}
+        >
           <Location />
-          <ModeToggleSwitch />
-          <button
-            className={` ${
-              isMobile ? " w-16 h-8" : " w-24 h-9 text-xs"
-            } border-[1px] ${
-              isDarkMode
-                ? "bg-gray-800 text-white"
-                : "bg-white border-[#53c9c2]"
-            }  flex justify-center items-center  rounded-4xl px-3 cursor-pointer hover:-translate-y-0.5 dark:text-black  dark:font-[500]  dark:bg-white`}
-            onClick={() => setOpenAuth(!openAuth)}
-          >
-            Login
-          </button>
+          <div className="flex items-center justify-center gap-3">
+            <ModeToggleSwitch />
+            <button
+              className={` ${
+                isMobile ? " w-16 h-8" : " w-24 h-9 text-xs"
+              } border-[1px] ${
+                isDarkMode
+                  ? "bg-gray-800 text-white"
+                  : "bg-white text-gray-800 border-[#53c9c2]"
+              }  flex justify-center items-center  rounded-4xl px-3 cursor-pointer hover:-translate-y-0.5 dark:text-black  dark:font-[500]  dark:bg-white`}
+              onClick={() => setOpenAuth(!openAuth)}
+            >
+              Login
+            </button>
+          </div>
           {/* <button className="w-24 h-9 flex justify-center items-center  bg-primary rounded-4xl px-3 cursor-pointer text-white hover:-translate-y-0.5 border-none">Signup</button> */}
         </div>
       </div>

@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import NavBar from "@/components/Nav/navBar/navBar";
 import useIsMobile from "@/hooks/useIsMobile";
+import MobileNav from "@/components/Nav/MobileNav";
 
 export default function DefaultLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -14,7 +15,9 @@ export default function DefaultLayout({ children }: { children: ReactNode }) {
       {(isHome || !isMobile) && <NavBar />}
 
 
-      <main>{children}</main>
+      <main>{children}
+        {isMobile && <MobileNav />}
+      </main>
     </div>
   );
 }

@@ -63,7 +63,11 @@ const Location = () => {
     <div className="p-4 rounded  text-sm  ">
       {location ? (
         <div
-          className={`flex justify-center   border-[1px] ${isDarkMode ?'bg-gray-800 text-white':'bg-white border-[#53c9c2]'}  items-center space-x-2 ${
+          className={`flex justify-center   border-[1px] ${
+            isDarkMode
+              ? "bg-gray-800 text-white"
+              : "bg-white text-gray-800 border-[#53c9c2]"
+          }  items-center space-x-2 ${
             isMobile ? "p-1.5" : "p-3"
           }  rounded-full dark:bg-white `}
         >

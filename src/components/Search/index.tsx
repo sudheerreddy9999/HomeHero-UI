@@ -1,9 +1,9 @@
 import React from "react";
 import { CiSearch } from "react-icons/ci";
-import { IoArrowBack } from "react-icons/io5";
+// import { IoArrowBack } from "react-icons/io5";
 import useIsMobile from "@/hooks/useIsMobile";
 import { useTheme } from "@/context/ThemeContext";
-import Link from "next/link";
+// import Link from "next/link";
 type seachProps = {
   heading?: string;
   place?: string;
@@ -16,15 +16,26 @@ const Search = ({ heading, seachPlaceholder, place }: seachProps) => {
   return (
     <>
       {isMobile ? (
-        <div className="w-full  flex justify-between items-center relative mb-4">
-          <div className="flex items-center justify-between space-x-3">
+        <div className="w-full relative  flex justify-between  items-center relative mb-4">
+          {/* <div className="flex items-center justify-between space-x-3">
             <Link href="/">
               <IoArrowBack size={30} />
             </Link>
             <h2 className="text-medium font-semibold text-center">{heading}</h2>
-          </div>
+          </div> */}
+                      <input
+              type="text"
+              placeholder={seachPlaceholder}
+              className={`w-full border  ${
+                place === "navbar"
+                  ? "rounded-2xl focus:outline-none  p-2.5 pl-9"
+                  : "rounded-lg  p-2 pl-9"
+              } border-gray-300 ${
+                isDarkMode ? "text-white" : "text-black"
+              }  focus:outline-none focus:ring-1`}
+            />
           <div>
-            <CiSearch className="cursor-pointer" size={25} />
+            <CiSearch className="cursor-pointer absolute right-3 bottom-2" size={25} />
           </div>
         </div>
       ) : (
