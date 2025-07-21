@@ -27,6 +27,7 @@ jobs:
           echo "NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }}" >> .env.production
           echo "NEXT_PUBLIC_GEO_LOCATION=${{ secrets.NEXT_PUBLIC_GEO_LOCATION }}" >> .env.production
           echo "NEXT_PUBLIC_GEONAMES_USERNAME=${{ secrets.NEXT_PUBLIC_GEONAMES_USERNAME }}" >> .env.production
+          echo "NEXT_PUBLIC_BASE_URL_CHAT=${{ secrets.NEXT_PUBLIC_BASE_URL_CHAT }}" >> .env.production
 
       - run: npm run build
 
