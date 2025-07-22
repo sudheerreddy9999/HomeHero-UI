@@ -1,5 +1,6 @@
 import React from "react";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import { useTheme } from "@/context/ThemeContext";
 interface Message {
   id: string;
   text: string;
@@ -8,9 +9,10 @@ interface Message {
 
 const ChatConvo = () => {
   const { messages, loading } = useAppSelector((state) => state.chatBot);
+  const { isDarkMode } = useTheme();
 
   return (
-    <div className="p-4 min-h-[220px] max-h-[300px] overflow-y-auto w-full space-y-4 custom-scrollbar">
+    <div className={`p-4 min-h-[220px] max-h-[300px] overflow-y-auto w-full space-y-4 custom-scrollbar ${isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-700"}`}>
       {messages.map((message: Message) => (
         <div
           key={message.id}
@@ -21,8 +23,8 @@ const ChatConvo = () => {
           <div
             className={`p-3 rounded-md max-w-xs ${
               message.userType === "bot"
-                ? "bg-gray-100 text-gray-700"
-                : "bg-blue-100 text-gray-700"
+                ? `${isDarkMode?'bg-gray-700 text-white':'bg-gray-100 text-gray-700'}  `
+                :`${isDarkMode?'bg-gray-700 text-white':'bg-blue-100 text-gray-700'}  `
             }`}
           >
             <p className="text-[12.5px]">{message.text}</p>

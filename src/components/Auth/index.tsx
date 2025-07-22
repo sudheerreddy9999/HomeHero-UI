@@ -168,7 +168,7 @@ const Welcome = ({ onAuthClose }: AuthProps) => {
     <div className="fixed inset-0 w-full   bg-opacity-90 backdrop-blur-[2px] flex items-center justify-center z-999">
       <div
         className={`shadow-2xl ${
-          isDarkMode ? "bg-gray-800 text-white" : "bg-white"
+          isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-700"
         } w-[95%]  md:w-md p-8  rounded-md flex flex-col justify-center items-center space-y-3`}
       >
         {loader && <Loader message="Signing in with Google" />}
@@ -189,11 +189,12 @@ const Welcome = ({ onAuthClose }: AuthProps) => {
         </div>
         {!otpSentSuccessfully ? (
           <>
-            <GoogleLogin
+          <div className={`${isDarkMode?'bg-gray-800':'bg-white'}`}><GoogleLogin
               theme={isDarkMode ? "filled_black" : undefined}
               onSuccess={handleLoginSuccess}
               onError={handleErrorMessage}
-            />
+            /></div>
+            
             <form
               onSubmit={formik.handleSubmit}
               className="w-full space-y-6 my-3 mb-6"
