@@ -120,7 +120,7 @@ const CartSection = () => {
             ))}
           </ul>
         </div>
-        <div className={`w-full shadow-xl rounded-2xl ${isDarkMode?'bg-gray-800':'bg-white'} p-4 space-y-4`}>
+        <div className={`w-full shadow-xl hidden sm:block rounded-2xl ${isDarkMode?'bg-gray-800':'bg-white'} p-4 space-y-4`}>
           <h2 className="text-lg font-bold">Need Help?</h2>
           <div className="flex items-start gap-2 text-sm">
             <HelpCircle className="text-blue-500 size-4 mt-1" />

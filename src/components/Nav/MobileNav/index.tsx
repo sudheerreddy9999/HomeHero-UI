@@ -6,9 +6,11 @@ import { LuBookCheck } from "react-icons/lu";
 import { IoCartOutline } from "react-icons/io5";
 import { MdManageAccounts } from "react-icons/md";
 import Image from '@/components/Image/image';
+import { useTheme } from '@/context/ThemeContext';
 import HomeLogo from "@/assets/home-hero-icon.png";
 const MobileNav = () => {
   const pathname = usePathname();
+  const { isDarkMode } = useTheme();
 
   const navItems = [
     { href: '/', label: 'Home', icon: <Image src={HomeLogo} alt="Home" className="w-6 h-6" /> },
@@ -18,13 +20,13 @@ const MobileNav = () => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-50 md:hidden flex justify-between items-center px-6 py-2 shadow-md">
+    <div className={`fixed bottom-0 left-0 right-0 ${isDarkMode?'bg-gray-800 text-white':'bg-white text-gray-700 border-t border-gray-200'}  dark:border-gray-700 z-50 md:hidden flex justify-between items-center px-6 py-2 shadow-md`}>
       {navItems.map((item) => (
         <Link
           key={item.href}
           href={item.href}
           className={`flex flex-col items-center text-xs ${
-            pathname === item.href ? 'text-blue-600' : 'text-gray-500'
+            pathname === item.href ? 'text-blue-600' : `${isDarkMode?'text-gray-100':'text-gray-500'}`
           }`}
         >
           {item.icon}

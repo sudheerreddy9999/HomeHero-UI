@@ -56,7 +56,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ selectedItems }) => {
         isDarkMode ? "bg-gray-900" : "bg-white"
       } min-h-screen`}
     >
-      <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 justify-between mt-10">
+      <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 justify-between sm:mt-10">
         <div className="w-full md:w-[67%]">
           <SelectedCategory selectedItems={selectedItems} />
         </div>
@@ -64,7 +64,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ selectedItems }) => {
           <div className="w-full hidden sm:block">
             <CartSection />
           </div>
-          <div className="block sm:hidden">
+          <div className="block sm:hidden ">
             <CartMobileView />
           </div>
         </div>
