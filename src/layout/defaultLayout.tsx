@@ -17,11 +17,7 @@ export default function DefaultLayout({ children }: { children: ReactNode }) {
 
       <main>
         {children}
-        <div className="fixed bottom-4 right-4 p-4 z-50">
-          <ChatBot />
-        </div>
-        {isMobile && <MobileNav />}
-        
+        {isMobile ? isHome && <MobileNav /> : <ChatBot />}
       </main>
     </div>
   );

@@ -56,7 +56,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ selectedItems }) => {
         isDarkMode ? "bg-gray-900" : "bg-white"
       } min-h-screen`}
     >
-      <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 justify-between sm:mt-10">
+      <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 justify-between mt-12 sm:mt-10">
         <div className="w-full md:w-[67%]">
           <SelectedCategory selectedItems={selectedItems} />
         </div>
