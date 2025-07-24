@@ -16,6 +16,7 @@ import isMobile from "@/hooks/useIsMobile";
 import ChatBot from "@/components/ChatBot";
 import MobileNav from "@/components/Nav/MobileNav";
 import MobileNonHome from "@/components/Nav/MobieNonHome";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function AuthorizedLayout({
   children,
@@ -28,6 +29,7 @@ export default function AuthorizedLayout({
   const userDetails = useAppSelector((state) => state.user.userDetails);
   const dispatch = useDispatch<AppDispatch>();
   const isMobileView = isMobile();
+  const { isDarkMode } = useTheme();
 
   const pathName = usePathname();
   const isHome = pathName === "/";
@@ -73,7 +75,7 @@ export default function AuthorizedLayout({
       {isHome && (
         <div
           className={` text-white ${
-            scrollPercent > 59 && "bg-gray-50 shadow-2xl"
+            scrollPercent > 59 && `${isDarkMode?'bg-gray-800 text-gray-100':'bg-gray-50 text-gray-700'} shadow-2xl`
           }  w-full h-16   flex items-center justify-between ${
             isMobileView ? "" : "px-4"
           }  sm:px-10 fixed top-0 left-0 z-50 `}

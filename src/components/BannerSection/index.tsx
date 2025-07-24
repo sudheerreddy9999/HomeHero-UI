@@ -57,7 +57,7 @@ const BannerSection = () => {
                   : " bg-white border border-gray-300 text-gray-700"
               } z-10 relative`}
             />
-            <div className="bg-blue-400 p-2 rounded-full absolute right-1 top-1/2 transform -translate-y-1/2 z-20">
+            <div className="bg-blue-400 p-1.5 sm:p-2 rounded-full absolute right-1 top-1/2 transform -translate-y-1/2 z-20">
               <FiArrowUpRight size={24} className="text-white" />
             </div>
           </div>

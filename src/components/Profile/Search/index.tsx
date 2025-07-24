@@ -1,5 +1,9 @@
 import React from "react";
 import { useTheme } from "@/context/ThemeContext";
+import useIsMobile from "@/hooks/useIsMobile";
+import { IoArrowBack } from "react-icons/io5";
+
+import { FiArrowUpRight } from "react-icons/fi";
 
 interface MobileHomeSearchProps {
   isOpen: boolean;
@@ -11,6 +15,7 @@ const MobileHomeSearch: React.FC<MobileHomeSearchProps> = ({
   onClose,
 }) => {
   const { isDarkMode } = useTheme();
+  const isMobile = useIsMobile();
   return (
     <div
       className={`fixed top-0 right-0 h-full w-full ${isDarkMode?'bg-gray-800 text-gray-100':'bg-white text-gray-700'} shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
@@ -18,15 +23,31 @@ const MobileHomeSearch: React.FC<MobileHomeSearchProps> = ({
       }`}
     >
       <div className="p-4">
-        <div className="flex justify-between items-center">
-          <h2 className="text-lg font-semibold">Search</h2>
-          <button onClick={onClose} className="text-sm ">
-            Close
-          </button>
-        </div>
-        <div className="mt-4">
-          <p className="text-gray-500">Loading...</p>
-        </div>
+           <div className="relative w-full mt-4">
+                      <IoArrowBack
+                        size={24}
+                        onClick={onClose}
+                        className={`absolute left-4 ${
+                          isDarkMode ? "text-white" : "text-gray-700"
+                        }  top-1/2 transform -translate-y-1/2  z-20`}
+                      />
+                      <input
+                        type="text"
+                        placeholder={
+                          isMobile
+                            ? "How Can We Help You Today?"
+                            : 'Search for Services, "AC Repair", "Plumber", "Electrician" etc...'
+                        }
+                        className={`w-full  border-2 text-sm sm:text-[15px] pl-12 pr-4 py-3 mt-0 rounded-xl  ${
+                          isDarkMode
+                            ? "bg-gray-800 text-white"
+                            : " bg-white border border-gray-300 text-gray-700"
+                        } z-10 relative`}
+                      />
+                      <div className=" p-1.5 sm:p-2 rounded-full absolute right-1 top-1/2 transform -translate-y-1/2 z-20">
+                        <FiArrowUpRight size={24} className="text-white" />
+                      </div>
+                    </div>
       </div>
     </div>
   );
