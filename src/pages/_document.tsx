@@ -5,7 +5,7 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <meta name="fast2sms" content="i17pYICdCf96udk85RG6ty0idh8J2DQR" />
+          <meta name="fast2sms" content="wDNbaUgNQVdYKK4oo4AijNmt98Yz15v7" />
         </Head>
         <body>
           <Main />
