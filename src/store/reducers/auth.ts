@@ -6,7 +6,8 @@ const initialState ={
     otpSentSuccessfully :false,
     loginSuccess:false,
     invalidOtp:false,
-    resendotp:false
+    resendotp:false,
+    errorMessage:""
 }
 
 export const authSlice = createSlice({
@@ -22,7 +23,9 @@ export const authSlice = createSlice({
             state.resendotp = action.payload.resend;
         },
         getInvalidOtp:(state,action)=>{
+            console.log("Invalid OTP action payload:", action.payload);
             state.invalidOtp = action.payload.status;
+            state.errorMessage = action.payload.message || "Invalid OTP";
         }
     }
 })

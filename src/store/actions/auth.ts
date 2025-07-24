@@ -52,7 +52,7 @@ export const verifyOtpAction =
     try {
       const response = await get(apiEndpoints.VERIFY_OTP, payload);
       if (response && response.status === 400) {
-        dispatch(getInvalidOtp({ status: true }));
+        dispatch(getInvalidOtp({ status: true,message: response.data.message }));
       }
       if (response && response.status === 200) {
         Cookies.set("token", response.data.data.token, {
@@ -66,7 +66,7 @@ export const verifyOtpAction =
       if (error instanceof Error) { 
         console.error(error.message);
         dispatch(getInvalidOtp({ status: true }));
-         dispatch(getOtpSendSuccessfully({ status: false }));
+         dispatch(getOtpSendSuccessfully({ status: false,message: error.message }));
       } else {
         console.error("Unexpected error", error);
       }
