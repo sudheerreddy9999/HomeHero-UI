@@ -10,7 +10,7 @@ const MobileNonHome = () => {
   const router = useRouter();
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const isDarkMode = useTheme();
+  const { isDarkMode } = useTheme();
 
   const handleBack = () => {
     router.back();
@@ -18,14 +18,16 @@ const MobileNonHome = () => {
 
   return (
     <div>
-      <div className={`fixed top-0 left-0 w-full z-50 ${isDarkMode?'bg-gray-800 text-gray-100':'bg-white text-gray-700'}  shadow flex items-center justify-between px-4 py-3`}>
+      <div
+        className={`fixed top-0 left-0 w-full z-50 ${
+          isDarkMode ? "bg-gray-800 text-gray-100" : " bg-white text-gray-700"
+        }  shadow flex items-center justify-between px-4 py-3`}
+      >
         <div className="flex items-center space-x-4">
-          <button className="text-gray-800" onClick={handleBack}>
+          <button onClick={handleBack}>
             <IoArrowBack size={24} />
           </button>
-          <h1 className="text-lg font-semibold text-gray-900">
-            Selected AC Services
-          </h1>
+          <h1 className="text-lg font-semibold">Selected AC Services</h1>
         </div>
         <div className="flex items-center space-x-4">
           <button
@@ -35,7 +37,10 @@ const MobileNonHome = () => {
               setIsSideBarOpen(false);
             }}
           >
-            <IoSearchOutline size={24} />
+            <IoSearchOutline
+              size={24}
+              className={`${isDarkMode ? "text-gray-100" : "text-gray-700"}`}
+            />
           </button>
           <button
             onClick={() => {
@@ -43,7 +48,10 @@ const MobileNonHome = () => {
               setIsSearchOpen(false);
             }}
           >
-            <RxHamburgerMenu size={24} className="text-gray-700" />
+            <RxHamburgerMenu
+              size={24}
+              className={`${isDarkMode ? "text-gray-100" : "text-gray-700"}`}
+            />
           </button>
         </div>
       </div>

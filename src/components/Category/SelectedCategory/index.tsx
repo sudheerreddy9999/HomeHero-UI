@@ -22,7 +22,7 @@ const SelectedCategory = ({ selectedItems }: SelectedCategoryProps) => {
     }
   };
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4  h-[80vh] sm:h-[72vh] overflow-scroll no-scrollbar">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4  h-[82vh] sm:h-[72vh] overflow-scroll no-scrollbar">
       {selectedItems.map((item) => (
         <div
           key={item.id}
