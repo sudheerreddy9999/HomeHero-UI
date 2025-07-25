@@ -70,7 +70,7 @@ const ModeToggleSwitch = () => {
           onClick={() => setOpenModal(!openModal)}
           alt="Image"
           src={currentMode === "Dark" ? ThemeDark : ThemeLight}
-          className="size-6 cursor-pointer text-white hover:-translate-y-0.5 transition-transform lg:mt-1.5"
+          className="size-6 cursor-pointer text-white hover:-translate-y-0.5 transition-transform "
         />
         <div className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-gray-200 text-black text-xs px-2 py-1.5 rounded shadow-md ">
           Theme

@@ -56,7 +56,7 @@ const LocationSearch = ({ onSelectLocation, onclose }: LocationSearchProps) => {
 
   return (
     <div className="fixed inset-0    bg-opacity-90 backdrop-blur-[2px] w-full bg-opacity-90 flex items-center justify-center z-999">
-      <div className={`flex flex-col ${isDarkMode?'bg-gray-800 text-white':'bg-white text-gray-800'} w-[95%] sm:w-[34%] overflow-scroll h-6/12 rounded-md shadow-2xl  items-center`}>
+      <div className={`custom-scrollbar flex flex-col ${isDarkMode?'bg-gray-800 text-white':'bg-white text-gray-800'} w-[95%] sm:w-[34%] overflow-scroll h-6/12 rounded-md shadow-2xl  items-center`}>
         <div className="flex justify-end w-full p-3">
           {/* <Image
             src={CloseIcon}
@@ -94,7 +94,7 @@ const LocationSearch = ({ onSelectLocation, onclose }: LocationSearchProps) => {
             </div>
           )}
 
-          <ul className="mt-2 h-[130px] overflow-y-auto">
+          <ul className="custom-scrollbar mt-2 h-[130px] overflow-y-auto">
             {loading ? (
               <li className=" text-sm">Searching...</li>
             ) : searchPerformed && results.length === 0 ? (

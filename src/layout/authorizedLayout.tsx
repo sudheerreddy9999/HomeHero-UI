@@ -13,9 +13,13 @@ import { handleUserLogout } from "@/store/actions/user";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import Location from "@/components/Nav/location";
 import isMobile from "@/hooks/useIsMobile";
+import { LuNotebookText } from "react-icons/lu";
+import ProfileDarkTheme from "@/assets/profile-darkMode.png";
+import { BsCart4 } from "react-icons/bs";
 import ChatBot from "@/components/ChatBot";
+import Link from "next/link";
 import MobileNav from "@/components/Nav/MobileNav";
-import MobileNonHome from "@/components/Nav/MobieNonHome";
+// import MobileNonHome from "@/components/Nav/MobieNonHome";
 import { useTheme } from "@/context/ThemeContext";
 
 export default function AuthorizedLayout({
@@ -71,11 +75,16 @@ export default function AuthorizedLayout({
 
   return (
     <>
-      {isMobileView && !isHome && <MobileNonHome />}
+      {/* {isMobileView && !isHome && <MobileNonHome />} */}
       {isHome && (
         <div
           className={` text-white ${
-            scrollPercent > 59 && `${isDarkMode?'bg-gray-800 text-gray-100':'bg-gray-50 text-gray-700'} shadow-2xl`
+            scrollPercent > 59 &&
+            `${
+              isDarkMode
+                ? "bg-gray-800 text-gray-100"
+                : "bg-gray-50 text-gray-700"
+            } shadow-2xl`
           }  w-full h-16   flex items-center justify-between ${
             isMobileView ? "" : "px-4"
           }  sm:px-10 fixed top-0 left-0 z-50 `}
@@ -113,27 +122,74 @@ export default function AuthorizedLayout({
             <div className="">
               <Location />
             </div>
-            <div className="flex items-center space-x-2 gap-3">
+            <div className="flex items-center space-x-4 gap-3">
               <div className="mt-2">
                 <ModeToggleSwitch />
               </div>
+              {!isMobileView && (
+                <>
+                  <div className="relative group inline-block">
+                    <Link href="/bookings">
+                      <LuNotebookText
+                        size={22}
+                        className={`${
+                          isMobileView ? "text-gray-900" : "text-gray-800"
+                        } cursor-pointer`}
+                      />
+                    </Link>
+
+                    <div className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-gray-200 text-black text-xs px-2 py-1.5 rounded shadow-md ">
+                      Bookings
+                    </div>
+                  </div>
+                  <div className="relative group inline-block">
+                    <Link href="/cart">
+                      <BsCart4
+                        size={22}
+                        className={`${
+                          isMobileView ? "text-gray-900" : "text-gray-800"
+                        } cursor-pointer`}
+                      />
+                    </Link>
+                    <div className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-gray-200 text-black text-xs px-2 py-1.5 rounded shadow-md ">
+                      Cart
+                    </div>
+                  </div>
+                </>
+              )}
+
               <div
-                className="text-gray-700  relative inline-block"
+                className="text-gray-900  relative inline-block"
                 ref={dropdownRef}
               >
-                <FaRegCircleUser
-                  className="size-6 dark:text-blue-400 cursor-pointer"
-                  onClick={() => setOpen(!open)}
-                />
+                {isDarkMode ? (
+                  <Image
+                    src={ProfileDarkTheme}
+                    alt="Profile Dark Mode"
+                    onClick={() => setOpen(!open)}
+                    className={`size-6 ${
+                      isMobileView ? "text-gray-900" : "text-gray-800"
+                    } dark:text-blue-500 cursor-pointer `}
+                  />
+                ) : (
+                  <FaRegCircleUser
+                    className={`size-6 ${
+                      isMobileView ? "text-gray-900" : "text-gray-800"
+                    } dark:text-blue-500 cursor-pointer`}
+                    onClick={() => setOpen(!open)}
+                  />
+                )}
+
                 {open && (
-                  <div className="absolute w-28  left-1/12 border-b-1  mt-2 -translate-x-1/2 bg-gray-100 p-2 rounded-[10px] ">
+                  <div className={`absolute w-36 -right-20 sm:-right-24   mt-2 -translate-x-1/2 ${isDarkMode?'bg-gray-900 text-gray-100':'bg-white text-gray-700'} bg-gray-100 p-3 rounded-[10px] `}>
                     <p className="border-b-1 py-2">
                       {" "}
                       {userDetails?.first_name || userDetails?.email}{" "}
                       {userDetails?.last_name}
                     </p>
+                    <p className="border-b-1 py-2 cursor-pointer">Profile</p>
                     <p
-                      className="py-1 cursor-pointer"
+                      className="py-2 cursor-pointer"
                       onClick={() => handleLogoutClick()}
                     >
                       Logout

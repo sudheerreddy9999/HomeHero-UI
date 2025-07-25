@@ -5,15 +5,20 @@ import { IoSearchOutline, IoArrowBack } from "react-icons/io5";
 import MobileSideBar from "@/components/Profile/SideBar";
 import MobileHomeSearch from "@/components/Profile/Search";
 import { useTheme } from "@/context/ThemeContext";
+interface MobileNonHomeProps {
+  route: string;
+  message: string;
+  placeholder?: string;
+}
 
-const MobileNonHome = () => {
+const MobileNonHome = ({ route, message }: MobileNonHomeProps) => {
   const router = useRouter();
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { isDarkMode } = useTheme();
 
   const handleBack = () => {
-    router.back();
+    router.push(route);
   };
 
   return (
@@ -27,7 +32,7 @@ const MobileNonHome = () => {
           <button onClick={handleBack}>
             <IoArrowBack size={24} />
           </button>
-          <h1 className="text-lg font-semibold">Selected AC Services</h1>
+          <h1 className="text-lg font-semibold">{message}</h1>
         </div>
         <div className="flex items-center space-x-4">
           <button

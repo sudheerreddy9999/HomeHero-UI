@@ -32,7 +32,7 @@ const CartMobileView = () => {
           } bg-black/50 z-40 flex items-end sm:items-center justify-center`}
         >
           <div
-            className={`${
+            className={`custom-scrollbar ${
               isDarkMode ? "bg-gray-800" : "bg-white"
             }  w-full sm:w-[400px] rounded-t-2xl sm:rounded-2xl p-6 shadow-lg relative max-h-[90vh] overflow-y-auto`}
           >

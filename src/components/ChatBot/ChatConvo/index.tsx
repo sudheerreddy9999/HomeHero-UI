@@ -12,7 +12,7 @@ const ChatConvo = () => {
   const { isDarkMode } = useTheme();
 
   return (
-    <div className={`p-4 min-h-[220px] max-h-[300px] overflow-y-auto w-full space-y-4 custom-scrollbar ${isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-700"}`}>
+    <div className={` custom-scrollbar p-4 min-h-[240px] max-h-[300px] overflow-y-auto w-full space-y-4 custom-scrollbar ${isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-700"}`}>
       {messages.map((message: Message) => (
         <div
           key={message.id}

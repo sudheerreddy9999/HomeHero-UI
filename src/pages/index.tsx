@@ -5,15 +5,20 @@ import MobileServices from "@/components/services/MobileServices";
 import Services from "@/components/services";
 import useIsMobile from "@/hooks/useIsMobile";
 import MostBookedServices from "@/components/MostBookedServices";
+// import ComboPackages from "@/components/MainSection/ComboSection";
 import Footer from "@/components/footer";
 import { useTheme } from "@/context/ThemeContext";
-
+// import OffersSection from "@/components/MainSection/OfferSection";
 
 export default function Home() {
   const isMobile = useIsMobile();
   const { isDarkMode } = useTheme();
   return (
-    <div className={`${isDarkMode?'bg-gray-900 text-white':'bg-white text-gray-800'}  min-h-screen`}>
+    <div
+      className={`${
+        isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-800"
+      }  min-h-screen`}
+    >
       <div className="relative">
         <div>
           <BannerSection />
@@ -23,17 +28,22 @@ export default function Home() {
             <MobileServices />
           </div>
         ) : (
-          <div className=" flex justify-center items-center  absolute -bottom-56 left-0 w-full overflow-scroll h-full">
+          <div className="custom-scrollbar flex justify-center items-center  absolute -bottom-56 left-0 w-full overflow-scroll h-full">
             <Services />
           </div>
         )}
       </div>
-      <div>
-    </div>
+      <div></div>
       {/* <IntroSection /> */}
       <div className="mt-6 xs:mt-24 md:mt-24 flex items-start">
-        <MostBookedServices/>
+        <MostBookedServices />
       </div>
+      {/* <div>
+        <OffersSection />
+      </div>
+      <div>
+        <ComboPackages />
+      </div> */}
       <Footer />
     </div>
   );

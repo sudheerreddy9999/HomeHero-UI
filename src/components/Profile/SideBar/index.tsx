@@ -5,6 +5,7 @@ import { IoClose } from "react-icons/io5";
 import { useTheme } from "@/context/ThemeContext";
 import useIsMobile from "@/hooks/useIsMobile";
 import Welcome from "@/components/Auth";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 interface MobileSideBarProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({ isOpen, onClose }) => {
   const { isDarkMode } = useTheme();
   const isMobile = useIsMobile();
   const [openAuth, setOpenAuth] = React.useState(false);
+  const userDetails = useAppSelector((state) => state.user.userDetails);
   const handleOpenAuth = () => {
     console.log("Open Auth Modal");
     setOpenAuth(!openAuth);
@@ -46,7 +48,8 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({ isOpen, onClose }) => {
                 <IoClose size={28} />
               </button>
             </div>
-            <div
+            { !userDetails && (
+               <div
               className={`${
                 isDarkMode ? "bg-gray-800" : "bg-gray-50"
               }   p-3 flex flex-col space-y-3 items-center rounded-lg mb-4`}
@@ -67,6 +70,8 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({ isOpen, onClose }) => {
                 Login/Signup
               </button>
             </div>
+            )}
+           
 
             <nav className="flex flex-col gap-3">
               {["Orders", "Cart", "Settings", "ChatBot", "Help", "Logout"].map(
@@ -80,7 +85,7 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({ isOpen, onClose }) => {
                       {item}
                     </button>
 
-                    {index !== 4 && (
+                    {index !== 5 && (
                       <div className="w-full h-[1px] bg-gray-300 dark:bg-gray-700" />
                     )}
                   </div>

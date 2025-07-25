@@ -30,7 +30,7 @@ const ChatBody = () => {
     <div
       className={`absolute bottom-20 sm:bottom-12 right-2 sm:right-0 ${
         isDarkMode ? "bg-gray-800" : "bg-white "
-      } shadow-xl rounded-lg w-[375px]  sm:w-[400px]`}
+      } shadow-xl rounded-lg w-[375px]  sm:w-[415px]`}
     >
       <div
         className={`${

@@ -109,7 +109,7 @@ const MostBookedServices = () => {
       )}
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto scroll-smooth no-scrollbar "
+        className=" custom-scrollbar flex gap-4 overflow-x-auto scroll-smooth no-scrollbar "
         style={{
           scrollSnapType: "x mandatory",
         }}

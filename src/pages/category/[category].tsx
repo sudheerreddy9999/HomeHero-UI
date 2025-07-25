@@ -6,6 +6,7 @@ import CartMobileView from "@/components/Category/CartMobile.tsx";
 import { useTheme } from "@/context/ThemeContext";
 import { acServices } from "@/Jsons/acServives";
 import { ServiceItem } from "@/types/serviceTypes";
+import MobileNonHome from "@/components/Nav/MobieNonHome";
 
 const validCategories = ["acservice"];
 interface CategoryPageProps {
@@ -51,25 +52,28 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ selectedItems }) => {
   const { isDarkMode } = useTheme();
 
   return (
-    <div
-      className={`sm:pt-14 sm:py-6 p-3 sm:px-10 ${
-        isDarkMode ? "bg-gray-900" : "bg-white"
-      } min-h-screen`}
-    >
-      <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 justify-between mt-12 sm:mt-10">
-        <div className="w-full md:w-[67%]">
-          <SelectedCategory selectedItems={selectedItems} />
-        </div>
-        <div className="w-full md:w-[30%]">
-          <div className="w-full hidden sm:block">
-            <CartSection />
+    <>
+      <MobileNonHome  message="Selected AC Services"route="/"  />
+      <div
+        className={`sm:pt-14 sm:py-6 p-3 sm:px-10 ${
+          isDarkMode ? "bg-gray-900" : "bg-white"
+        } min-h-screen`}
+      >
+        <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 justify-between mt-12 sm:mt-10">
+          <div className="w-full md:w-[67%]">
+            <SelectedCategory selectedItems={selectedItems} />
           </div>
-          <div className="block sm:hidden ">
-            <CartMobileView />
+          <div className="w-full md:w-[30%]">
+            <div className="w-full hidden sm:block">
+              <CartSection />
+            </div>
+            <div className="block sm:hidden ">
+              <CartMobileView />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

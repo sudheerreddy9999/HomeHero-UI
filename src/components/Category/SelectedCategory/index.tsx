@@ -26,7 +26,7 @@ const SelectedCategory = ({ selectedItems }: SelectedCategoryProps) => {
       {selectedItems.map((item) => (
         <div
           key={item.id}
-          className={`service-card relative ${
+          className={` custom-scrollbar service-card relative ${
             isDarkMode ? "bg-gray-700" : "bg-white"
           }  rounded-2xl h-60 shadow-xl overflow-hidden transition-transform duration-300 hover:scale-[1.02]`}
 

@@ -22,8 +22,8 @@ const MobileHomeSearch: React.FC<MobileHomeSearchProps> = ({
         isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
-      <div className="p-4">
-           <div className="relative w-full mt-4">
+      <div className="p-4 px-2">
+           <div className="relative w-full">
                       <IoArrowBack
                         size={24}
                         onClick={onClose}
@@ -45,7 +45,7 @@ const MobileHomeSearch: React.FC<MobileHomeSearchProps> = ({
                         } z-10 relative`}
                       />
                       <div className=" p-1.5 sm:p-2 rounded-full absolute right-1 top-1/2 transform -translate-y-1/2 z-20">
-                        <FiArrowUpRight size={24} className="text-white" />
+                        <FiArrowUpRight size={24}  />
                       </div>
                     </div>
       </div>
