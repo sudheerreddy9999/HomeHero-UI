@@ -1,8 +1,9 @@
 export const apiEndpoints ={
     LOGIN : '/user/login',
-    SEND_OTP:"user/registerOtp",
-    VERIFY_OTP:"user/verifyOtp",
-    GOOGLE_LOGIN:"user/google/login",
-    USER_DETAILS:"user/details",
+    SEND_OTP:"/user/generate/login/otp",
+    GOOGLE_LOGIN:"/user/google/login",
+    USER_DETAILS:"/user/details",
+    GET_SERVICES:'/services',
+    SEARCH_SERVICES:'/services/search',
     CHAT_CHAT:"chat/chat",
 }

@@ -50,7 +50,7 @@ export const sendEmailOtp =
 export const verifyOtpAction =
   (payload: VerifyOtpPayload) => async (dispatch: AppDispatch) => {
     try {
-      const response = await get(apiEndpoints.VERIFY_OTP, payload);
+      const response = await get(apiEndpoints.LOGIN, payload);
       if (response && response.status === 400) {
         dispatch(getInvalidOtp({ status: true,message: response.data.message }));
       }
