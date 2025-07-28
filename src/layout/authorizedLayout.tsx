@@ -79,7 +79,7 @@ export default function AuthorizedLayout({
       {isHome && (
         <div
           className={` text-white ${
-            scrollPercent > 59 &&
+            scrollPercent > 25 &&
             `${
               isDarkMode
                 ? "bg-gray-800 text-gray-100"
@@ -104,8 +104,8 @@ export default function AuthorizedLayout({
                   className=" block sm:hidden size-7"
                 />
               </div>
-              <div className="w-[35%] flex items-center justify-center">
-                {(scrollPercent > 59 || !isHome) && (
+              <div className="w-[35%] ml-24 flex items-center justify-center">
+                {(scrollPercent > 25 || !isHome) && (
                   <Search
                     seachPlaceholder="Search for services, products, etc."
                     place="navbar"
@@ -181,7 +181,13 @@ export default function AuthorizedLayout({
                 )}
 
                 {open && (
-                  <div className={`absolute w-36 -right-20 sm:-right-24   mt-2 -translate-x-1/2 ${isDarkMode?'bg-gray-900 text-gray-100':'bg-white text-gray-700'} bg-gray-100 p-3 rounded-[10px] `}>
+                  <div
+                    className={`absolute w-36 -right-20 sm:-right-24   mt-2 -translate-x-1/2 ${
+                      isDarkMode
+                        ? "bg-gray-900 text-gray-100"
+                        : "bg-white text-gray-700"
+                    } bg-gray-100 p-3 rounded-[10px] `}
+                  >
                     <p className="border-b-1 py-2">
                       {" "}
                       {userDetails?.first_name || userDetails?.email}{" "}

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { CiSearch } from "react-icons/ci";
 // import { IoArrowBack } from "react-icons/io5";
 import useIsMobile from "@/hooks/useIsMobile";
@@ -7,16 +7,33 @@ import { useTheme } from "@/context/ThemeContext";
 type seachProps = {
   heading?: string;
   place?: string;
-  seachPlaceholder: string;
+  seachPlaceholder?: string;
 };
+ const placeholders = [
+    "Search for ac repair",
+    "Search for pipe repair",
+    "Search for carpet cleaning",
+    "Search for  electrician",
+    "Search for plumber",
+  ];
 
 const Search = ({ heading, seachPlaceholder, place }: seachProps) => {
   const isMobile = useIsMobile();
+  placeholders.push(seachPlaceholder || "Search for services");
   const { isDarkMode } = useTheme();
+    const [placeholderIndex, setPlaceholderIndex] = useState(0);
+    useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex((prevIndex) => (prevIndex + 1) % placeholders.length);
+    }, 2000); 
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, []);
+
   return (
     <>
       {isMobile ? (
-        <div className="w-full relative  flex justify-between  items-center relative mb-4">
+        <div className="w-full relative  flex justify-between  items-center  mb-4">
           {/* <div className="flex items-center justify-between space-x-3">
             <Link href="/">
               <IoArrowBack size={30} />
@@ -25,7 +42,7 @@ const Search = ({ heading, seachPlaceholder, place }: seachProps) => {
           </div> */}
                       <input
               type="text"
-              placeholder={seachPlaceholder}
+              placeholder={placeholders[placeholderIndex]}
               className={`w-full border  ${
                 place === "navbar"
                   ? "rounded-2xl focus:outline-none  p-2.5 pl-9"
@@ -54,7 +71,7 @@ const Search = ({ heading, seachPlaceholder, place }: seachProps) => {
             />
             <input
               type="text"
-              placeholder={seachPlaceholder}
+              placeholder={placeholders[placeholderIndex]}
               className={`w-full border  ${
                 place === "navbar"
                   ? "rounded-2xl focus:outline-none  p-2.5 pl-9"

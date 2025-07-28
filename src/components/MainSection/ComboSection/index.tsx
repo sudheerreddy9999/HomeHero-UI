@@ -1,4 +1,10 @@
 import React from "react";
+import Image from "@/components/Image/image";
+import AcCarpet from "@/assets/combo-services/ac-carpet.webp";
+import pestControl from "@/assets/combo-services/pest-watertank.jpeg";
+import sofaCarpet from "@/assets/combo-services/sofa-carpet.webp";
+import { useTheme } from "@/context/ThemeContext";
+import useIsMobile from "@/hooks/useIsMobile";
 
 const comboData = [
   {
@@ -8,9 +14,9 @@ const comboData = [
     description:
       "Thorough home cleaning with surface sanitization and AC cooling optimization for summer comfort.",
     validTill: "July 31",
+    offerPercentage: 25,
     notes: "Only for residential homes.",
-    image:
-      "https://media.istockphoto.com/id/814423752/photo/eye-of-model-with-colorful-art-make-up-close-up.jpg?s=612x612&w=0&k=20&c=l15OdMWjgCKycMMShP8UK94ELVlEGvt7GmB_esHWPYE=",
+    image: AcCarpet,
   },
   {
     title: "Pest Control + Water Tank",
@@ -19,9 +25,9 @@ const comboData = [
     description:
       "Get rid of pests with odorless treatment and ensure clean, healthy water with tank disinfection.",
     validTill: "Aug 15",
+    offerPercentage: 18,
     notes: "Valid for 2/3BHK homes only.",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpu6I5I7ThZqqnZ9TLcF9UxIglJc_z_leEYzdW9VrD7nD8nWPcgA6Ym63g2FJt9p4gGcA&usqp=CAU",
+    image: pestControl,
   },
   {
     title: "Sofa Cleaning + Carpet Shampoo",
@@ -30,8 +36,9 @@ const comboData = [
     description:
       "Deep vacuuming and stain removal to refresh your sofa and carpet with eco-friendly solutions.",
     validTill: "July 30",
+    offerPercentage: 36,
     notes: "Includes 5-seater & 1 carpet.",
-    image: "https://tinypng.com/images/social/website.jpg",
+    image: sofaCarpet,
   },
   {
     title: "Home Cleaning + AC Repair",
@@ -40,68 +47,132 @@ const comboData = [
     description:
       "Thorough home cleaning with surface sanitization and AC cooling optimization for summer comfort.",
     validTill: "July 31",
+    offerPercentage: 25,
     notes: "Only for residential homes.",
-    image:
-      "https://media.istockphoto.com/id/814423752/photo/eye-of-model-with-colorful-art-make-up-close-up.jpg?s=612x612&w=0&k=20&c=l15OdMWjgCKycMMShP8UK94ELVlEGvt7GmB_esHWPYE=",
+    image: AcCarpet,
   },
 ];
 
 const ComboPackages = () => {
+  const { isDarkMode } = useTheme();
+  const isMobile = useIsMobile();
   return (
-    <section className="w-full px-6 py-10">
-      <div className="mx-auto">
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">
+    <section
+      className={`w-full ${isMobile ? "px-3 py-5 " : "px-6 py-10 "} ${
+        isDarkMode ? " text-gray-200" : " text-gray-700"
+      }`}
+    >
+      <div className=" w-full">
+        <h2 className="text-xl sm:text-2xl font-semibold mb-4">
           Combo Packages
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div
+          className={`${
+            isMobile
+              ? " flex w-full overflow-x-scroll custom-scrollbar"
+              : "grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          }  gap-6`}
+        >
           {comboData.map((combo, index) => {
-            const saved =
-              parseInt(combo.originalPrice.replace("₹", "")) -
-              parseInt(combo.price.replace("₹", ""));
+            // const saved =
+            //   parseInt(combo.originalPrice.replace("₹", "")) -
+            //   parseInt(combo.price.replace("₹", ""));
 
             return (
               <div
                 key={index}
-                className="bg-white rounded-2xl shadow-md p-5 pt-10 flex flex-col border border-gray-100 h-full"
+                className={`  relative ${
+                  isDarkMode ? "bg-gray-800" : "bg-white border border-gray-100"
+                }  rounded-2xl shadow-md  flex flex-col  h-full ${
+                  isMobile
+                    ? "p-2 pt-8 shrink-0  w-[210px] min-h-[220px]"
+                    : "p-5 pt-10"
+                }`}
               >
-                <img
+                <Image
                   src={combo.image}
                   alt={combo.title}
-                  className="w-10/12 h-32 object-cover rounded-t-[30px] rounded-b-[70px] border-2 border-gray-200 mx-auto mt-[-16px]"
+                  className={`${
+                    isMobile ? "h-24" : "w-10/12 h-40"
+                  }  object-fit rounded-t-[30px] rounded-b-[70px] ${
+                    isDarkMode
+                      ? "border-2 border-gray-600"
+                      : "border-2 border-gray-200"
+                  }  mx-auto mt-[-16px]`}
                 />
+                <div
+                  className={`absolute ${
+                    isMobile
+                      ? "w-7 h-[80px] -top-6 right-7 pt-1 -rotate-90 flex flex-col "
+                      : "w-10 h-[75px] top-0 right-4 text-sm flex flex-col"
+                  }  bg-green-600  font-semibold text-gray-100 text-center items-center   z-10`}
+                >
+                  <span
+                    className={` py-2 ${isMobile && "rotate-90 text-xs"}  `}
+                  >
+                    {combo.offerPercentage}%
+                  </span>
+                  <span className={`${isMobile && "rotate-90 text-xs"}`}>
+                    OFF
+                  </span>
+                  <div
+                    className={`absolute  bottom-0 -left-0  h-full
+                      ${
+                        isMobile
+                          ? "border-l-[16px] border-l-transparent border-r-[10px] border-r-transparent  border-b-[16px]"
+                          : " border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent  border-b-[20px]  "
+                      } ${
+                      isDarkMode ? "border-b-gray-800" : "border-b-white"
+                    }  bg-transparent`}
+                  />
+                </div>
 
-                {/* Make this section grow to fill remaining height */}
-                <div className="flex flex-col justify-between text-sm text-gray-700 flex-1 mt-4">
+                <div className="flex flex-col justify-between text-sm  flex-1 mt-4">
                   <div>
-                    <h3 className="text-base font-semibold text-gray-800">
+                    <h3
+                      className={`${
+                        isMobile ? "text-xs" : "text-base font-semibold"
+                      } `}
+                    >
                       {combo.title}
                     </h3>
-                    <p className="text-gray-600 text-xs mt-1">
-                      {combo.description}
-                    </p>
-
-                    <div className="mt-2 flex flex-col gap-1 text-xs">
-                      <span className="text-green-600 font-medium">
+                    {!isMobile && (
+                      <p
+                        className={`text-[12.5px] mt-1 ${
+                          isDarkMode ? "text-gray-400" : "text-gray-700"
+                        } `}
+                      >
+                        {combo.description}
+                      </p>
+                    )}
+                    {isMobile && (
+                      <div className="mt-2 flex flex-col gap-1 text-xs">
+                        {/* <span className="text-green-600 font-lg">
                         Save ₹{saved}
                       </span>
                       <span className="text-red-500 font-medium">
                         Valid till {combo.validTill}
-                      </span>
-                      <span className="text-gray-400 italic">
-                        Note: {combo.notes}
-                      </span>
-                    </div>
+                      </span> */}
+                        <span className="text-gray-400 italic">
+                          Note: {combo.notes}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Push this section to bottom */}
                   <div className="mt-4 flex items-center justify-between">
-                    <div className="text-indigo-600 font-bold text-base">
+                    <div className="text-sm sm:font-bold sm:text-base">
                       {combo.price}
-                      <span className="text-gray-400 line-through text-sm ml-2">
+                      <span className="text-gray-400 line-through text-xs sm:text-sm ml-1 sm:ml-2">
                         {combo.originalPrice}
                       </span>
                     </div>
-                    <button className="bg-[#53c9c2] text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">
+                    <button
+                      className={`bg-[#53c9c2] text-white ${
+                        isMobile ? "py-2 px-2 text-xs" : "py-2 px-4"
+                      }  rounded-lg cursor-pointer hover:-translate-y-1 transition-colors`}
+                    >
                       Book Now
                     </button>
                   </div>

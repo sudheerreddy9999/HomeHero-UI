@@ -5,10 +5,10 @@ import MobileServices from "@/components/services/MobileServices";
 import Services from "@/components/services";
 import useIsMobile from "@/hooks/useIsMobile";
 import MostBookedServices from "@/components/MostBookedServices";
-// import ComboPackages from "@/components/MainSection/ComboSection";
+import ComboPackages from "@/components/MainSection/ComboSection";
 import Footer from "@/components/footer";
 import { useTheme } from "@/context/ThemeContext";
-// import OffersSection from "@/components/MainSection/OfferSection";
+import OffersSection from "@/components/MainSection/OfferSection";
 
 export default function Home() {
   const isMobile = useIsMobile();
@@ -38,12 +38,12 @@ export default function Home() {
       <div className="mt-6 xs:mt-24 md:mt-24 flex items-start">
         <MostBookedServices />
       </div>
-      {/* <div>
+      <div>
         <OffersSection />
       </div>
-      <div>
+      <div className="w-full">
         <ComboPackages />
-      </div> */}
+      </div>
       <Footer />
     </div>
   );

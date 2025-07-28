@@ -19,7 +19,7 @@ const NavBar = () => {
   // const router = useRouter();
   const [openAuth, setOpenAuth] = useState(false);
   const [scrollPercent, setScrollPercent] = useState(0);
-  const [comparePercent, setComparePercent] = useState(59);
+  const [comparePercent, setComparePercent] = useState(25);
   // const isDarkMode = useDarkMode();
   // const [isMobile, setIsMobile] = useState(false);
   const { isDarkMode } = useTheme();
@@ -49,8 +49,8 @@ const NavBar = () => {
   }, []);
   useEffect(() => {
     if (isMobile) {
-      if (scrollPercent > 59) {
-        setComparePercent(59);
+      if (scrollPercent > 25) {
+        setComparePercent(25);
       } else {
         setComparePercent(20);
       }
@@ -91,7 +91,7 @@ const NavBar = () => {
 
         {!isMobile && (
           <div className="w-[35%] flex items-center justify-center ml-32">
-            {(scrollPercent > 59 || !isHome) && (
+            {(scrollPercent > 25 || !isHome) && (
               <Search
                 seachPlaceholder="Search for services, products, etc."
                 place="navbar"

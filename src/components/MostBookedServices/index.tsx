@@ -83,10 +83,10 @@ const MostBookedServices = () => {
   return (
     <div
       className={`relative w-full px-4 py-6 ${
-        isDarkMode ? " text-white" : " text-gray-800"
+        isDarkMode ? " text-white" : " text-gray-700"
       }`}
     >
-      <h2 className="text-2xl font-semibold mb-4 ">Most Booked Services</h2>
+      <h2 className="text-xl sm:text-2xl  font-semibold mb-4 ">Most Booked Services</h2>
       {canScrollLeft && (
         <button
           onClick={() => scroll("left")}
