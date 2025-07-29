@@ -3,7 +3,7 @@ export const apiEndpoints ={
     SEND_OTP:"/user/generate/login/otp",
     GOOGLE_LOGIN:"/user/google/login",
     USER_DETAILS:"/user/details",
-    GET_SERVICES:'/services',
+    GET_SERVICES:'/service',
     SEARCH_SERVICES:'/services/search',
     CHAT_CHAT:"chat/chat",
 }

@@ -98,7 +98,8 @@ export const loginWithGoogle =
         credentialResponse.body
       );
       if (response && response.status === 200) {
-        dispatch(getUserDetails(response.data));
+        dispatch(getUserDetails(response.data.data));
+        // dispatch(userDetailsAction());
         Cookies.set("token", response.data.data.token, {
           expires: 7,
           secure: true,

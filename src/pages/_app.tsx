@@ -28,7 +28,9 @@ function InnerApp({ Component, pageProps }: AppPropsWithLayout) {
   const dispatch = useDispatch<AppDispatch>();
   const { userDetails, isLoading } = useAppSelector((state) => state.user);
   useEffect(() => {
-    dispatch(userDetailsAction());
+    if (typeof window !== "undefined") {
+      dispatch(userDetailsAction());
+    }
   }, [dispatch]);
   if (isLoading) {
     return (

@@ -76,7 +76,7 @@ export default function AuthorizedLayout({
   return (
     <>
       {/* {isMobileView && !isHome && <MobileNonHome />} */}
-      {isHome && (
+      {(isHome || !isMobileView) && (
         <div
           className={` text-white ${
             scrollPercent > 25 &&

@@ -13,7 +13,7 @@ const CartMobileView = () => {
     <>
       <div
         className={`fixed bottom-0 left-0 right-0  ${
-          isDarkMode ? "text-gray-100 bg-transparent" : "text-gray-800 bg-white"
+          isDarkMode ? "text-gray-100 bg-gray-800" : "text-gray-800 bg-white"
         } w-full shadow-md z-30 flex justify-between items-center px-4 py-3`}
       >
         <div className="font-semibold">Amount ₹ {totalAmount}</div>
@@ -34,7 +34,7 @@ const CartMobileView = () => {
           <div
             className={`custom-scrollbar ${
               isDarkMode ? "bg-gray-800" : "bg-white"
-            }  w-full sm:w-[400px] rounded-t-2xl sm:rounded-2xl p-6 shadow-lg relative max-h-[90vh] overflow-y-auto`}
+            }  w-full sm:w-[400px] rounded-t-2xl sm:rounded-2xl px-2 p-6  shadow-lg relative max-h-[90vh] overflow-y-auto`}
           >
             <button
               className="absolute top-3 right-3 text-gray-600 hover:text-black"
@@ -42,7 +42,7 @@ const CartMobileView = () => {
             >
               <X className="w-5 h-5" />
             </button>
-            <h2 className="text-lg font-bold mb-4">Your Cart</h2>
+            <h2 className="text-lg font-bold ">Your Cart</h2>
             <CartSection />
 
             <div className="mt-6">

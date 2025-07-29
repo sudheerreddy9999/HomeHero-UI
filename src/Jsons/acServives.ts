@@ -1,6 +1,5 @@
 import image1 from "@/assets/SunRiseSofa.webp"
 import { StaticImageData } from "next/image";
-import image2 from "@/assets/banner-image.webp"
 import image3 from "@/assets/sofa-mobile.jpeg"
 import image4 from "@/assets/MostBookedServices/ac-reaparing.jpg"
 
@@ -28,7 +27,7 @@ export const acServices: ACService[] = [
   },
   {
     id: "ac2",
-    image: image2,
+    image: image1,
     serviceName: "AC Repair",
     description: "Repair for cooling issues, noise problems, or electrical faults.",
     discountPercent: 25,
@@ -76,44 +75,44 @@ export const acServices: ACService[] = [
     afterPrice: 647,
     saved: 252
   },
-  // {
-  //   id: "ac7",
-  //  image: image1,
-  //   serviceName: "AC Dry Service",
-  //   description: "Dry cleaning of internal components without water.",
-  //   discountPercent: 18,
-  //   beforePrice: 699,
-  //   afterPrice: 573,
-  //   saved: 126
-  // },
-  // {
-  //   id: "ac8",
-  //   image: image1,
-  //   serviceName: "AC Jet Pump Cleaning",
-  //   description: "High-pressure cleaning of indoor and outdoor units.",
-  //   discountPercent: 35,
-  //   beforePrice: 1299,
-  //   afterPrice: 844,
-  //   saved: 455
-  // },
-  // {
-  //   id: "ac9",
-  //    image: image1,
-  //   serviceName: "AC Annual Maintenance",
-  //   description: "Year-round maintenance including 3 services and minor fixes.",
-  //   discountPercent: 40,
-  //   beforePrice: 2999,
-  //   afterPrice: 1799,
-  //   saved: 1200
-  // },
-  // {
-  //   id: "ac10",
-  //    image: image1,
-  //   serviceName: "AC PCB Board Repair",
-  //   description: "Repair or replacement of AC circuit (PCB) boards for proper functioning.",
-  //   discountPercent: 22,
-  //   beforePrice: 1699,
-  //   afterPrice: 1325,
-  //   saved: 374
-  // }
+  {
+    id: "ac7",
+   image: image1,
+    serviceName: "AC Dry Service",
+    description: "Dry cleaning of internal components without water.",
+    discountPercent: 18,
+    beforePrice: 699,
+    afterPrice: 573,
+    saved: 126
+  },
+  {
+    id: "ac8",
+    image: image1,
+    serviceName: "AC Jet Pump Cleaning",
+    description: "High-pressure cleaning of indoor and outdoor units.",
+    discountPercent: 35,
+    beforePrice: 1299,
+    afterPrice: 844,
+    saved: 455
+  },
+  {
+    id: "ac9",
+     image: image1,
+    serviceName: "AC Annual Maintenance",
+    description: "Year-round maintenance including 3 services and minor fixes.",
+    discountPercent: 40,
+    beforePrice: 2999,
+    afterPrice: 1799,
+    saved: 1200
+  },
+  {
+    id: "ac10",
+     image: image1,
+    serviceName: "AC PCB Board Repair",
+    description: "Repair or replacement of AC circuit (PCB) boards for proper functioning.",
+    discountPercent: 22,
+    beforePrice: 1699,
+    afterPrice: 1325,
+    saved: 374
+  }
 ];
