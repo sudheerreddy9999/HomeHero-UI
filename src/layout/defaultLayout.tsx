@@ -5,6 +5,7 @@ import NavBar from "@/components/Nav/navBar/navBar";
 import useIsMobile from "@/hooks/useIsMobile";
 import MobileNav from "@/components/Nav/MobileNav";
 import ChatBot from "@/components/ChatBot";
+import Footer from "@/components/footer";
 
 export default function DefaultLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -14,11 +15,11 @@ export default function DefaultLayout({ children }: { children: ReactNode }) {
   return (
     <div className="w-full dark:bg-black">
       {(isHome || !isMobile) && <NavBar />}
-
       <main>
         {children}
         {isMobile ? isHome && <MobileNav /> : <ChatBot />}
       </main>
+      {!isMobile&&<Footer />}
     </div>
   );
 }

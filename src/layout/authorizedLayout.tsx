@@ -21,6 +21,7 @@ import Link from "next/link";
 import MobileNav from "@/components/Nav/MobileNav";
 // import MobileNonHome from "@/components/Nav/MobieNonHome";
 import { useTheme } from "@/context/ThemeContext";
+import Footer from "@/components/footer";
 
 export default function AuthorizedLayout({
   children,
@@ -212,6 +213,7 @@ export default function AuthorizedLayout({
         {children}
         {isMobileView ? isHome && <MobileNav /> : <ChatBot />}
       </main>
+      {!isMobileView && <Footer />}
     </>
   );
 }

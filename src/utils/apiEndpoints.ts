@@ -4,6 +4,6 @@ export const apiEndpoints ={
     GOOGLE_LOGIN:"/user/google/login",
     USER_DETAILS:"/user/details",
     GET_SERVICES:'/service',
-    SEARCH_SERVICES:'/services/search',
+    SEARCH_SERVICES:'/service/search',
     CHAT_CHAT:"chat/chat",
 }

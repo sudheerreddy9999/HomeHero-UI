@@ -1,8 +1,8 @@
 import {addToCartReducer,removeItemReducer} from "../reducers/cart";
 import { AppDispatch } from "../config/store";
-import {ACService} from "@/Jsons/acServives";
+import { ServiceItem } from "@/types/serviceTypes";
 
-export const addToCartAction = (item:ACService) => async (dispatch: AppDispatch) => {
+export const addToCartAction = (item:ServiceItem) => async (dispatch: AppDispatch) => {
     try {
         dispatch(addToCartReducer(item));
     } catch (error) {

@@ -63,8 +63,8 @@ const NavBar = () => {
         className={`${
           scrollPercent > comparePercent
             ? isDarkMode
-              ? "bg-gray-800"
-              : "bg-white"
+              ? "bg-gray-900 text-gray-200"
+              : "bg-white text-gray-700"
             : ""
         } w-full h-16  flex items-center justify-between sm:px-10 fixed top-0 left-0 z-50`}
       >

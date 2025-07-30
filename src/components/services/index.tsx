@@ -1,4 +1,4 @@
-import React,{useEffect}  from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/hooks/useAppSelector";
@@ -6,30 +6,33 @@ import { getServicesAction } from "@/store/actions/services";
 import Link from "next/link";
 import Image from "../Image/image";
 import { useTheme } from "@/context/ThemeContext";
+import { ServicesHomePageSkelton } from "../skeletons";
 
 interface serviceItem {
-  id:number,
-  description:string,
-  image_url:string,
-  name:string,
-
+  id: number;
+  description: string;
+  image_url: string;
+  route: string;
+  name: string;
 }
 const Services = () => {
   const { isDarkMode } = useTheme();
   const dispatch = useAppDispatch();
-  const { services } = useAppSelector((state) => state.services);
+  const { services, serviceLoading } = useAppSelector(
+    (state) => state.services
+  );
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getServicesAction());
-  },[useDispatch])
+  }, [useDispatch,dispatch]);
 
   return (
     <div>
       <div className="flex ml-24 gap-6">
-        {services.length > 0 &&
+        {services.length > 0 && !serviceLoading ? (
           services.map((service: serviceItem) => (
             <Link
-              href={service.name}
+              href={service.route}
               key={service.id}
               className={`flex sm:p-1 py-2   sm:py-5 ${
                 isDarkMode
@@ -55,7 +58,10 @@ const Services = () => {
                 </p>
               </div>
             </Link>
-          ))}
+          ))
+        ) : (
+          <ServicesHomePageSkelton />
+        )}
       </div>
     </div>
   );

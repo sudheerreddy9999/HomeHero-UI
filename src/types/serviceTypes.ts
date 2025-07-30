@@ -8,12 +8,20 @@ export interface ServiceItemImage {
 }
 
 export interface ServiceItem {
-  id: string;
-  image: ServiceItemImage;
-  serviceName: string;
+  service_id: number;
+  service_name: string;
   description: string;
-  discountPercent: number;
-  beforePrice: number;
-  afterPrice: number;
-  saved: number;
+  service_image_url: string;
+  service_type_name: string;
+  service_type_description: string;
+  service_type_image_url: string;
+  price: string;
+  duration_minutes: number;
+}
+
+
+export interface GetCategoryItemsType{
+  headers :{
+    service_id:string
+  }
 }

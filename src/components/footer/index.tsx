@@ -17,7 +17,7 @@ const Footer = () => {
   return (
     <footer
       className={`${
-        isDarkMode ? "bg-gray-800 text-white" : "bg-gray-50 text-gray-800"
+        isDarkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-800"
       } px-6 md:px-16 py-10 ${isMobile && "mb-10"}`}
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">

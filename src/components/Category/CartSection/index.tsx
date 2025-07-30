@@ -55,30 +55,30 @@ const CartSection = () => {
                 <tbody>
                   {cartItems.map((item) => (
                     <tr
-                      key={item.id}
+                      key={item.service_id}
                       className=" hover:bg-gray-50   transition-colors"
                     >
                       <td className="px-4 py-2 text-sm ">
-                        {item.id}
+                        {item.service_id}
                       </td>
                       <td>
                         <Image
-                          src={item.image}
+                          src={item.service_type_image_url}
                           alt="CartImages"
                           className="w-10 h-10 rounded-md"
                         />
                       </td>
                       <td className="px-4 text-sm py-2  ">
-                        {item.serviceName}
+                        {item.service_name}
                       </td>
                       {/* <td className="px-4 py-2 text-sm text-gray-800">
                         {item.discountPercent}
                       </td> */}
                       <td className="px-4 py-2 text-sm ">
-                        ${item.afterPrice}
+                        ${item.price}
                       </td>
                       <td>
-                        <button className={` py-1.5 p-3.5 rounded-md ${isDarkMode?'bg-gray-600':'bg-gray-200'}  cursor-pointer`} onClick={()=>handleRemoveItem(item.id)}>
+                        <button className={` py-1.5 p-3.5 rounded-md ${isDarkMode?'bg-gray-600':'bg-gray-200'}  cursor-pointer`} onClick={()=>handleRemoveItem(String(item.service_id))}>
                           <FaMinus className="size-3" />
                         </button>
                       </td>

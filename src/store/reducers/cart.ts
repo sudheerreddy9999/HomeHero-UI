@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ACService } from "@/Jsons/acServives";
+import { ServiceItem } from "@/types/serviceTypes";
 
 const TAX_RATE = 0.18;
 
 const initialState = {
-  cartItems: [] as ACService[],
+  cartItems: [] as ServiceItem[],
   totalAmount: 0,
   subtotal: 0,
   taxAmount: 0,
@@ -16,7 +16,7 @@ const calculateTotals = (state: typeof initialState) => {
   let totalQuantity = 0;
 
   state.cartItems.forEach((item) => {
-    subtotal += item.afterPrice;
+    subtotal += item.service_id;
     totalQuantity += 1;
   });
 
@@ -33,10 +33,10 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCartReducer: (state, action: PayloadAction<ACService>) => {
-      if (state.cartItems.some((item) => item.id === action.payload.id)) {
+    addToCartReducer: (state, action: PayloadAction<ServiceItem>) => {
+      if (state.cartItems.some((item:ServiceItem) => item.service_id === action.payload.service_id)) {
         console.warn(
-          `Item with id ${action.payload.id} is already in the cart.`
+          `Item with id ${action.payload.service_id} is already in the cart.`
         );
         return;
       } else {
@@ -46,7 +46,7 @@ export const cartSlice = createSlice({
     },
     removeItemReducer: (state, action) => {
       state.cartItems = state.cartItems.filter(
-        (item) => item.id !== action.payload
+        (item:ServiceItem) => item.service_id !== action.payload
       );
       calculateTotals(state);
     },

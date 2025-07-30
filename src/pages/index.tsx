@@ -6,7 +6,6 @@ import Services from "@/components/services";
 import useIsMobile from "@/hooks/useIsMobile";
 import MostBookedServices from "@/components/MostBookedServices";
 import ComboPackages from "@/components/MainSection/ComboSection";
-import Footer from "@/components/footer";
 import { useTheme } from "@/context/ThemeContext";
 import OffersSection from "@/components/MainSection/OfferSection";
 
@@ -28,7 +27,7 @@ export default function Home() {
             <MobileServices />
           </div>
         ) : (
-          <div className="custom-scrollbar flex justify-center items-center  absolute -bottom-56 left-0 w-full overflow-scroll h-full">
+          <div className="custom-scrollbar flex justify-center items-center  absolute -bottom-56 -left-12 w-full overflow-scroll h-full">
             <Services />
           </div>
         )}
@@ -44,7 +43,6 @@ export default function Home() {
       <div className="w-full">
         <ComboPackages />
       </div>
-      <Footer />
     </div>
   );
 }
