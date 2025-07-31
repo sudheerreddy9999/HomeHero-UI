@@ -11,22 +11,33 @@ import MostBookedServices from "@/components/MostBookedServices";
 import { getCategoryItemsAction } from "@/store/actions/services";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { CategoryItemsSkeleton  } from "@/components/skeletons";
+import { CategoryItemsSkeleton } from "@/components/skeletons";
 
-const validCategories = ["acservices", "plumbing", "homecleaning"] as const;
+const validCategories = ["acservices", "plumbing", "homecleaning", "electrical", "saloon"] as const;
 type ValidCategory = (typeof validCategories)[number];
+
 
 const categoryNumbers: Record<ValidCategory, number> = {
   acservices: 1,
   plumbing: 2,
   homecleaning: 3,
+  electrical: 4,
+  saloon: 5,
 };
+
+const categoryDisplayNames: Record<ValidCategory, string> = {
+  acservices: "AC Services",
+  plumbing: "Plumbing Services",
+  homecleaning: "Home Cleaning Services",
+  electrical: "Electrical Services",
+  saloon: "Saloon Services",
+};
+
 interface CategoryPageProps {
   category: ValidCategory;
   selectedItems: ServiceItem[];
   number: number;
 }
-
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = validCategories.map((category) => ({
     params: { category },
@@ -37,14 +48,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: false,
   };
 };
-
-export const getStaticProps: GetStaticProps<CategoryPageProps> = async ({
-  params,
-}) => {
+export const getStaticProps: GetStaticProps<CategoryPageProps> = async ({ params }) => {
   const category = params?.category as ValidCategory;
 
   const selectedItems: ServiceItem[] = [];
-
   const number = categoryNumbers[category] ?? 0;
 
   return {
@@ -56,16 +63,16 @@ export const getStaticProps: GetStaticProps<CategoryPageProps> = async ({
   };
 };
 
-const CategoryPage: React.FC<CategoryPageProps> = ({ number }) => {
+const CategoryPage: React.FC<CategoryPageProps> = ({ number, category }) => {
   const { isDarkMode } = useTheme();
   const isMobile = useIsMobile();
   const dispatch = useAppDispatch();
   const rightRef = useRef<HTMLDivElement>(null);
   const [rightHeight, setRightHeight] = useState(0);
-  const { categoryItems, serviceLoading } = useAppSelector(
-    (state) => state.services
-  );
-  console.log(categoryItems, " Inside App COmponent is ");
+
+  const { categoryItems, serviceLoading } = useAppSelector((state) => state.services);
+
+  const dynamicMessage = `Selected ${categoryDisplayNames[category]}`;
 
   useEffect(() => {
     if (number > 0) {
@@ -76,7 +83,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ number }) => {
       };
       dispatch(getCategoryItemsAction(payload));
     }
-  }, [number,dispatch]);
+  }, [number, dispatch]);
 
   useEffect(() => {
     const observer = new ResizeObserver((entries) => {
@@ -97,29 +104,21 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ number }) => {
 
   return (
     <>
-      {isMobile && <MobileNonHome message="Selected AC Services" route="/" />}
+      {isMobile && <MobileNonHome message={dynamicMessage} route="/" />}
 
-      <div
-        className={`sm:pt-10 p-3 sm:px-10 ${
-          isDarkMode ? "bg-gray-800" : "bg-white"
-        }`}
-      >
+      <div className={`sm:pt-10 p-3 sm:px-10 ${isDarkMode ? "bg-gray-800" : "bg-white"}`}>
         <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 justify-between mt-12 sm:mt-10">
           <div
             className="w-full md:w-[67%]"
             style={{ height: rightHeight ? `${rightHeight}px` : "auto" }}
           >
-            {(categoryItems.length > 0 && serviceLoading) ? (
-              <SelectedCategory
-                selectedItems={categoryItems}
-                height={rightHeight}
-              />
+            {categoryItems.length > 0 && serviceLoading ? (
+              <SelectedCategory selectedItems={categoryItems} height={rightHeight} />
             ) : (
-              <>
-               <CategoryItemsSkeleton />
-              </>
+              <CategoryItemsSkeleton />
             )}
           </div>
+
           <div className="w-full md:w-[30%]" ref={rightRef}>
             <div className="w-full hidden sm:block">
               <CartSection />

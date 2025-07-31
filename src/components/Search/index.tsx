@@ -7,6 +7,7 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { ServiceItem } from "@/types/serviceTypes";
 import Image from "../Image/image";
+import { IoIosTrendingUp } from "react-icons/io";
 import { getCategoryItemsAction } from "@/store/actions/services";
 // import Link from "next/link";
 type seachProps = {
@@ -132,24 +133,27 @@ const Search = ({ heading, seachPlaceholder, place }: seachProps) => {
       {opensearchModel && (
         <div className="fixed inset-0 w-full bg-opacity-90 flex mt-16 justify-center z-999">
           <div
-            className="flex flex-col  w-[70%] sm:w-[70%] h-9/12 rounded-md shadow-2xl bg-white "
+            className="flex flex-col  w-[70%] sm:w-[45%] h-9/12 rounded-md shadow-2xl bg-white "
             ref={modalRef}
           >
-            <div className="grid grid-cols-3 gap-4  items-center mt-2 p-4">
+            <p className="flex items-center p-4 pb-0 font-bold">
+              Trending <IoIosTrendingUp size={20} className="mx-2 font-bold" />
+            </p>
+            <div className="grid grid-cols-1 gap-4  items-center mt-2 p-4 overflow-scroll">
               {categoryItems.map((item: ServiceItem) => (
                 <div
                   key={item.service_id}
                   className={` custom-scrollbar service-card relative ${
                     isDarkMode ? "bg-gray-700" : "bg-white"
-                  }  rounded-2xl flex  shadow-xl h-20 overflow-hidden transition-transform duration-300 hover:scale-[1.02]`}
+                  }  rounded-2xl flex   h-12 overflow-hidden transition-transform duration-300 hover:scale-[1.02]`}
                 >
                   <div>
                     <Image
                       src={item.service_type_image_url}
                       alt={item.service_name}
                       width={200}
-                      height={40}
-                      className="w-32 h-full object-cover"
+                      height={30}
+                      className="w-24 h-full object-fit"
                     />
                   </div>
 
@@ -158,24 +162,26 @@ const Search = ({ heading, seachPlaceholder, place }: seachProps) => {
                       isDarkMode
                         ? "bg-zinc-800/80 text-white"
                         : "bg-white text-gray-800"
-                    }    rounded-2xl p-4  shadow-md`}
+                    }    p-1 px-4`}
                   >
                     <div>
                       {" "}
                       <div className="flex justify-between items-center">
                         <p className=" dark:text-white mb-1">
-                          {item.service_name}
+                          {item.service_type_name}
                         </p>
                       </div>
-                      <p className="text-xs mb-1">{item.description}</p>
+                      <p className="text-xs mb-1">
+                        {item.service_type_description}
+                      </p>
                     </div>
-                    <div className="flex justify-between items-center">
+                    {/* <div className="flex justify-between items-center">
                       <div className="flex items-center gap-2">
                         <span className="description font-semibold">
                           ₹{item.price}
                         </span>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               ))}

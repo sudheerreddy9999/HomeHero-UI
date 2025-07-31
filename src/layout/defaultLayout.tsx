@@ -19,7 +19,7 @@ export default function DefaultLayout({ children }: { children: ReactNode }) {
         {children}
         {isMobile ? isHome && <MobileNav /> : <ChatBot />}
       </main>
-      {!isMobile&&<Footer />}
+      {(!isMobile|| isHome)  &&<Footer />}
     </div>
   );
 }
