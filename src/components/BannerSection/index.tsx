@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FiArrowUpRight } from "react-icons/fi";
 import DynamicText from "./DynamicText";
@@ -9,8 +9,11 @@ import MobileViewSofa from "@/assets/sofa-mobile.jpeg";
 import darkModeSofaImage from "@/assets/darkSofa.webp";
 import darkMobileSOfa from "@/assets/sofadarkMb.webp";
 import { useTheme } from "@/context/ThemeContext";
+import SearchModel from "../Search/SearchModel";
 
 const BannerSection = () => {
+  const [opensearchModel, setOpenSearchModel] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
   const { isDarkMode } = useTheme();
   const getSofaImage = () => {
@@ -21,8 +24,39 @@ const BannerSection = () => {
     if (isDarkMode) return darkModeSofaImage;
     return sofaImage;
   };
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        setOpenSearchModel(false);
+      }
+    };
+
+    if (opensearchModel) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [opensearchModel]);
+  const handleInputClick = () => {
+    setOpenSearchModel(true);
+  };
   return (
     <>
+      {opensearchModel && (
+        <div className="fixed inset-0 w-full bg-opacity-90 flex mt-16 justify-center  z-50 transition-opacity duration-300 ease-in-out">
+          <div
+            className=" transform transition-all duration-300 ease-in-out scale-95  animate-fadeInUp flex flex-col bg-white   w-[100%] sm:w-[55%] py-4 pt-7 h-10/12 rounded-2xl shadow-2xl "
+            ref={modalRef}
+          >
+            <SearchModel />
+          </div>
+        </div>
+      )}
       <div className="relative  w-full h-[55vh] sm:h-[65vh]">
         <Image
           src={getSofaImage()}
@@ -56,6 +90,7 @@ const BannerSection = () => {
                   ? "bg-gray-800 text-white"
                   : " bg-white border border-gray-300 text-gray-700"
               } z-10 relative`}
+              onClick={handleInputClick}
             />
             <div className="bg-blue-400 p-1.5 sm:p-2 rounded-full absolute right-1 top-1/2 transform -translate-y-1/2 z-20">
               <FiArrowUpRight size={24} className="text-white" />

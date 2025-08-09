@@ -6,4 +6,5 @@ export const apiEndpoints ={
     GET_SERVICES:'/service',
     SEARCH_SERVICES:'/service/search',
     CHAT_CHAT:"chat/chat",
+    TRENDING_SERVICES:"/service/random"      
 }

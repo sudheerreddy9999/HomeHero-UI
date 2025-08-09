@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { useDispatch } from "react-redux";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { getServicesAction } from "@/store/actions/services";
 import Link from "next/link";
@@ -24,7 +23,7 @@ const Services = () => {
 
   useEffect(() => {
     dispatch(getServicesAction());
-  }, [useDispatch,dispatch]);
+  }, [dispatch]);
 
   return (
     <div>

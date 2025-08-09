@@ -1,15 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { CiSearch } from "react-icons/ci";
-// import { IoArrowBack } from "react-icons/io5";
 import useIsMobile from "@/hooks/useIsMobile";
 import { useTheme } from "@/context/ThemeContext";
-import { useAppSelector } from "@/hooks/useAppSelector";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { ServiceItem } from "@/types/serviceTypes";
-import Image from "../Image/image";
-import { IoIosTrendingUp } from "react-icons/io";
-import { getCategoryItemsAction } from "@/store/actions/services";
-// import Link from "next/link";
+
+import SearchModel from "./SearchModel";
 type seachProps = {
   heading?: string;
   place?: string;
@@ -25,14 +19,11 @@ const placeholders = [
 
 const Search = ({ heading, seachPlaceholder, place }: seachProps) => {
   const isMobile = useIsMobile();
-  const dispatch = useAppDispatch();
   placeholders.push(seachPlaceholder || "Search for services");
   const { isDarkMode } = useTheme();
+  const modalRef = useRef<HTMLDivElement>(null);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [opensearchModel, setOpenSearchModel] = useState(false);
-  const modalRef = useRef<HTMLDivElement>(null);
-  const { categoryItems } = useAppSelector((state) => state.services);
-
   const handleInputClick = () => {
     setOpenSearchModel(true);
   };
@@ -41,8 +32,9 @@ const Search = ({ heading, seachPlaceholder, place }: seachProps) => {
       setPlaceholderIndex((prevIndex) => (prevIndex + 1) % placeholders.length);
     }, 2000);
 
-    return () => clearInterval(interval); // Cleanup on unmount
+    return () => clearInterval(interval);
   }, []);
+
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (
@@ -62,27 +54,10 @@ const Search = ({ heading, seachPlaceholder, place }: seachProps) => {
     };
   }, [opensearchModel]);
 
-  useEffect(() => {
-    if (!(categoryItems.length > 0)) {
-      const payload = {
-        headers: {
-          service_id: String(1),
-        },
-      };
-      dispatch(getCategoryItemsAction(payload));
-    }
-  }, [dispatch]);
-
   return (
     <div>
       {isMobile ? (
         <div className="w-full relative  flex justify-between  items-center  mb-4">
-          {/* <div className="flex items-center justify-between space-x-3">
-            <Link href="/">
-              <IoArrowBack size={30} />
-            </Link>
-            <h2 className="text-medium font-semibold text-center">{heading}</h2>
-          </div> */}
           <input
             type="text"
             placeholder={placeholders[placeholderIndex]}
@@ -100,9 +75,14 @@ const Search = ({ heading, seachPlaceholder, place }: seachProps) => {
               size={25}
             />
           </div>
+          <h1>Hello Sudheer</h1>
         </div>
       ) : (
-        <div className=" flex flex-col-reverse w-[97%] ml-28  sm:flex-row justify-between items-end sm:items-center">
+        <div
+          className={` flex flex-col-reverse w-[97%] ml-28 ${
+            opensearchModel && "hidden"
+          } sm:flex-row justify-between items-end sm:items-center`}
+        >
           <h2 className="text-2xl font-semibold text-center">{heading}</h2>
           <div
             className={`relative w-[70%] ${
@@ -131,61 +111,12 @@ const Search = ({ heading, seachPlaceholder, place }: seachProps) => {
         </div>
       )}
       {opensearchModel && (
-        <div className="fixed inset-0 w-full bg-opacity-90 flex mt-16 justify-center z-999">
+        <div className="fixed inset-0 w-full bg-opacity-90 flex mt-16 justify-center  z-999 transition-opacity duration-300 ease-in-out">
           <div
-            className="flex flex-col  w-[70%] sm:w-[45%] h-9/12 rounded-md shadow-2xl bg-white "
+            className=" transform transition-all duration-300 ease-in-out scale-95  animate-fadeInUp flex flex-col bg-white   w-[70%] sm:w-[55%] py-4 pt-7 h-10/12 rounded-2xl shadow-2xl "
             ref={modalRef}
           >
-            <p className="flex items-center p-4 pb-0 font-bold">
-              Trending <IoIosTrendingUp size={20} className="mx-2 font-bold" />
-            </p>
-            <div className="grid grid-cols-1 gap-4  items-center mt-2 p-4 overflow-scroll">
-              {categoryItems.map((item: ServiceItem) => (
-                <div
-                  key={item.service_id}
-                  className={` custom-scrollbar service-card relative ${
-                    isDarkMode ? "bg-gray-700" : "bg-white"
-                  }  rounded-2xl flex   h-12 overflow-hidden transition-transform duration-300 hover:scale-[1.02]`}
-                >
-                  <div>
-                    <Image
-                      src={item.service_type_image_url}
-                      alt={item.service_name}
-                      width={200}
-                      height={30}
-                      className="w-24 h-full object-fit"
-                    />
-                  </div>
-
-                  <div
-                    className={`  flex  justify-between  px-auto  ${
-                      isDarkMode
-                        ? "bg-zinc-800/80 text-white"
-                        : "bg-white text-gray-800"
-                    }    p-1 px-4`}
-                  >
-                    <div>
-                      {" "}
-                      <div className="flex justify-between items-center">
-                        <p className=" dark:text-white mb-1">
-                          {item.service_type_name}
-                        </p>
-                      </div>
-                      <p className="text-xs mb-1">
-                        {item.service_type_description}
-                      </p>
-                    </div>
-                    {/* <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-2">
-                        <span className="description font-semibold">
-                          ₹{item.price}
-                        </span>
-                      </div>
-                    </div> */}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <SearchModel />
           </div>
         </div>
       )}

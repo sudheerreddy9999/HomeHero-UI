@@ -16,6 +16,7 @@ export interface ServiceItem {
   service_type_description: string;
   service_type_image_url: string;
   price: string;
+  offerPrice:string
   duration_minutes: number;
 }
 
@@ -23,5 +24,11 @@ export interface ServiceItem {
 export interface GetCategoryItemsType{
   headers :{
     service_id:string
+  }
+}
+
+export interface GetServiceSearch{
+  headers:{
+    service_name:string;
   }
 }

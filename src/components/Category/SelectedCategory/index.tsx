@@ -29,9 +29,9 @@ const SelectedCategory = ({ selectedItems, height }: SelectedCategoryProps) => {
       className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12      overflow-scroll no-scrollbar`}
       style={{ height: !isMobile ? `${height}px` : undefined }}
     >
-      {selectedItems.map((item) => (
+      {selectedItems.map((item,index) => (
         <div
-          key={item.service_id}
+          key={index}
           className={` custom-scrollbar service-card relative ${
             isDarkMode ? "bg-gray-700" : "bg-white"
           }  rounded-2xl h-60 shadow-xl overflow-hidden transition-transform duration-300 hover:scale-[1.02]`}
@@ -52,18 +52,18 @@ const SelectedCategory = ({ selectedItems, height }: SelectedCategoryProps) => {
           >
             <div className="flex justify-between items-center">
               <h3 className="title font-semibold  dark:text-white mb-1">
-                {item.service_name}
+                {item.service_type_name}
               </h3>
               <span className="text-green-600 text-xs font-medium">
                 ({item.duration_minutes}% OFF)
               </span>
             </div>
 
-            <p className="text-xs mb-1">{item.description}</p>
+            <p className="text-xs mb-1">{item.service_type_description}</p>
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <span className="description font-semibold">
-                  ₹{item.price}
+                  ₹{item.offerPrice}
                 </span>
                 <span className="line-through text-gray-400 text-sm">
                   ₹{item.price}
