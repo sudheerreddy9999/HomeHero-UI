@@ -13,9 +13,14 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { CategoryItemsSkeleton } from "@/components/skeletons";
 
-const validCategories = ["acservices", "plumbing", "homecleaning", "electrical", "saloon"] as const;
+const validCategories = [
+  "acservices",
+  "plumbing",
+  "homecleaning",
+  "electrical",
+  "saloon",
+] as const;
 type ValidCategory = (typeof validCategories)[number];
-
 
 const categoryNumbers: Record<ValidCategory, number> = {
   acservices: 1,
@@ -48,7 +53,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: false,
   };
 };
-export const getStaticProps: GetStaticProps<CategoryPageProps> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<CategoryPageProps> = async ({
+  params,
+}) => {
   const category = params?.category as ValidCategory;
 
   const selectedItems: ServiceItem[] = [];
@@ -70,7 +77,9 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ number, category }) => {
   const rightRef = useRef<HTMLDivElement>(null);
   const [rightHeight, setRightHeight] = useState(0);
 
-  const { categoryItems, serviceLoading } = useAppSelector((state) => state.services);
+  const { categoryItems, serviceLoading } = useAppSelector(
+    (state) => state.services
+  );
 
   const dynamicMessage = `Selected ${categoryDisplayNames[category]}`;
 
@@ -106,14 +115,21 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ number, category }) => {
     <>
       {isMobile && <MobileNonHome message={dynamicMessage} route="/" />}
 
-      <div className={`sm:pt-10 p-3 sm:px-10 ${isDarkMode ? "bg-gray-800" : "bg-white"}`}>
+      <div
+        className={`sm:pt-10 p-3 sm:px-10 ${
+          isDarkMode ? "bg-gray-800" : "bg-white"
+        }`}
+      >
         <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 justify-between mt-12 sm:mt-10">
           <div
             className="w-full md:w-[67%]"
             style={{ height: rightHeight ? `${rightHeight}px` : "auto" }}
           >
             {categoryItems.length > 0 && serviceLoading ? (
-              <SelectedCategory selectedItems={categoryItems} height={rightHeight} />
+              <SelectedCategory
+                selectedItems={categoryItems}
+                height={rightHeight}
+              />
             ) : (
               <CategoryItemsSkeleton />
             )}

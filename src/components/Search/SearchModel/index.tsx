@@ -8,15 +8,18 @@ import { ServiceItem } from "@/types/serviceTypes";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { FiArrowUpRight } from "react-icons/fi";
 import { IoIosTrendingUp } from "react-icons/io";
+import noResults from "@/assets/no-results-found.png";
+import { SearchItemSkelton } from "@/components/skeletons";
 import {
   getTrendingServices,
   getSearchServiceItems,
 } from "@/store/actions/services";
-
 const SearchModel = () => {
   const [textInputFeild, setTextInputFeild] = useState("");
   const [debounceValue, setDebounceValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const [noResultsFound, setNoResultsFound] = useState(false);
+  const ScrollHorizantalContainer = useRef<HTMLDivElement>(null);
   const { isDarkMode } = useTheme();
   const isMobile = useIsMobile();
   const dispatch = useAppDispatch();
@@ -28,6 +31,7 @@ const SearchModel = () => {
     textInputFeild.length > 0 && serviceSerachItems.length > 0
       ? serviceSerachItems.slice(currentBar * 6, currentBar * 6 + 6)
       : trending.slice(currentBar * 6, currentBar * 6 + 6);
+
   const totalPages = Math.ceil(
     (textInputFeild.length > 0 && serviceSerachItems.length > 0
       ? serviceSerachItems.length
@@ -59,19 +63,47 @@ const SearchModel = () => {
       };
       dispatch(getSearchServiceItems(payload));
     }
-  }, [debounceValue,dispatch]);
+  }, [debounceValue, dispatch]);
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
+  useEffect(() => {
+    const scrollRef = ScrollHorizantalContainer.current;
+    if (!scrollRef) return;
+
+    const handleScroll = () => {
+      if (scrollRef.scrollLeft > 0) {
+      }
+    };
+
+    scrollRef.addEventListener("scroll", handleScroll);
+    return () => scrollRef.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (textInputFeild.length > 0 && serviceSerachItems.length <= 0) {
+      setNoResultsFound(true);
+    }
+    if (textInputFeild.length == 0 || serviceSerachItems.length > 0) {
+      setNoResultsFound(false);
+    }
+  }, [serviceSerachItems, textInputFeild]);
+
   return (
     <>
-      <div className=" flex justify-center items-center bg-gradient-to-br from-[#d2ecea] via-blue-50 to-[#badfdc]  py-10 mx-2 rounded-3xl">
+      <div
+        className={` flex justify-center items-center ${
+          isDarkMode
+            ? "bg-gray-800"
+            : "bg-gradient-to-br from-[#d2ecea] via-blue-50 to-[#badfdc]"
+        }  py-10 mx-2 rounded-3xl`}
+      >
         <div className="relative w-3/4 sm:w-10/12 mt-4 flex justify-center items-center">
           <CiSearch
             size={24}
             className={`absolute left-4 ${
-              isDarkMode ? "text-white" : "text-gray-700"
+              isDarkMode ? "text-white " : "text-gray-700"
             }  top-1/2 transform -translate-y-1/2  z-20`}
           />
           <input
@@ -82,10 +114,10 @@ const SearchModel = () => {
                 ? "How Can We Help You Today?"
                 : 'Search for Services, "AC Repair", "Plumber", "Electrician" etc...'
             }
-            className={`w-full text-sm sm:text-[15px] pl-12 pr-4 py-4 mt-0 rounded-full focus:outline-none ${
+            className={`w-full text-sm sm:text-[15px] pl-12 pr-4 py-4 mt-0 rounded-full border focus:outline-none ${
               isDarkMode
-                ? "bg-gray-800 text-white"
-                : " bg-white border border-gray-300 text-gray-700"
+                ? "bg-gray-800 text-white "
+                : " bg-white  border-gray-300 text-gray-700"
             } z-10 relative`}
             value={textInputFeild}
             onChange={(e) => setTextInputFeild(e.target.value)}
@@ -95,61 +127,80 @@ const SearchModel = () => {
           </div>
         </div>
       </div>
-      {textInputFeild.length <= 0 && (
+      {textInputFeild.length <= 0 ? (
         <p className="flex items-center p-4 pb-0 font-bold text-lg mt-3">
           Trending Services{" "}
           <IoIosTrendingUp size={24} className="mx-2 font-bold" />
         </p>
+      ) : (
+        <div className="mt-10"></div>
+      )}
+      {currentItems.length == 0 ? (
+        <SearchItemSkelton />
+      ) : (
+        <div
+          ref={ScrollHorizantalContainer}
+          className={`grid  grid-cols-1 sm:grid-cols-3  gap-4 space-y-0.5  items-center mt-2 p-4 px-10  ${
+            isMobile && "overflow-auto"
+          }`}
+        >
+          {noResultsFound ? (
+            <Image
+              src={noResults}
+              alt="noResultsFound"
+              className="size-32 lg:size-44 ml-[120%]"
+            />
+          ) : (
+            <>
+              {currentItems.map((item: ServiceItem, index) => (
+                <div
+                  key={index}
+                  className={` custom-scrollbar service-card relative ${
+                    isDarkMode ? "bg-gray-700" : "bg-white"
+                  }  rounded-2xl flex  shadow-2xl   h-[90px] overflow-hidden transition-transform duration-300 hover:-translate-y- p-2 cursor-pointer`}
+                >
+                  <div>
+                    <Image
+                      src={item.service_type_image_url}
+                      alt={item.service_name}
+                      width={200}
+                      height={30}
+                      className="w-32 h-full object-cover rounded-md"
+                    />
+                  </div>
+
+                  <div
+                    className={`  flex  justify-between  px-auto  ${
+                      isDarkMode ? " text-gray-300" : "bg-white text-gray-800"
+                    }    p-1 px-4`}
+                  >
+                    <div>
+                      {" "}
+                      <div className="flex justify-between items-center">
+                        <p className=" dark:text-white mb-1 text-xs font-bold">
+                          {item.service_type_name}
+                        </p>
+                      </div>
+                      <p className="text-[10px] mb-1">
+                        {item.service_type_description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
       )}
 
-      <div
-        className={`grid  grid-cols-1 sm:grid-cols-3  gap-4 space-y-0.5  items-center mt-2 p-4 px-10  ${isMobile&&'overflow-auto'}`}
-      >
-        {currentItems.map((item: ServiceItem, index) => (
-          <div
-            key={index}
-            className={` custom-scrollbar service-card relative ${
-              isDarkMode ? "bg-gray-700" : "bg-white"
-            }  rounded-2xl flex  shadow-2xl   h-[90px] overflow-hidden transition-transform duration-300 hover:scale-[1.02] p-2`}
-          >
-            <div>
-              <Image
-                src={item.service_type_image_url}
-                alt={item.service_name}
-                width={200}
-                height={30}
-                className="w-32 h-full object-cover rounded-md"
-              />
-            </div>
-
-            <div
-              className={`  flex  justify-between  px-auto  ${
-                isDarkMode
-                  ? "bg-zinc-800/80 text-white"
-                  : "bg-white text-gray-800"
-              }    p-1 px-4`}
-            >
-              <div>
-                {" "}
-                <div className="flex justify-between items-center">
-                  <p className=" dark:text-white mb-1 text-xs font-bold">
-                    {item.service_type_name}
-                  </p>
-                </div>
-                <p className="text-[10px] mb-1">
-                  {item.service_type_description}
-                </p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
       <div className="w-full flex justify-center items-center space-x-2 mt-3">
         {[...Array(totalPages)].map((_, index) => (
           <div
-          key={index}
+            key={index}
             className={`${
-              currentBar === index ? "bg-gray-600" : "bg-gray-300"
+              currentBar === index
+                ? `${isDarkMode ? "bg-gray-300" : "bg-gray-600"} `
+                : `${isDarkMode ? "bg-gray-600" : "bg-gray-300"} `
             }  h-1 w-9 rounded-2xl cursor-pointer`}
             onClick={() => handleTabChange(index)}
           ></div>

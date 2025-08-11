@@ -105,7 +105,7 @@ const MobileHomeSearch: React.FC<MobileHomeSearchProps> = ({
           </div>
         </div>
         <div
-          className={`grid grid-cols-1  gap-4 space-y-0.5  mt-2 p-4 px-2 overflow-auto h-[90vh] `}
+          className={`grid grid-cols-1 gap-2 sm:gap-4 space-y-0.5  mt-2 p-4 px-2 overflow-auto h-[90vh] `}
         >
           {currentItems.map((item: ServiceItem, index) => (
             <div
@@ -113,7 +113,7 @@ const MobileHomeSearch: React.FC<MobileHomeSearchProps> = ({
               className={` custom-scrollbar service-card relative ${
                 isDarkMode ? "bg-gray-700" : "bg-white"
               } ${
-                isMobile ? "h-[60px]" : "h-[90px]"
+                isMobile ? "h-[65px]" : "h-[90px]"
               }  rounded-2xl flex  shadow-2xl overflow-hidden transition-transform duration-300 hover:scale-[1.02] p-2`}
             >
               <div>
@@ -131,7 +131,7 @@ const MobileHomeSearch: React.FC<MobileHomeSearchProps> = ({
               <div
                 className={`  flex  justify-between  px-auto  ${
                   isDarkMode
-                    ? "bg-zinc-800/80 text-white"
+                    ? " text-white"
                     : "bg-white text-gray-800"
                 }    p-1 px-4`}
               >

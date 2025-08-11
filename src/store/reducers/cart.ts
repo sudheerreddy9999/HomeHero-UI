@@ -16,14 +16,14 @@ const calculateTotals = (state: typeof initialState) => {
   let totalQuantity = 0;
 
   state.cartItems.forEach((item) => {
-    subtotal += item.service_id;
+    subtotal += Number(item.offerPrice);
     totalQuantity += 1;
   });
 
   const taxAmount = parseFloat((subtotal * TAX_RATE).toFixed(2));
   const totalAmount = parseFloat((subtotal + taxAmount).toFixed(2));
 
-  state.subtotal = subtotal;
+  state.subtotal = parseFloat(subtotal.toFixed(2));
   state.taxAmount = taxAmount;
   state.totalAmount = totalAmount;
   state.totalQuantity = totalQuantity;
@@ -34,9 +34,14 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCartReducer: (state, action: PayloadAction<ServiceItem>) => {
-      if (state.cartItems.some((item:ServiceItem) => item.service_id === action.payload.service_id)) {
+      if (
+        state.cartItems.some(
+          (item: ServiceItem) =>
+            item.service_type_id === action.payload.service_type_id
+        )
+      ) {
         console.warn(
-          `Item with id ${action.payload.service_id} is already in the cart.`
+          `Item with id ${action.payload.service_type_id} is already in the cart.`
         );
         return;
       } else {
@@ -46,7 +51,7 @@ export const cartSlice = createSlice({
     },
     removeItemReducer: (state, action) => {
       state.cartItems = state.cartItems.filter(
-        (item:ServiceItem) => item.service_id !== action.payload
+        (item: ServiceItem) => item.service_type_id !== Number(action.payload)
       );
       calculateTotals(state);
     },

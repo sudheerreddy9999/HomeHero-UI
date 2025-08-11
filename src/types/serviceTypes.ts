@@ -16,7 +16,8 @@ export interface ServiceItem {
   service_type_description: string;
   service_type_image_url: string;
   price: string;
-  offerPrice:string
+  offerPrice:string;
+  service_type_id:number
   duration_minutes: number;
 }
 

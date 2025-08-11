@@ -17,7 +17,7 @@ interface serviceItem {
 const Services = () => {
   const { isDarkMode } = useTheme();
   const dispatch = useAppDispatch();
-  const { services, serviceLoading } = useAppSelector(
+  const { services } = useAppSelector(
     (state) => state.services
   );
 
@@ -28,7 +28,7 @@ const Services = () => {
   return (
     <div>
       <div className="flex ml-24 gap-6">
-        {services.length > 0 && !serviceLoading ? (
+        {services.length > 0  ? (
           services.map((service: serviceItem) => (
             <Link
               href={service.route}
@@ -37,7 +37,7 @@ const Services = () => {
                 isDarkMode
                   ? "dark:hover:bg-gray-700/50 bg-gray-800"
                   : "bg-white hover:bg-white/70"
-              }    hover:backdrop-invert hover:backdrop-opacity-10 dark:text-black  dark:bg-gray-800  flex-col justify-center items-center w-36 lg:w-52  rounded-3xl shadow-2xl  space-y-2 hover:-translate-y-3 hover:shadow-xl transition-all cursor-pointer`}
+              }    hover:backdrop-invert hover:backdrop-opacity-10 dark:text-black  dark:bg-gray-800  flex-col justify-center items-center w-36 lg:w-52  rounded-3xl shadow-md  space-y-2 hover:-translate-y-3 hover:shadow-xl transition-all cursor-pointer`}
             >
               <div className="p-1 sm:p-2 bg-amber-50 rounded-full ">
                 <Image

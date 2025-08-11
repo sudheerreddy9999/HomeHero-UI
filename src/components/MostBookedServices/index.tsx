@@ -83,7 +83,7 @@ const MostBookedServices = () => {
   return (
     <div
       className={`relative w-full px-4 py-6 ${
-        isDarkMode ? " text-white bg-gray-800" : " text-gray-700 "
+        isDarkMode ? " text-white bg-gray-900" : " text-gray-700 bg-white "
       }`}
     >
       <h2 className="text-xl sm:text-2xl  font-semibold mb-4 ">Most Booked Services</h2>

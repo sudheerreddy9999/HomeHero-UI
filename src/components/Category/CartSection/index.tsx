@@ -9,11 +9,10 @@ import type { AppDispatch } from "@/store/config/store";
 import { removeItemFromCart } from "@/store/actions/cart";
 import { useTheme } from "@/context/ThemeContext";
 
-
 const CartSection = () => {
-    const dispatch = useDispatch<AppDispatch>();
-    const { isDarkMode } = useTheme();
-  const { cartItems, totalAmount,subtotal,taxAmount } = useAppSelector(
+  const dispatch = useDispatch<AppDispatch>();
+  const { isDarkMode } = useTheme();
+  const { cartItems, totalAmount, subtotal, taxAmount } = useAppSelector(
     (state) => state.cart
   );
   const offers = [
@@ -22,19 +21,30 @@ const CartSection = () => {
     "🎁 Free home service on your 3rd booking",
   ];
 
-  const handleRemoveItem = (item:string)=>{
+  const handleRemoveItem = (item: string) => {
+    console.log("Ite sinsnssssssss ",item)
     dispatch(removeItemFromCart(item));
-  }
+  };
 
   return (
-    <div className={`w-full ${isDarkMode?'text-gray-200':'text-gray-800'}  pt-0`}>
+    <div
+      className={`w-full ${
+        isDarkMode ? "text-gray-200" : "text-gray-800"
+      }  pt-0`}
+    >
       <div className="flex flex-col  w-full sm:p-5 md:p-0 pt-0 gap-4 max-w-6xl mx-auto ">
         {cartItems.length > 0 ? (
-          <div className={`w-full flex  flex-col shadow-2xl rounded-2xl ${isDarkMode?'bg-gray-800':'bg-white'}  p-3`}>
+          <div
+            className={`w-full flex  flex-col shadow-2xl rounded-2xl ${
+              isDarkMode ? "bg-gray-800" : "bg-white"
+            }  p-3`}
+          >
             <h1 className="py-2 font-bold text-lg">Products</h1>
             <div className="">
               <table className="w-full table-auto border-separate border-spacing-y-2">
-                <thead className={`${isDarkMode?'bg-gray-600':'bg-gray-100'}  `}>
+                <thead
+                  className={`${isDarkMode ? "bg-gray-600" : "bg-gray-100"}  `}
+                >
                   <tr>
                     <th className="px-4 py-2 text-left text-sm font-medium">
                       Id
@@ -53,32 +63,35 @@ const CartSection = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {cartItems.map((item) => (
-                    <tr
-                      key={item.service_id}
-                      className=" hover:bg-gray-50   transition-colors"
-                    >
-                      <td className="px-4 py-2 text-sm ">
-                        {item.service_id}
-                      </td>
+                  {cartItems.map((item, index) => (
+                    <tr key={index} className="   transition-colors">
+                      <td className="px-4 py-2 text-sm ">{item.service_type_id}</td>
                       <td>
                         <Image
                           src={item.service_type_image_url}
                           alt="CartImages"
-                          className="w-10 h-10 rounded-md"
+                          width={70}
+                          height={20}
+                          style={{ width: "100%", height: "30px" }}
+                          className=" rounded-md"
                         />
                       </td>
                       <td className="px-4 text-sm py-2  ">
-                        {item.service_name}
+                        {item.service_type_name}
                       </td>
                       {/* <td className="px-4 py-2 text-sm text-gray-800">
                         {item.discountPercent}
                       </td> */}
-                      <td className="px-4 py-2 text-sm ">
-                        ${item.price}
-                      </td>
+                      <td className="px-4 py-2 text-sm ">${item.price}</td>
                       <td>
-                        <button className={` py-1.5 p-3.5 rounded-md ${isDarkMode?'bg-gray-600':'bg-gray-200'}  cursor-pointer`} onClick={()=>handleRemoveItem(String(item.service_id))}>
+                        <button
+                          className={` py-1.5 p-3.5 rounded-md ${
+                            isDarkMode ? "bg-gray-600" : "bg-gray-200"
+                          }  cursor-pointer`}
+                          onClick={() =>
+                            handleRemoveItem(String(item.service_type_id))
+                          }
+                        >
                           <FaMinus className="size-3" />
                         </button>
                       </td>
@@ -101,18 +114,25 @@ const CartSection = () => {
             </div>
           </div>
         ) : (
-          <div className={`w-full flex flex-col items-center justify-center h-44 shadow-2xl rounded-2xl ${isDarkMode?'bg-gray-800':'bg-white'} p-6 text-center`}>
+          <div
+            className={`w-full flex flex-col items-center justify-center h-44 shadow-2xl rounded-2xl ${
+              isDarkMode ? "bg-gray-800" : "bg-white"
+            } p-6 text-center`}
+          >
             <Image
               src={shopingCart}
               alt="emptyShopingCart"
-              className="size-16"
+              width={70}
+              height={20}
             />
-            <p className="mt-2  font-medium">
-              No items in the cart
-            </p>
+            <p className="mt-2  font-medium">No items in the cart</p>
           </div>
         )}
-        <div className={`w-full shadow-xl rounded-2xl ${isDarkMode?'bg-gray-800':'bg-white'} p-4 space-y-3`}>
+        <div
+          className={`w-full shadow-xl rounded-2xl ${
+            isDarkMode ? "bg-gray-800" : "bg-white"
+          } p-4 space-y-3`}
+        >
           <h2 className="text-lg font-bold">Available Offers</h2>
           <ul className="list-disc text-sm list-inside space-y-1 px-2 ">
             {offers.map((offer, idx) => (
@@ -120,7 +140,11 @@ const CartSection = () => {
             ))}
           </ul>
         </div>
-        <div className={`w-full shadow-xl hidden sm:block rounded-2xl ${isDarkMode?'bg-gray-800':'bg-white'} p-4 space-y-4`}>
+        <div
+          className={`w-full shadow-xl hidden sm:block rounded-2xl ${
+            isDarkMode ? "bg-gray-800" : "bg-white"
+          } p-4 space-y-4`}
+        >
           <h2 className="text-lg font-bold">Need Help?</h2>
           <div className="flex items-start gap-2 text-sm">
             <HelpCircle className="text-blue-500 size-4 mt-1" />

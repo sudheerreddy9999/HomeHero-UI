@@ -50,9 +50,35 @@ export const ServicesHomePageSkelton = () => {
                   <div className={`col-span-1 h-4 rounded ${bgBlock}`}></div>
                 </div> */}
                 <div className={`h-2.5 rounded ${bgBlock}`}></div>
-                 <div className={`h-2.5 w-10/12 mx-auto rounded ${bgBlock}`}></div>
+                <div
+                  className={`h-2.5 w-10/12 mx-auto rounded ${bgBlock}`}
+                ></div>
               </div>
             </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export const SearchItemSkelton = () => {
+  const { bgCard, bgBlock } = useSkeletonThemeClasses();
+  return (
+    <div className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6 p-3 ">
+      {Array.from({ length: 6 }).map((_, index) => (
+        <div
+          key={index}
+          className={`mx-auto w-full h-[90px] rounded-2xl shadow-2xl  ${bgCard}`}
+        >
+          <div className="flex p-2 h-full w-full space-x-1.5">
+            {" "}
+            <div
+              className={`w-3/12 h-full ${bgBlock} animate-pulse rounded-md`}
+            ></div>{" "}
+            <div
+              className={`w-10/12 h-full rounded-md animate-pulse ${bgBlock}`}
+            ></div>
           </div>
         </div>
       ))}

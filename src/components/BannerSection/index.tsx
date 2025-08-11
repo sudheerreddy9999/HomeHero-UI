@@ -50,7 +50,7 @@ const BannerSection = () => {
       {opensearchModel && (
         <div className="fixed inset-0 w-full bg-opacity-90 flex mt-16 justify-center  z-50 transition-opacity duration-300 ease-in-out">
           <div
-            className=" transform transition-all duration-300 ease-in-out scale-95  animate-fadeInUp flex flex-col bg-white   w-[100%] sm:w-[55%] py-4 pt-7 h-10/12 rounded-2xl shadow-2xl "
+            className={`transform transition-all duration-300 ease-in-out scale-95  animate-fadeInUp flex flex-col ${isDarkMode?'bg-gray-900':'bg-white'}    w-[100%] sm:w-[55%] py-4 pt-7 h-10/12 rounded-2xl shadow-2xl `}
             ref={modalRef}
           >
             <SearchModel />
