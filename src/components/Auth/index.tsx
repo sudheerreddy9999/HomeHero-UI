@@ -199,17 +199,27 @@ const Welcome = ({ onAuthClose }: AuthProps) => {
             <div className="flex justify-between w-full mb-6">
               {otpSentSuccessfully && (
                 <IoChevronBackOutline
-                  className="cursor-pointer"
+                  className={` ${
+                    enableVerifyOtpText
+                      ? "cursor-not-allowed"
+                      : "cursor-pointer"
+                  }`}
                   size={28}
-                  onClick={() => handleOtpBackEmail()}
+                  onClick={
+                    !enableVerifyBtn ? () => handleOtpBackEmail() : undefined
+                  }
                 />
               )}
 
               <h1 className="text-xl font-bold">Sign in</h1>
               <IoClose
                 size={28}
-                className="text-xl font-bold cursor-pointer"
-                onClick={() => handleCloseAuth()}
+                className={`text-xl font-bold ${
+                  enableVerifyOtpText ? "cursor-not-allowed" : "cursor-pointer"
+                }`}
+                onClick={
+                  !enableVerifyOtpText ? () => handleCloseAuth() : undefined
+                }
               />
             </div>
             {!otpSentSuccessfully ? (
@@ -243,7 +253,7 @@ const Welcome = ({ onAuthClose }: AuthProps) => {
                     />
                     <button
                       type="submit"
-                      className="absolute right-[1px] top-1/2 transform -translate-y-1/2 cursor-pointer hover:bg-gray-100 hover:h-12 hover:rounded-r-md"
+                      className="absolute right-[1px] top-1/2 transform -translate-y-1/2 cursor-pointer hover:h-12  hover:rounded-r-md"
                     >
                       <IoArrowForwardOutline size={28} />
                     </button>
@@ -268,7 +278,7 @@ const Welcome = ({ onAuthClose }: AuthProps) => {
               </>
             ) : (
               <>
-                <div className="text-center space-y-2 ">
+                <div className="text-center space-y-2  ">
                   <h1>Enter the Verification code send to </h1>
                   <h1>
                     {formik.values.email || localStorage.getItem("email")}
@@ -321,7 +331,7 @@ const Welcome = ({ onAuthClose }: AuthProps) => {
             <div className="fixed inset-0 w-full   bg-opacity-90 backdrop-blur-[1px] flex items-center justify-center z-999">
               <div
                 className={`shadow-2xl  ${
-                  isDarkMode ? "bg-gray-800 text-white" : " text-gray-700"
+                  isDarkMode ? " text-white" : " text-gray-700"
                 } w-[95%]  md:w-md p-8  rounded-md flex flex-col justify-center items-center space-y-3`}
                 style={{ height }}
               >
