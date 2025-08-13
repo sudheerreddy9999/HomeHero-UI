@@ -3,9 +3,9 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { getServicesAction } from "@/store/actions/services";
 import Link from "next/link";
-import Image from "../Image/image";
+import Image from "@/components/Image/image"
 import { useTheme } from "@/context/ThemeContext";
-import { ServicesHomePageSkelton } from "../skeletons";
+import { ServicesHomePageSkelton } from "@/components/skeletons"
 
 interface serviceItem {
   id: number;
@@ -39,12 +39,12 @@ const Services = () => {
                   : "bg-white hover:bg-white/70"
               }    hover:backdrop-invert hover:backdrop-opacity-10 dark:text-black  dark:bg-gray-800  flex-col justify-center items-center w-36 lg:w-52  rounded-3xl shadow-md  space-y-2 hover:-translate-y-3 hover:shadow-xl transition-all cursor-pointer`}
             >
-              <div className="p-1 sm:p-2 bg-amber-50 rounded-full ">
+              <div className={`p-1 sm:p-2 ${isDarkMode?'bg-white':'bg-amber-50'} rounded-full  `}>
                 <Image
                   src={service.image_url}
                   alt={service.name}
-                  width={28}
-                  height={28}
+                  width={30}
+                  height={30}
                   className=" w-6 h-6 lg:w-7 lg:h-7 rounded-lg"
                 />
               </div>

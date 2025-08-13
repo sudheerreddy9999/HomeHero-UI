@@ -3,7 +3,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useFormik } from "formik";
 import { IoArrowForwardOutline } from "react-icons/io5";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import OtpFeilds from "@/components/otpFeilds";
+import OtpFeilds from "@/components/Auth/OtpFeilds";
 import { useDispatch } from "react-redux";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
@@ -145,8 +145,8 @@ const Welcome = ({ onAuthClose }: AuthProps) => {
     const otpValue = otpRefValues.current.join("");
     setEnableVerifyBtnText(true);
     const payload = {
-        email: formik.values.email || localStorage.getItem("email") || "",
-        otp: otpValue,
+      email: formik.values.email || localStorage.getItem("email") || "",
+      otp: otpValue,
     };
     dispatch(verifyOtpAction(payload));
   };

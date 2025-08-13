@@ -1,13 +1,13 @@
 import React from "react";
-import BannerSection from "@/components/BannerSection";
+import BannerSection from "@/components/HomePageSection/BannerSection";
 // import IntroSection from "@/components/MainSection/introsection";
-import MobileServices from "@/components/services/MobileServices";
-import Services from "@/components/services";
+import MobileServices from "@/components/HomePageSection/Services/MobileServices";
+import Services from "@/components/HomePageSection/Services";
 import useIsMobile from "@/hooks/useIsMobile";
-import MostBookedServices from "@/components/MostBookedServices";
-import ComboPackages from "@/components/MainSection/ComboSection";
+import MostBookedServices from "@/components/HomePageSection/MostBookedServices";
+import ComboPackages from "@/components/HomePageSection/OffersSection/ComboSection";
 import { useTheme } from "@/context/ThemeContext";
-import OffersSection from "@/components/MainSection/OfferSection";
+import OffersSection from "@/components/HomePageSection/OffersSection/OfferSection";
 
 export default function Home() {
   const isMobile = useIsMobile();

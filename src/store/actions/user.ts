@@ -10,7 +10,9 @@ export const userDetailsAction = () => async (dispatch: AppDispatch) => {
     if (!token) {
       return dispatch(getUserDetailsError());
     }
-    const response = await get(apiEndpoints.USER_DETAILS);
+    const response = await get(apiEndpoints.USER_DETAILS, {
+      headers: { email: localStorage.getItem("email") || "" },
+    });
     if (response && response.status === 200) {
       dispatch(getUserDetails(response.data.data[0]));
     } else {

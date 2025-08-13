@@ -7,7 +7,7 @@ import { useTheme } from "@/context/ThemeContext";
 import { ServiceItem } from "@/types/serviceTypes";
 import useIsMobile from "@/hooks/useIsMobile";
 import MobileNonHome from "@/components/Nav/MobieNonHome";
-import MostBookedServices from "@/components/MostBookedServices";
+import MostBookedServices from "@/components/HomePageSection/MostBookedServices";
 import { getCategoryItemsAction } from "@/store/actions/services";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
@@ -117,7 +117,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ number, category }) => {
 
       <div
         className={`sm:pt-10 p-3 sm:px-10 ${
-          isDarkMode ? "bg-gray-800" : "bg-white"
+          isDarkMode ? "bg-gray-900" : "bg-white"
         }`}
       >
         <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 justify-between mt-12 sm:mt-10">

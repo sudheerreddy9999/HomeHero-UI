@@ -2,14 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FiArrowUpRight } from "react-icons/fi";
 import DynamicText from "./DynamicText";
-import Image from "../Image/image";
+import Image from "@/components/Image/image"
 import useIsMobile from "@/hooks/useIsMobile";
 import sofaImage from "@/assets/sofa.jpeg";
 import MobileViewSofa from "@/assets/sofa-mobile.jpeg";
 import darkModeSofaImage from "@/assets/darkSofa.webp";
 import darkMobileSOfa from "@/assets/sofadarkMb.webp";
 import { useTheme } from "@/context/ThemeContext";
-import SearchModel from "../Search/SearchModel";
+import SearchModel from "@/components/Search"
 
 const BannerSection = () => {
   const [opensearchModel, setOpenSearchModel] = useState(false);

@@ -6,8 +6,10 @@ import LogoIcon from "../assets/home-hero-icon.png";
 import ModeToggleSwitch from "@/components/Nav/modeswitch";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
+import darkCartMode from "@/assets/profile-icons/cart-darkMode.png";
 import Search from "@/components/Search";
 import { usePathname } from "next/navigation";
+import darkBookingsIcon from "@/assets/profile-icons/darkBookingIcon.png";
 import type { AppDispatch } from "@/store/config/store";
 import { handleUserLogout } from "@/store/actions/user";
 import { useAppSelector } from "@/hooks/useAppSelector";
@@ -131,12 +133,24 @@ export default function AuthorizedLayout({
                 <>
                   <div className="relative group inline-block">
                     <Link href="/bookings">
-                      <LuNotebookText
-                        size={22}
-                        className={`${
-                          isMobileView ? "text-gray-900" : "text-gray-800"
-                        } cursor-pointer`}
-                      />
+                      {isDarkMode ? (
+                        <Image
+                          src={darkBookingsIcon}
+                          style={{ width: "20px", height: "18px" }}
+                          alt="DarkCart"
+                        />
+                      ) : (
+                        <LuNotebookText
+                          size={22}
+                          className={`${
+                            isMobileView
+                              ? "text-gray-900"
+                              : `${
+                                  isDarkMode ? "text-gray-700" : "text-gray-800"
+                                } `
+                          } cursor-pointer`}
+                        />
+                      )}
                     </Link>
 
                     <div className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-gray-200 text-black text-xs px-2 py-1.5 rounded shadow-md ">
@@ -145,12 +159,24 @@ export default function AuthorizedLayout({
                   </div>
                   <div className="relative group inline-block">
                     <Link href="/cart">
-                      <BsCart4
-                        size={22}
-                        className={`${
-                          isMobileView ? "text-gray-900" : "text-gray-800"
-                        } cursor-pointer`}
-                      />
+                      {isDarkMode ? (
+                        <Image
+                          src={darkCartMode}
+                          style={{ width: "20px", height: "18px" }}
+                          alt="DarkCart"
+                        />
+                      ) : (
+                        <BsCart4
+                          size={22}
+                          className={`${
+                            isMobileView
+                              ? "text-gray-900"
+                              : `${
+                                  isDarkMode ? "text-gray-700" : "text-gray-800"
+                                } `
+                          } cursor-pointer`}
+                        />
+                      )}
                     </Link>
                     <div className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-gray-200 text-black text-xs px-2 py-1.5 rounded shadow-md ">
                       Cart

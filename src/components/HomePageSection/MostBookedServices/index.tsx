@@ -6,7 +6,7 @@ import geaser from "@/assets/MostBookedServices/geaser.jpg";
 import waterPurifier from "@/assets/MostBookedServices/water-purifier.jpg";
 import tapFix from "@/assets/MostBookedServices/tap-fix.jpg";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import Image from "../Image/image";
+import Image from "../../Image/image";
 import { useTheme } from "@/context/ThemeContext";
 
 const services = [

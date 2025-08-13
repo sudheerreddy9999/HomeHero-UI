@@ -13,6 +13,7 @@ interface ChatBotState {
   enableSendButton?: boolean;
   loading?: boolean;
   sessionId?: string;
+  feedbackStatus?: null | string;
 }
 const sessionId = getOrCreateDailySessionId();
 
@@ -27,6 +28,7 @@ const initialState: ChatBotState = {
   enableSendButton: true,
   loading: false,
   sessionId: sessionId,
+  feedbackStatus:null
 };
 
 const chatBotSlice = createSlice({
@@ -60,9 +62,12 @@ const chatBotSlice = createSlice({
         },
       ];
     },
+    updateFeedBackStatus:(state,action)=>{
+      state.feedbackStatus=action.payload
+    }
   },
 });
 
-export const { addUserMessage, addBotMessage, clearMessages } =
+export const { addUserMessage, addBotMessage, clearMessages,updateFeedBackStatus } =
   chatBotSlice.actions;
 export default chatBotSlice.reducer;

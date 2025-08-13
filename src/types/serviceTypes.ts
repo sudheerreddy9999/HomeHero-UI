@@ -33,3 +33,8 @@ export interface GetServiceSearch{
     service_name:string;
   }
 }
+
+export interface FeedBackType{
+  session_id:string,
+  status:string
+}

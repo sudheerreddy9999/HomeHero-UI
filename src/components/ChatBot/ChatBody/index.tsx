@@ -8,12 +8,17 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { sendMessageAction } from "@/store/actions/chat-bot";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/store/config/store";
+import {
+  RefreshChatAction,
+  HandleUserFeedBack,
+} from "@/store/actions/chat-bot";
 
 const ChatBody = () => {
   const { isDarkMode } = useTheme();
   const dispatch = useDispatch<AppDispatch>();
   const [userInputMessage, setUserInputMessage] = useState("");
-  const { enableSendButton, sessionId } = useAppSelector(
+  const [isSpinning, setIsSpinning] = useState(false);
+  const { enableSendButton, sessionId, feedbackStatus } = useAppSelector(
     (state) => state.chatBot
   );
   const handleSendMessage = () => {
@@ -25,6 +30,21 @@ const ChatBody = () => {
     } catch (error) {
       console.error("Error sending message:", error);
     }
+  };
+  const handleRefresh = () => {
+    setIsSpinning(true);
+    dispatch(RefreshChatAction());
+    setTimeout(() => {
+      setIsSpinning(false);
+    }, 1000);
+  };
+
+  const handleLike = (status:string) => {
+    const payload = {
+      session_id: String(sessionId || "").trim(),
+      status: status,
+    };
+    dispatch(HandleUserFeedBack(payload));
   };
   return (
     <div
@@ -84,11 +104,25 @@ const ChatBody = () => {
         </div>
         <div className="flex  items-center justify-between">
           <div className="flex items-center space-x-2">
-            <BiLike size={20} className="text-gray-500 cursor-pointer" />
-            <BiDislike size={20} className="text-gray-500 cursor-pointer" />
+            <BiLike
+              size={20}
+              className={`cursor-pointer ${
+                feedbackStatus == "like" ? "text-blue-800" : "text-gray-500"
+              }`}
+              onClick={()=>handleLike("like")}
+            />
+            <BiDislike
+              size={20}
+              className={`cursor-pointer ${
+                feedbackStatus == "dislike" ? "text-blue-800" : "text-gray-500"
+              }`}
+              onClick={()=>handleLike("dislike")}
+            />
             <MdOutlineRefresh
               size={20}
-              className="text-gray-500 cursor-pointer"
+              className={`text-gray-500 cursor-pointer transition-transform duration-500 
+        ${isSpinning ? "animate-spin" : ""}`}
+              onClick={handleRefresh}
             />
           </div>
           <p

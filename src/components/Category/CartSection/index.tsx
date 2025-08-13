@@ -22,7 +22,6 @@ const CartSection = () => {
   ];
 
   const handleRemoveItem = (item: string) => {
-    console.log("Ite sinsnssssssss ",item)
     dispatch(removeItemFromCart(item));
   };
 
