@@ -1,4 +1,4 @@
-import Services from "@/components/services";
+import Services from "../../Services";
 import Image from "@/components/Image/image";
 // import ServicesImg from "@/assets/services-Image.png"
 import BannerImage from "@/assets/icons/banner-image.jpg"
