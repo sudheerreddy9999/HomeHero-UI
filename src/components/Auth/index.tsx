@@ -145,10 +145,8 @@ const Welcome = ({ onAuthClose }: AuthProps) => {
     const otpValue = otpRefValues.current.join("");
     setEnableVerifyBtnText(true);
     const payload = {
-      headers: {
         email: formik.values.email || localStorage.getItem("email") || "",
         otp: otpValue,
-      },
     };
     dispatch(verifyOtpAction(payload));
   };
