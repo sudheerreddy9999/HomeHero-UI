@@ -57,14 +57,14 @@ const BannerSection = () => {
           </div>
         </div>
       )}
-      <div className="relative  w-full h-[55vh] sm:h-[65vh]">
+      <div className="relative  w-full h-[45vh] sm:h-[65vh]">
         <Image
           src={getSofaImage()}
           className="w-full h-full object-center sm:rounded-b-2xl"
           alt="Background"
         />
         <div className="absolute inset-0 flex flex-col justify-center items-center  bg-opacity-30">
-          <h1 className={`text-3xl sm:text-4xl font-bold text-white`}>
+          <h1 className={`text-xl sm:text-4xl font-bold text-white`}>
             Welcome to HomeHero
           </h1>
           {/* <p className="text-lg text-white mt-2">

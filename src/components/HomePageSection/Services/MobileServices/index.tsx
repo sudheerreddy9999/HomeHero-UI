@@ -37,7 +37,7 @@ const MobileServices = () => {
         route: "/category/electrical",
       },
       {
-        title: "Cab Services",
+        title: "saloon Services",
         description: "Safe and affordable rides repairs and installations.",
         imageUrl: CabService,
         route: "/category/saloon",
@@ -48,25 +48,25 @@ const MobileServices = () => {
   const { isDarkMode } = useTheme();
   return (
     <div>
-      <p className="text-xl font-semibold px-2 dark:text-white mb-4">
+      <p className=" font-[600] px-2 dark:text-white mb-3">
         Top-Rated Services
       </p>
       <div className="flex flex-col text-start items-center gap-6">
-        <div className="flex justify-center items-center gap-4">
+        <div className="flex justify-center items-center gap-6">
           {serviceList.slice(0, 3).map((service, index) => (
             <Link
               href={service.route}
               key={index}
               className={`${
                 isDarkMode ? "bg-gray-800" : "bg-gray-50"
-              }   rounded-lg w-28 h-24 shadow-lg flex flex-col justify-center hover:-translate-y-1 items-center space-y-2`}
+              }   rounded-lg w-24 h-20 shadow-lg flex flex-col justify-center hover:-translate-y-1 items-center space-y-2`}
             >
               <Image
                 src={service.imageUrl}
-                className="size-[40px] "
+                className="size-[30px] w-[35px] "
                 alt="serviceImage"
               />
-              <p className="text-center text-sm font-medium">{service.title}</p>
+              <p className="text-center text-xs font-medium">{service.title}</p>
             </Link>
           ))}
         </div>
@@ -77,21 +77,21 @@ const MobileServices = () => {
               key={index + 3}
               className={`${
                 isDarkMode ? "bg-gray-800" : "bg-gray-50"
-              }  dark:bg-gray-100 rounded-lg w-28 h-24 shadow-lg hover:-translate-y-1 flex flex-col justify-center items-center space-y-2`}
+              }  dark:bg-gray-100 rounded-lg w-24 h-20 shadow-lg hover:-translate-y-1 flex flex-col justify-center items-center space-y-2`}
             >
               <Link
                 href={service.route}
                 key={index}
                 className={`${
                   isDarkMode ? "bg-gray-800" : "bg-gray-50"
-                }   rounded-lg w-28 h-24 shadow-lg flex flex-col justify-center hover:-translate-y-1 items-center space-y-2`}
+                }   rounded-lg w-24 h-20  shadow-lg flex flex-col justify-center hover:-translate-y-1 items-center space-y-2`}
               >
                 <Image
                   src={service.imageUrl}
-                  className="size-[40px]"
+                  className="size-[30px] w-[35px] "
                   alt="serviceImage"
                 />
-                <p className="text-center text-sm font-medium">
+                <p className="text-center text-xs font-medium">
                   {service.title}
                 </p>
               </Link>

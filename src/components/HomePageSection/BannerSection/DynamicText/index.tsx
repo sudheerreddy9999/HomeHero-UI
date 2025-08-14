@@ -50,7 +50,7 @@ const DynamicText = () => {
   }, [charIndex, headingIndex, loopCompleted, headings]);
   return (
     <>
-      <div className=" text-[16px] text-white lg:text-2xl dark:text-gray-100 md:text-xl font-semibold  text-center mt-4 ">
+      <div className=" text-[14px] text-white lg:text-2xl dark:text-gray-100 md:text-xl font-semibold  text-center mt-4 ">
         {headings[headingIndex].static}{" "}
         <span>
           {typedText}

@@ -83,10 +83,10 @@ const MostBookedServices = () => {
   return (
     <div
       className={`relative w-full px-4 py-6 ${
-        isDarkMode ? " text-white bg-gray-900" : " text-gray-700 bg-white "
+        isDarkMode ? " text-white bg-gray-900" : " text-gray-700 "
       }`}
     >
-      <h2 className="text-xl sm:text-2xl  font-semibold mb-4 ">Most Booked Services</h2>
+      <h2 className=" sm:text-2xl  font-[600] mb-4 ">Most Booked Services</h2>
       {canScrollLeft && (
         <button
           onClick={() => scroll("left")}
@@ -129,7 +129,7 @@ const MostBookedServices = () => {
               />
             </div>
             <div className="p-2 ">
-              <h3 className="service-name mb-1 text-sm sm:text-medium font-semibold ">
+              <h3 className="service-name mb-1 text-xs sm:text-medium font-semibold ">
                 {service.name}
               </h3>
               <div className="flex justify-between items-center text-sm">

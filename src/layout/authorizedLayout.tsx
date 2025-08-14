@@ -237,9 +237,10 @@ export default function AuthorizedLayout({
 
       <main>
         {children}
-        {isMobileView ? isHome && <MobileNav /> : <ChatBot />}
+        {isMobileView ? isHome && undefined : <ChatBot />}
+        <MobileNav />
       </main>
-      {!isMobileView && <Footer />}
+       <Footer />
     </>
   );
 }

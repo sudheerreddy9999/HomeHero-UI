@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import ChatConvo from "../ChatConvo";
 import { MdOutlineRefresh } from "react-icons/md";
-import { BiLike, BiDislike } from "react-icons/bi";
+import { BiLike, BiDislike,BiSolidDislike,BiSolidLike   } from "react-icons/bi";
 import { IoMdSend } from "react-icons/io";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { sendMessageAction } from "@/store/actions/chat-bot";
@@ -39,7 +39,7 @@ const ChatBody = () => {
     }, 1000);
   };
 
-  const handleLike = (status:string) => {
+  const handleLike = (status: string) => {
     const payload = {
       session_id: String(sessionId || "").trim(),
       status: status,
@@ -104,20 +104,24 @@ const ChatBody = () => {
         </div>
         <div className="flex  items-center justify-between">
           <div className="flex items-center space-x-2">
-            <BiLike
-              size={20}
-              className={`cursor-pointer ${
-                feedbackStatus == "like" ? "text-blue-800" : "text-gray-500"
-              }`}
-              onClick={()=>handleLike("like")}
-            />
-            <BiDislike
-              size={20}
-              className={`cursor-pointer ${
-                feedbackStatus == "dislike" ? "text-blue-800" : "text-gray-500"
-              }`}
-              onClick={()=>handleLike("dislike")}
-            />
+            {feedbackStatus === "like" ? (
+              <BiSolidLike  size={20} className={`cursor-pointer`} />
+            ) : (
+              <BiLike
+                size={20}
+                className={`cursor-pointer`}
+                onClick={() => handleLike("like")}
+              />
+            )}
+             {feedbackStatus === "dislike" ? (
+              <BiSolidDislike size={20} className={`cursor-pointer `} />
+            ) : (
+              <BiDislike
+                size={20}
+                className={`cursor-pointer `}
+                onClick={() => handleLike("dislike")}
+              />
+            )}
             <MdOutlineRefresh
               size={20}
               className={`text-gray-500 cursor-pointer transition-transform duration-500 
@@ -126,7 +130,7 @@ const ChatBody = () => {
             />
           </div>
           <p
-            className={`text-xs ${isDarkMode ? "text-white" : "text-gray-700"}`}
+            className={`text-xs cursor-pointer ${isDarkMode ? "text-white" : "text-gray-700"}`}
           >
             Powered by HomeHero
           </p>

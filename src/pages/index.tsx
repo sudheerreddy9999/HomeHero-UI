@@ -34,7 +34,7 @@ export default function Home() {
       </div>
       <div></div>
       {/* <IntroSection /> */}
-      <div className="mt-6 xs:mt-24 md:mt-24 flex items-start">
+      <div className=" xs:mt-24 md:mt-24 flex items-start">
         <MostBookedServices />
       </div>
       <div>
