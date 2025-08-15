@@ -122,3 +122,31 @@ export const put = async (
     }
   }
 };
+
+
+export const del = async (
+  url: string,
+  body?: unknown,
+  params?: RequestParams,
+  apiType?: ApiType
+): Promise<AxiosResponse | undefined> => {
+  try {
+    const response = await axiosInstance.delete(url, {
+      headers: params?.headers,
+      params: params?.params,
+      data: body, // JSON body for DELETE
+      apiType,
+    } as CustomAxiosRequestConfig);
+    return response;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.message ?? "");
+      return error.response;
+    } else if (error instanceof Error) {
+      console.error(error.message ?? "");
+    } else {
+      console.error(error, "Unknown Error Found");
+    }
+  }
+};
+

@@ -52,18 +52,18 @@ const MobileServices = () => {
         Top-Rated Services
       </p>
       <div className="flex flex-col text-start items-center gap-6">
-        <div className="flex justify-center items-center gap-6">
+        <div className="flex justify-center items-center gap-4">
           {serviceList.slice(0, 3).map((service, index) => (
             <Link
               href={service.route}
               key={index}
               className={`${
                 isDarkMode ? "bg-gray-800" : "bg-gray-50"
-              }   rounded-lg w-24 h-20 shadow-lg flex flex-col justify-center hover:-translate-y-1 items-center space-y-2`}
+              }   rounded-lg w-28 h-24 shadow-lg flex flex-col justify-center hover:-translate-y-1 items-center space-y-2`}
             >
               <Image
                 src={service.imageUrl}
-                className="size-[30px] w-[35px] "
+                className="size-[40px] "
                 alt="serviceImage"
               />
               <p className="text-center text-xs font-medium">{service.title}</p>
@@ -73,22 +73,17 @@ const MobileServices = () => {
 
         <div className="flex justify-center gap-4">
           {serviceList.slice(3).map((service, index) => (
-            <div
-              key={index + 3}
-              className={`${
-                isDarkMode ? "bg-gray-800" : "bg-gray-50"
-              }  dark:bg-gray-100 rounded-lg w-24 h-20 shadow-lg hover:-translate-y-1 flex flex-col justify-center items-center space-y-2`}
-            >
+            <div key={index + 3}>
               <Link
                 href={service.route}
                 key={index}
                 className={`${
                   isDarkMode ? "bg-gray-800" : "bg-gray-50"
-                }   rounded-lg w-24 h-20  shadow-lg flex flex-col justify-center hover:-translate-y-1 items-center space-y-2`}
+                }   rounded-lg w-28 h-24  shadow-lg flex flex-col justify-center hover:-translate-y-1 items-center space-y-2`}
               >
                 <Image
                   src={service.imageUrl}
-                  className="size-[30px] w-[35px] "
+                  className="size-[40px]"
                   alt="serviceImage"
                 />
                 <p className="text-center text-xs font-medium">

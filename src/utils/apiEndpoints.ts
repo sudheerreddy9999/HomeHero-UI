@@ -7,5 +7,8 @@ export const apiEndpoints ={
     SEARCH_SERVICES:'/service/search',
     CHAT_CHAT:"chat/chat",
     TRENDING_SERVICES:"/service/random",
-    CHAT_FEEDBACK:"/chat/feedback"    
+    CHAT_FEEDBACK:"/chat/feedback",
+    ADD_CART_ITEM:"/service/cart/add",
+    DELETE_CART_ITEM:"/service/cart/delete",
+    GET_CART_ITEMS:"/service/cart/items"
 }

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ServiceItem } from "@/types/serviceTypes";
+import { ServiceItem, CartPost } from "@/types/serviceTypes";
 
 const TAX_RATE = 0.18;
 
@@ -9,15 +9,15 @@ const initialState = {
   subtotal: 0,
   taxAmount: 0,
   totalQuantity: 0,
+  isLoaded: false,
 };
 
 const calculateTotals = (state: typeof initialState) => {
   let subtotal = 0;
-  let totalQuantity = 0;
+  const totalQuantity = state.cartItems.length;
 
   state.cartItems.forEach((item) => {
-    subtotal += Number(item.offerPrice);
-    totalQuantity += 1;
+    subtotal += Number(item.offerPrice || 0);
   });
 
   const taxAmount = parseFloat((subtotal * TAX_RATE).toFixed(2));
@@ -33,25 +33,32 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    getCartItems: (state, action) => {
+      const payloadArray = Array.isArray(action.payload) ? action.payload : [];
+      state.cartItems = payloadArray as ServiceItem[];
+
+      calculateTotals(state);
+    },
+    setIsLoaded: (state, action: PayloadAction<boolean>) => {
+      state.isLoaded = action.payload;
+    },
     addToCartReducer: (state, action: PayloadAction<ServiceItem>) => {
       if (
         state.cartItems.some(
-          (item: ServiceItem) =>
-            item.service_type_id === action.payload.service_type_id
+          (item) => item.service_type_id === action.payload.service_type_id
         )
       ) {
         console.warn(
-          `Item with id ${action.payload.service_type_id} is already in the cart.`
+          `Item with id ${action.payload.service_id} is already in the cart.`
         );
         return;
-      } else {
-        state.cartItems.push(action.payload);
-        calculateTotals(state);
       }
+      state.cartItems.push(action.payload);
+      calculateTotals(state);
     },
-    removeItemReducer: (state, action) => {
+    removeItemReducer: (state, action: PayloadAction<CartPost>) => {
       state.cartItems = state.cartItems.filter(
-        (item: ServiceItem) => item.service_type_id !== Number(action.payload)
+        (item) => item.service_type_id !== Number(action.payload.service_id)
       );
       calculateTotals(state);
     },
@@ -61,6 +68,12 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCartReducer, removeItemReducer, caliculateTotals } =
-  cartSlice.actions;
+export const {
+  addToCartReducer,
+  removeItemReducer,
+  caliculateTotals,
+  getCartItems,
+  setIsLoaded,
+} = cartSlice.actions;
+
 export default cartSlice.reducer;

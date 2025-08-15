@@ -12,6 +12,7 @@ import { useTheme } from "@/context/ThemeContext";
 const CartSection = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { isDarkMode } = useTheme();
+  const {userDetails} = useAppSelector((state)=>state.user)
   const { cartItems, totalAmount, subtotal, taxAmount } = useAppSelector(
     (state) => state.cart
   );
@@ -21,8 +22,20 @@ const CartSection = () => {
     "🎁 Free home service on your 3rd booking",
   ];
 
-  const handleRemoveItem = (item: string) => {
-    dispatch(removeItemFromCart(item));
+  const handleRemoveItem = async (itemId: number) => {
+    try {
+      if (!userDetails) {
+        throw new Error("User details not loaded");
+      }
+      const payload = {
+        user_id: userDetails.user_id,
+        service_id: itemId,
+      };
+
+      await dispatch(removeItemFromCart(payload));
+    } catch (error) {
+      console.log("Error from component:", error);
+    }
   };
 
   return (
@@ -71,12 +84,12 @@ const CartSection = () => {
                           alt="CartImages"
                           width={70}
                           height={20}
-                          style={{ width: "100%", height: "30px" }}
+                          style={{ width: "40%", height: "30px" }}
                           className=" rounded-md"
                         />
                       </td>
                       <td className="px-4 text-sm py-2  ">
-                        {item.service_type_name}
+                        {item.service_name}
                       </td>
                       {/* <td className="px-4 py-2 text-sm text-gray-800">
                         {item.discountPercent}
@@ -88,7 +101,7 @@ const CartSection = () => {
                             isDarkMode ? "bg-gray-600" : "bg-gray-200"
                           }  cursor-pointer`}
                           onClick={() =>
-                            handleRemoveItem(String(item.service_type_id))
+                            handleRemoveItem((item.service_type_id))
                           }
                         >
                           <FaMinus className="size-3" />

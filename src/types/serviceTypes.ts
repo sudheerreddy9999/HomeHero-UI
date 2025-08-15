@@ -16,10 +16,11 @@ export interface ServiceItem {
   service_type_description: string;
   service_type_image_url: string;
   price: string;
-  offerPrice:string;
-  service_type_id:number
+  offerPrice: string;
+  service_type_id: number;
   duration_minutes: number;
 }
+
 
 
 export interface GetCategoryItemsType{
@@ -37,4 +38,9 @@ export interface GetServiceSearch{
 export interface FeedBackType{
   session_id:string,
   status:string
+}
+
+export interface CartPost{
+  user_id:number;
+  service_id:number
 }

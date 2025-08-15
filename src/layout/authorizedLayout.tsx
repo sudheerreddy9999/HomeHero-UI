@@ -34,6 +34,8 @@ export default function AuthorizedLayout({
   const [scrollPercent, setScrollPercent] = useState(0);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const userDetails = useAppSelector((state) => state.user.userDetails);
+  const { cartItems } = useAppSelector((state) => state.cart);
+  const totalQuantity = cartItems.length;
   const dispatch = useDispatch<AppDispatch>();
   const isMobileView = isMobile();
   const { isDarkMode } = useTheme();
@@ -181,6 +183,11 @@ export default function AuthorizedLayout({
                     <div className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-gray-200 text-black text-xs px-2 py-1.5 rounded shadow-md ">
                       Cart
                     </div>
+                    {totalQuantity > 0 && (
+                      <div className="absolute -top-3 left-4.5 text-center size-4.5  bg-gray-200 text-black text-[10px] p-1 rounded-full shadow-md ">
+                        {totalQuantity}
+                      </div>
+                    )}
                   </div>
                 </>
               )}
@@ -240,7 +247,7 @@ export default function AuthorizedLayout({
         {isMobileView ? isHome && undefined : <ChatBot />}
         <MobileNav />
       </main>
-       <Footer />
+      <Footer />
     </>
   );
 }

@@ -18,11 +18,14 @@ const SelectedCategory = ({ selectedItems, height }: SelectedCategoryProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const { isDarkMode } = useTheme();
   const isMobile = useIsMobile();
-
   const { cartItems } = useAppSelector((state) => state.cart);
+  const { userDetails } = useAppSelector((state) => state.user);
 
   const handleAddToCart = async (item: ServiceItem) => {
     try {
+      if (!item.service_type_id) {
+        return;
+      }
       await dispatch(addToCartAction(item));
     } catch (error) {
       console.log("Error from component:", error);
@@ -31,14 +34,24 @@ const SelectedCategory = ({ selectedItems, height }: SelectedCategoryProps) => {
 
   const handleRemoveFromCart = async (itemId: number) => {
     try {
-      await dispatch(removeItemFromCart(itemId));
+      if (!userDetails) {
+        throw new Error("User details not loaded");
+      }
+      const payload = {
+        user_id: userDetails.user_id,
+        service_id: itemId,
+      };
+
+      await dispatch(removeItemFromCart(payload));
     } catch (error) {
       console.log("Error from component:", error);
     }
   };
-
   const isInCart = (itemId: number) => {
-    return cartItems.some((cartItem) => cartItem.service_type_id === itemId);
+    return (
+      Array.isArray(cartItems) &&
+      cartItems.some((cartItem) => cartItem.service_id === itemId)
+    );
   };
 
   return (
@@ -47,7 +60,7 @@ const SelectedCategory = ({ selectedItems, height }: SelectedCategoryProps) => {
       style={{ height: !isMobile ? `${height}px` : undefined }}
     >
       {selectedItems.map((item, index) => {
-        const added = isInCart(item.service_type_id);
+        const added = item.service_type_id !== undefined ? isInCart(item.service_type_id) : false;
 
         return (
           <div
@@ -57,8 +70,8 @@ const SelectedCategory = ({ selectedItems, height }: SelectedCategoryProps) => {
             } rounded-2xl h-52 shadow-xl overflow-hidden transition-transform duration-300 hover:scale-[1.02]`}
           >
             <Image
-              src={item.service_type_image_url}
-              alt={item.service_name}
+              src={item.service_type_image_url || ""}
+              alt={item.service_name||""}
               width={400}
               height={100}
               style={{ width: "100%", height: "124px" }}
@@ -92,12 +105,12 @@ const SelectedCategory = ({ selectedItems, height }: SelectedCategoryProps) => {
                   </span>
                 </div>
 
-                {added ? (
+                {added && item.service_type_id !== undefined ? (
                   <button
                     className=" w-2/12 flex justify-center items-center p-2.5 pl-1  border border-blue-500  text-gray-700 text-sm font-medium py-1.5 rounded-lg transition cursor-pointer"
-                    onClick={() => handleRemoveFromCart(item.service_type_id)}
+                    onClick={() => handleRemoveFromCart(item.service_type_id as number)}
                   >
-                     <FaMinus className="ml-1.5" />
+                    <FaMinus className="ml-1.5" />
                   </button>
                 ) : (
                   <button

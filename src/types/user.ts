@@ -9,5 +9,6 @@ export interface UserDetailsType {
     profile_img: string;
     gender: string | null;
     active: 'Y' | 'N';
+    user_id:number
   }
   

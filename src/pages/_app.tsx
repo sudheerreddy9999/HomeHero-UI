@@ -14,6 +14,7 @@ import { userDetailsAction } from "@/store/actions/user";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { ThemeProvider } from "@/context/ThemeContext";
 import type { AppDispatch } from "@/store/config/store";
+import { getCartItemsAction } from "@/store/actions/cart";
 // import useDarkMode from "@/hooks/useDarkMode";
 
 type NextPageWithLayout = NextPage & {
@@ -32,6 +33,11 @@ function InnerApp({ Component, pageProps }: AppPropsWithLayout) {
       dispatch(userDetailsAction());
     }
   }, [dispatch]);
+  useEffect(()=>{
+    if(userDetails){
+          dispatch(getCartItemsAction());
+    }
+  },[dispatch,userDetails])
   if (isLoading) {
     return (
       <div className="fixed inset-0 w-full bg-opacity-90 flex items-center justify-center z-50">

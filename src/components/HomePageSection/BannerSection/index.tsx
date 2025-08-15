@@ -9,7 +9,7 @@ import MobileViewSofa from "@/assets/sofa-mobile.jpeg";
 import darkModeSofaImage from "@/assets/darkSofa.webp";
 import darkMobileSOfa from "@/assets/sofadarkMb.webp";
 import { useTheme } from "@/context/ThemeContext";
-import SearchModel from "@/components/Search"
+import SearchModel from "@/components/Search/SearchModel";
 
 const BannerSection = () => {
   const [opensearchModel, setOpenSearchModel] = useState(false);

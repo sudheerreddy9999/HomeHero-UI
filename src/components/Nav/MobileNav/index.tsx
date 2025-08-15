@@ -18,7 +18,7 @@ const MobileNav = () => {
   const { isDarkMode } = useTheme();
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  const {totalQuantity} = useAppSelector((state)=>state.cart);
+  const {cartItems} = useAppSelector((state)=>state.cart);
 
   const navItems = [
     {
@@ -28,7 +28,7 @@ const MobileNav = () => {
       count: 0,
     },
     { href: "/bookings", label: "Bookings", icon: <LuBookCheck size={24} />, count: 0 },
-    { href: "/cart", label: "Cart", icon: <IoCartOutline size={24} />, count: totalQuantity },
+    { href: "/cart", label: "Cart", icon: <IoCartOutline size={24} />, count: cartItems.length },
     { href: "/acount", label: "Account", icon: <MdManageAccounts size={24} />, count: 0 },
   ];
 

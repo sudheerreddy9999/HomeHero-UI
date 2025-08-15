@@ -75,7 +75,6 @@ const Search = ({ heading, seachPlaceholder, place }: seachProps) => {
               size={25}
             />
           </div>
-          <h1>Hello Sudheer</h1>
         </div>
       ) : (
         <div
