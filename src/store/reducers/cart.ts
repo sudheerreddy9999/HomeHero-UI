@@ -36,7 +36,6 @@ export const cartSlice = createSlice({
     getCartItems: (state, action) => {
       const payloadArray = Array.isArray(action.payload) ? action.payload : [];
       state.cartItems = payloadArray as ServiceItem[];
-
       calculateTotals(state);
     },
     setIsLoaded: (state, action: PayloadAction<boolean>) => {

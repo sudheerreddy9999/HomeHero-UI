@@ -41,6 +41,5 @@ export interface FeedBackType{
 }
 
 export interface CartPost{
-  user_id:number;
   service_id:number
 }

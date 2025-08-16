@@ -12,7 +12,6 @@ import { useTheme } from "@/context/ThemeContext";
 const CartSection = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { isDarkMode } = useTheme();
-  const {userDetails} = useAppSelector((state)=>state.user)
   const { cartItems, totalAmount, subtotal, taxAmount } = useAppSelector(
     (state) => state.cart
   );
@@ -24,11 +23,7 @@ const CartSection = () => {
 
   const handleRemoveItem = async (itemId: number) => {
     try {
-      if (!userDetails) {
-        throw new Error("User details not loaded");
-      }
       const payload = {
-        user_id: userDetails.user_id,
         service_id: itemId,
       };
 
@@ -88,8 +83,8 @@ const CartSection = () => {
                           className=" rounded-md"
                         />
                       </td>
-                      <td className="px-4 text-sm py-2  ">
-                        {item.service_name}
+                      <td className="px-4 text-xs py-2  ">
+                        {item.service_type_name}
                       </td>
                       {/* <td className="px-4 py-2 text-sm text-gray-800">
                         {item.discountPercent}
