@@ -103,16 +103,16 @@ const MobileHomeSearch: React.FC<MobileHomeSearchProps> = ({
           </div>
         </div>
         <div
-          className={`grid grid-cols-1 gap-2 sm:gap-4 space-y-0.5  mt-2 p-4 px-2 overflow-auto h-[90vh] `}
+          className={`flex  flex-col  sm:gap-4 space-y-2  mt-2 p-4 px-2 overflow-auto h-[90vh] `}
         >
-          {currentItems.map((item: ServiceItem, index) => (
+          {currentItems.slice(0,4).map((item: ServiceItem, index) => (
             <div
               key={index}
               className={` custom-scrollbar service-card relative ${
                 isDarkMode ? "bg-gray-700" : "bg-white"
               } ${
                 isMobile ? "h-[65px]" : "h-[90px]"
-              }  rounded-2xl flex  shadow-2xl overflow-hidden transition-transform duration-300 hover:scale-[1.02] p-2`}
+              }   flex  border-b-1  border-gray-600 overflow-hidden transition-transform duration-300 hover:scale-[1.02] p-2`}
             >
               <div>
                 <Image
@@ -121,7 +121,7 @@ const MobileHomeSearch: React.FC<MobileHomeSearchProps> = ({
                   width={200}
                   height={30}
                   className={`${
-                    isMobile ? "w-20" : "w-32"
+                    isMobile ? "w-16" : "w-32"
                   } h-full object-fit rounded-md`}
                 />
               </div>
@@ -140,7 +140,7 @@ const MobileHomeSearch: React.FC<MobileHomeSearchProps> = ({
                       {item.service_type_name}
                     </p>
                   </div>
-                  <p className="text-[10px] mb-1">
+                  <p className="text-[10px] pb-3 text-start">
                     {item.service_type_description}
                   </p>
                 </div>

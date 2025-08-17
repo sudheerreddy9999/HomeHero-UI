@@ -3,9 +3,12 @@ import Link from "next/link";
 import { useTheme } from "@/context/ThemeContext";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import CartItems from "@/components/Cart/Items";
+import MobileNonHome from "@/components/Nav/MobieNonHome";
+import useIsMobile from "@/hooks/useIsMobile";
 import CartSummary from "@/components/Cart/CartSummary";
 const UserCart = () => {
   const { isDarkMode } = useTheme();
+  const isMobile = useIsMobile();
   const { cartItems } = useAppSelector((state) => state.cart);
   return (
     <div
@@ -13,6 +16,7 @@ const UserCart = () => {
         isDarkMode ? "bg-gray-900 text-gray-200" : "bg-white text-gray-800"
       }  text-center px-4`}
     >
+      {isMobile && <MobileNonHome message="Cart" route="/" />}
       {cartItems.length <= 0 ? (
         <div
           className={`min-h-screen flex flex-col justify-center items-center ${
@@ -32,7 +36,7 @@ const UserCart = () => {
         </div>
       ) : (
         <div className="w-full flex justify-start md:justify-between md:min-h-[50vh] items-start md:mt-16">
-          <div className=" w-full md:w-8/12 mt-6 md:mt-0">
+          <div className=" w-full md:w-8/12 mt-16 md:mt-0">
             <CartItems />
           </div>
           <div className="w-4/12 hidden md:block">

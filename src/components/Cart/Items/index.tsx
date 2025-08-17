@@ -4,24 +4,26 @@ import Image from "@/components/Image/image";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useTheme } from "@/context/ThemeContext";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
+import useIsMobile from "@/hooks/useIsMobile";
 import { removeItemFromCart } from "@/store/actions/cart";
 
 const CartItems = () => {
   const { cartItems } = useAppSelector((state) => state.cart);
-  const {isDarkMode} = useTheme();
+  const { isDarkMode } = useTheme();
+  const isMobile = useIsMobile();
   const dispatch = useAppDispatch();
 
-    const handleRemoveItem = async (itemId: number) => {
-      try {
-        const payload = {
-          service_id: itemId,
-        };
-  
-        await dispatch(removeItemFromCart(payload));
-      } catch (error) {
-        console.log("Error from component:", error);
-      }
-    };
+  const handleRemoveItem = async (itemId: number) => {
+    try {
+      const payload = {
+        service_id: itemId,
+      };
+
+      await dispatch(removeItemFromCart(payload));
+    } catch (error) {
+      console.log("Error from component:", error);
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto p-0 md:p-6">
@@ -41,7 +43,11 @@ const CartItems = () => {
           {cartItems.map((item, index) => (
             <div
               key={index}
-              className={`flex items-center  ${isDarkMode?'bg-gray-800 text-gray-200':'bg-white text-gray-600'} rounded-2xl shadow-md p-4 hover:shadow-lg transition`}
+              className={`flex items-center  ${
+                isDarkMode
+                  ? "bg-gray-800 text-gray-200"
+                  : "bg-white text-gray-600"
+              } rounded-2xl shadow-md p-2 md:p-4 hover:shadow-lg transition`}
             >
               <div className=" flex-shrink-0">
                 <Image
@@ -49,7 +55,7 @@ const CartItems = () => {
                   alt={item.service_name}
                   width={100}
                   height={100}
-                  className="size-16 md:size-32 rounded-lg"
+                  className="w-[70px] h-[55px] md:size-32 rounded-lg"
                 />
               </div>
 
@@ -60,10 +66,8 @@ const CartItems = () => {
                 <p className="text-sm hidden md:block ">
                   {item.service_type_description}
                 </p>
-                <p className="text-xs">
-                  {item.service_name} 
-                </p>
-                  <p className="text-xs">
+                <p className="text-xs">{item.service_name}</p>
+                <p className="text-xs hidden md:block">
                   Astimated time • {item.duration_minutes} mins
                 </p>
                 {/* <div className="flex space-x-2">
@@ -73,10 +77,13 @@ const CartItems = () => {
                   <p className="text-xs text-green-600 font-medium">10% OFF</p>
                 </div> */}
 
-                <button className="cursor-pointer hover:-translate-y-1" onClick={()=>handleRemoveItem(item.service_type_id)}>
+                <button
+                  className="cursor-pointer hover:-translate-y-1"
+                  onClick={() => handleRemoveItem(item.service_type_id)}
+                >
                   <RiDeleteBinLine
-                    size={20}
-                    className="mt-3  hover:text-red-700 text-sm rounded-xl shadow"
+                    size={isMobile ? 16 : 20}
+                    className=" mt-1 md:mt-3  hover:text-red-700 text-sm rounded-xl shadow"
                   />
                 </button>
               </div>
@@ -89,12 +96,12 @@ const CartItems = () => {
             </div>
           ))}
 
-                  <div className="flex justify-end w-full mt-2 block sm:hidden">
-          {" "}
-          <button className="p-3 py-2 text-sm bg-[#53c9c2] rounded-lg cursor-pointer">
-            Procced to Checkout
-          </button>
-        </div>
+          <div className="flex justify-end w-full mt-2 block sm:hidden">
+            {" "}
+            <button className="p-3 py-2 text-sm bg-[#53c9c2] rounded-lg cursor-pointer">
+              Procced to Checkout
+            </button>
+          </div>
         </div>
       )}
     </div>
