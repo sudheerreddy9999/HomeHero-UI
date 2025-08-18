@@ -12,6 +12,7 @@ import { getCategoryItemsAction } from "@/store/actions/services";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { CategoryItemsSkeleton } from "@/components/skeletons";
+import { useRouter } from "next/router";
 
 const validCategories = [
   "acservices",
@@ -57,7 +58,6 @@ export const getStaticProps: GetStaticProps<CategoryPageProps> = async ({
   params,
 }) => {
   const category = params?.category as ValidCategory;
-
   const selectedItems: ServiceItem[] = [];
   const number = categoryNumbers[category] ?? 0;
 
@@ -71,6 +71,9 @@ export const getStaticProps: GetStaticProps<CategoryPageProps> = async ({
 };
 
 const CategoryPage: React.FC<CategoryPageProps> = ({ number, category }) => {
+  const router = useRouter();
+  const { serviceItem } = router.query;
+  console.log(serviceItem, "Service Items Valus is ", typeof serviceItem);
   const { isDarkMode } = useTheme();
   const isMobile = useIsMobile();
   const dispatch = useAppDispatch();
@@ -128,6 +131,12 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ number, category }) => {
             {categoryItems.length > 0 && serviceLoading ? (
               <SelectedCategory
                 selectedItems={categoryItems}
+                {...(serviceItem
+                  ? {
+                      servicePreviewItem:
+                        Array.isArray(serviceItem) ? serviceItem[0] : serviceItem,
+                    }
+                  : {})}
                 height={rightHeight}
               />
             ) : (

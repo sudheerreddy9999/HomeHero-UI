@@ -1,5 +1,5 @@
 export const apiEndpoints ={
-    LOGIN : '/user/login/google/otp',
+    LOGIN : '/user/login',
     SEND_OTP:"/user/generate/login/otp",
     GOOGLE_LOGIN:"/user/google/login",
     USER_DETAILS:"/user/details",

@@ -7,6 +7,14 @@ export interface ServiceItemImage {
   blurHeight?: number; 
 }
 
+export interface serviceTypes {
+  id: number;
+  description: string;
+  image_url: string;
+  route: string;
+  name: string;
+}
+
 export interface ServiceItem {
   service_id: number;
   service_name: string;

@@ -3,23 +3,15 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { getServicesAction } from "@/store/actions/services";
 import Link from "next/link";
-import Image from "@/components/Image/image"
+import Image from "@/components/Image/image";
 import { useTheme } from "@/context/ThemeContext";
-import { ServicesHomePageSkelton } from "@/components/skeletons"
+import { ServicesHomePageSkelton } from "@/components/skeletons";
+import { serviceTypes } from "@/types/serviceTypes";
 
-interface serviceItem {
-  id: number;
-  description: string;
-  image_url: string;
-  route: string;
-  name: string;
-}
 const Services = () => {
   const { isDarkMode } = useTheme();
   const dispatch = useAppDispatch();
-  const { services } = useAppSelector(
-    (state) => state.services
-  );
+  const { services } = useAppSelector((state) => state.services);
 
   useEffect(() => {
     dispatch(getServicesAction());
@@ -28,10 +20,12 @@ const Services = () => {
   return (
     <div>
       <div className="flex ml-24 gap-6">
-        {services.length > 0  ? (
-          services.map((service: serviceItem) => (
+        {services.length > 0 ? (
+          services.map((service: serviceTypes) => (
             <Link
-              href={service.route}
+              href={{
+                pathname: service.route,
+              }}
               key={service.id}
               className={`flex sm:p-1 py-2   sm:py-5 ${
                 isDarkMode
@@ -39,7 +33,11 @@ const Services = () => {
                   : "bg-white hover:bg-white/70"
               }    hover:backdrop-invert hover:backdrop-opacity-10 dark:text-black  dark:bg-gray-800  flex-col justify-center items-center w-36 lg:w-52  rounded-3xl shadow-md  space-y-2 hover:-translate-y-3 hover:shadow-xl transition-all cursor-pointer`}
             >
-              <div className={`p-1 sm:p-2 ${isDarkMode?'bg-white':'bg-amber-50'} rounded-full  `}>
+              <div
+                className={`p-1 sm:p-2 ${
+                  isDarkMode ? "bg-white" : "bg-amber-50"
+                } rounded-full  `}
+              >
                 <Image
                   src={service.image_url}
                   alt={service.name}

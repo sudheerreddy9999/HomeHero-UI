@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ServiceItem } from "@/types/serviceTypes";
 import Image from "@/components/Image/image";
 import { FaPlus, FaMinus } from "react-icons/fa6";
@@ -9,24 +9,30 @@ import { useTheme } from "@/context/ThemeContext";
 import useIsMobile from "@/hooks/useIsMobile";
 import Welcome from "@/components/Auth";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import ServiceItemModel from "@/components/Category/ServiceItemModel";
 
 type SelectedCategoryProps = {
   selectedItems: ServiceItem[];
   height?: number;
+  servicePreviewItem?: string;
 };
 
-const SelectedCategory = ({ selectedItems, height }: SelectedCategoryProps) => {
+const SelectedCategory = ({
+  selectedItems,
+  height,
+  servicePreviewItem,
+}: SelectedCategoryProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const { isDarkMode } = useTheme();
   const isMobile = useIsMobile();
   const { cartItems } = useAppSelector((state) => state.cart);
-  const {userDetails} = useAppSelector((state)=>state.user)
+  const { userDetails } = useAppSelector((state) => state.user);
+  const [serviceModelItem, setServiceItemModel] = useState<ServiceItem>();
+  const [openServiceModel, setOpenServiceModel] = useState(false);
   const [openAuth, setOpenAuth] = useState(false);
-  console.log(cartItems, "Cart Items Are ");
-
   const handleAddToCart = async (item: ServiceItem) => {
     try {
-      if(!userDetails){
+      if (!userDetails) {
         setOpenAuth(true);
         return;
       }
@@ -60,10 +66,34 @@ const SelectedCategory = ({ selectedItems, height }: SelectedCategoryProps) => {
     setOpenAuth(!openAuth);
   };
 
+  const handleItemClick = (item: number) => {
+    const foundItem = selectedItems.find(
+      (x) => x.service_type_id == Number(item)
+    );
+    setServiceItemModel(foundItem);
+    setOpenServiceModel(true);
+  };
+
+  useEffect(() => {
+    if (servicePreviewItem) {
+      const foundItem = selectedItems.find(
+        (x) => x.service_type_id == Number(servicePreviewItem)
+      );
+      setServiceItemModel(foundItem);
+      setOpenServiceModel(true);
+    }
+  }, [servicePreviewItem,selectedItems]);
+
   return (
     <>
-    {openAuth && <Welcome onAuthClose={handlecloseAuth} />}
-      
+      {openAuth && <Welcome onAuthClose={handlecloseAuth} />}
+      {openServiceModel && serviceModelItem && (
+        <ServiceItemModel
+          serviceModelItem={serviceModelItem}
+          isOpen={openServiceModel}
+          onClose={() => setOpenServiceModel(false)}
+        />
+      )}
       <div
         className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12 overflow-scroll no-scrollbar `}
         style={{ height: !isMobile ? `${height}px` : undefined }}
@@ -77,9 +107,10 @@ const SelectedCategory = ({ selectedItems, height }: SelectedCategoryProps) => {
           return (
             <div
               key={index}
-              className={`custom-scrollbar service-card relative ${
+              className={`custom-scrollbar service-card relative cursor-pointer ${
                 isDarkMode ? "bg-gray-700" : "bg-white"
               } rounded-2xl h-52 shadow-xl overflow-hidden transition-transform duration-300 hover:scale-[1.02]`}
+              onClick={() => handleItemClick(item.service_type_id)}
             >
               <Image
                 src={item.service_type_image_url || ""}
@@ -120,16 +151,20 @@ const SelectedCategory = ({ selectedItems, height }: SelectedCategoryProps) => {
                   {added && item.service_type_id !== undefined ? (
                     <button
                       className=" w-2/12 flex justify-center items-center p-2.5 pl-1  border border-blue-500  text-gray-700 text-sm font-medium py-1.5 rounded-lg transition cursor-pointer"
-                      onClick={() =>
-                        handleRemoveFromCart(item.service_type_id as number)
-                      }
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleRemoveFromCart(item.service_type_id as number);
+                      }}
                     >
                       <FaMinus className="ml-1.5" />
                     </button>
                   ) : (
                     <button
                       className="w-1/4 flex justify-center items-center p-2.5 bg-blue-500 hover:bg-blue-700 text-white text-sm font-medium py-1.5 rounded-lg transition cursor-pointer"
-                      onClick={() => handleAddToCart(item)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAddToCart(item);
+                      }}
                     >
                       Add <FaPlus className="ml-1.5" />
                     </button>

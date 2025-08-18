@@ -1,62 +1,25 @@
 import React, { useRef, useState, useEffect } from "react";
-import AcImage from "@/assets/MostBookedServices/ac-reaparing.jpg";
 import { IoStar } from "react-icons/io5";
-import WallMount from "@/assets/MostBookedServices/wallMount.jpg";
-import geaser from "@/assets/MostBookedServices/geaser.jpg";
-import waterPurifier from "@/assets/MostBookedServices/water-purifier.jpg";
-import tapFix from "@/assets/MostBookedServices/tap-fix.jpg";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Image from "../../Image/image";
 import { useTheme } from "@/context/ThemeContext";
-
-const services = [
-  {
-    id: 1,
-    name: "AC Repair & Gas Refill",
-    image: AcImage,
-    price: 799,
-    offerPrice: 599,
-    rating: 4.5,
-  },
-  {
-    id: 7,
-    name: "LED TV Wall Mount",
-    image: WallMount,
-    price: 499,
-    offerPrice: 349,
-    rating: 4.6,
-  },
-  {
-    id: 5,
-    name: "Geyser Installation",
-    image: geaser,
-    price: 899,
-    offerPrice: 699,
-    rating: 4.3,
-  },
-  {
-    id: 4,
-    name: "RO Water Purifier Service",
-    image: waterPurifier,
-    price: 599,
-    offerPrice: 449,
-    rating: 4.4,
-  },
-  {
-    id: 2,
-    name: "Bathroom Tap & Pipe Fix",
-    image: tapFix,
-    price: 499,
-    offerPrice: 349,
-    rating: 4.2,
-  },
-];
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { getTrendingServices } from "@/store/actions/services";
+import { ServiceItem, serviceTypes } from "@/types/serviceTypes";
+import { useRouter } from "next/router";
 
 const MostBookedServices = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const router = useRouter();
   const { isDarkMode } = useTheme();
+  const dispatch = useAppDispatch();
+  const { trending } = useAppSelector((state) => state.services);
+  const { services } = useAppSelector((state) => state.services) as {
+    services: serviceTypes[];
+  };
 
   const checkScroll = () => {
     const el = scrollRef.current;
@@ -79,6 +42,26 @@ const MostBookedServices = () => {
     const scrollAmount = direction === "left" ? -300 : 300;
     el.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
+
+  const handleRoute = (service_id: number, service_type_id: number) => {
+    const match = services.find((c) => c.id === service_id);
+
+    if (!match || !("route" in match)) return;
+
+    router.push({
+      pathname: (match as { route: string }).route,
+      query: {
+        serviceItem: service_type_id,
+        ref: "homepage",
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (trending.length <= 0) {
+      dispatch(getTrendingServices());
+    }
+  }, [trending,dispatch]);
 
   return (
     <div
@@ -114,39 +97,54 @@ const MostBookedServices = () => {
           scrollSnapType: "x mandatory",
         }}
       >
-        {services.map((service) => (
-          <div
-            key={service.id}
-            className={`most-booked flex-shrink-0 w-[190px] sm:w-[280px] md:w-[300px] snap-start rounded-lg hover:-translate-y-1 transition-transform duration-200 ease-in-out ${
-              isDarkMode ? " text-gray-200" : " text-gray-800"
-            }`}
-          >
-            <div className="h-36 sm:h-48 relative">
-              <Image
-                src={service.image}
-                alt={service.name}
-                className="rounded-t-lg w-full h-full object-cover"
-              />
-            </div>
-            <div className="p-2 ">
-              <h3 className="service-name mb-1 text-xs sm:text-medium font-semibold ">
-                {service.name}
-              </h3>
-              <div className="flex justify-between items-center text-sm">
-                <p className=" flex items-center gap-1">
-                  <IoStar className="text-yellow-500" />
-                  {service.rating} / 5
-                </p>
-                <p className="">
-                  <span className="price line-through mr-1">₹{service.price}</span>
-                  <span className="font-semibold text-xs md:text-[16px] pl-1">
-                    ₹{service.offerPrice}
-                  </span>
-                </p>
+        {trending.length > 0 ? (
+          <>
+            {trending.map((service: ServiceItem) => (
+              <div
+                key={service.service_type_id}
+                className={`most-booked flex-shrink-0 w-[190px] sm:w-[280px] md:w-[300px] snap-start rounded-lg hover:-translate-y-1 transition-transform duration-200 ease-in-out cursor-pointer ${
+                  isDarkMode ? " text-gray-200" : " text-gray-800"
+                }`}
+              >
+                <div
+                  className="h-36 sm:h-48 relative"
+                  onClick={() =>
+                    handleRoute(service.service_id, service.service_type_id)
+                  }
+                >
+                  <Image
+                    src={service.service_type_image_url}
+                    alt={service.service_type_name}
+                    width={100}
+                    height={100}
+                    className="rounded-t-lg w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-2 ">
+                  <h3 className="service-name mb-1 text-xs sm:text-medium font-semibold ">
+                    {service.service_type_name}
+                  </h3>
+                  <div className="flex justify-between items-center text-sm">
+                    <p className=" flex items-center gap-1">
+                      <IoStar className="text-yellow-500" />
+                      {service.service_id} / 5
+                    </p>
+                    <p className="">
+                      <span className="price line-through mr-1">
+                        ₹{service.price}
+                      </span>
+                      <span className="font-semibold text-xs md:text-[16px] pl-1">
+                        ₹{service.offerPrice}
+                      </span>
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
+            ))}
+          </>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
