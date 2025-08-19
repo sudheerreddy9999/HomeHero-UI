@@ -94,7 +94,7 @@ const ServiceItemModel: React.FC<ServiceItemModelProps> = ({
                 View Reviews <MdKeyboardArrowDown size={24} />
               </div>
               <div className="flex justify-end">
-                <button className="mt-4 w-4/12 md:w-1/4 items-center bg-[#53c9c2] hover:bg-[#44f4eb] text-white px-6 py-3 text-xs sm:text-sm rounded-xl font-medium transition">
+                <button className="mt-4 w-4/12 md:w-1/4 items-center cursor-pointer bg-[#53c9c2] hover:bg-[#44f4eb] text-white px-6 py-3 text-xs sm:text-sm rounded-xl font-medium transition">
                   Book Now
                 </button>
               </div>

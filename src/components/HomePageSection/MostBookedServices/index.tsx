@@ -5,7 +5,7 @@ import Image from "../../Image/image";
 import { useTheme } from "@/context/ThemeContext";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { getTrendingServices } from "@/store/actions/services";
+import { getTrendingServices,getServicesAction } from "@/store/actions/services";
 import { ServiceItem, serviceTypes } from "@/types/serviceTypes";
 import { useRouter } from "next/router";
 
@@ -43,11 +43,19 @@ const MostBookedServices = () => {
     el.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
 
+  useEffect(() => {
+    if (services.length <= 0) {
+      dispatch(getServicesAction());
+    }
+  }, [services, dispatch]);
+
   const handleRoute = (service_id: number, service_type_id: number) => {
-    const match = services.find((c) => c.id === service_id);
-
+    console.log("Service ID:", service_id, "Service Type ID:", service_type_id," CLickked Value is Hello Suddhhhhhhhhhhhhh");
+    console.log(services, "All Services Data");
+    const match = services.find((c) => Number(c.id) === Number(service_id));
+    console.log("Matched Service:", match);
     if (!match || !("route" in match)) return;
-
+    console.log("Matched Route:", match.route);
     router.push({
       pathname: (match as { route: string }).route,
       query: {
@@ -61,7 +69,7 @@ const MostBookedServices = () => {
     if (trending.length <= 0) {
       dispatch(getTrendingServices());
     }
-  }, [trending,dispatch]);
+  }, [trending, dispatch]);
 
   return (
     <div

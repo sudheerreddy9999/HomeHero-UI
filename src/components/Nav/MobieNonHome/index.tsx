@@ -32,7 +32,7 @@ const MobileNonHome = ({ route, message }: MobileNonHomeProps) => {
           <button onClick={handleBack}>
             <IoArrowBack size={24} />
           </button>
-          <h1 className="text-lg font-semibold">{message}</h1>
+          <h1 className="text-sm font-semibold">{message}</h1>
         </div>
         <div className="flex items-center space-x-4">
           <button

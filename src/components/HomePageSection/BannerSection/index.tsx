@@ -2,14 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FiArrowUpRight } from "react-icons/fi";
 import DynamicText from "./DynamicText";
-import Image from "@/components/Image/image"
+import Image from "@/components/Image/image";
 import useIsMobile from "@/hooks/useIsMobile";
 import sofaImage from "@/assets/sofa.jpeg";
 import MobileViewSofa from "@/assets/sofa-mobile.jpeg";
 import darkModeSofaImage from "@/assets/darkSofa.webp";
 import darkMobileSOfa from "@/assets/sofadarkMb.webp";
 import { useTheme } from "@/context/ThemeContext";
-import SearchModel from "@/components/Search/SearchModel";
+import MobileHomeSearch from "@/components/Profile/Search";
 
 const BannerSection = () => {
   const [opensearchModel, setOpenSearchModel] = useState(false);
@@ -48,14 +48,10 @@ const BannerSection = () => {
   return (
     <>
       {opensearchModel && (
-        <div className="fixed inset-0 w-full bg-opacity-90 flex mt-16 justify-center  z-50 transition-opacity duration-300 ease-in-out">
-          <div
-            className={`transform transition-all duration-300 ease-in-out scale-95  animate-fadeInUp flex flex-col ${isDarkMode?'bg-gray-900':'bg-white'}    w-[100%] sm:w-[55%] py-4 pt-7 h-10/12 rounded-2xl shadow-2xl `}
-            ref={modalRef}
-          >
-            <SearchModel />
-          </div>
-        </div>
+        <MobileHomeSearch
+          isOpen={opensearchModel}
+          onClose={() => setOpenSearchModel(false)}
+        />
       )}
       <div className="relative  w-full h-[45vh] sm:h-[65vh]">
         <Image

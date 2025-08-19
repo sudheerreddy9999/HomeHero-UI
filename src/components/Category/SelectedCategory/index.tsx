@@ -82,7 +82,7 @@ const SelectedCategory = ({
       setServiceItemModel(foundItem);
       setOpenServiceModel(true);
     }
-  }, [servicePreviewItem,selectedItems]);
+  }, [servicePreviewItem, selectedItems]);
 
   return (
     <>

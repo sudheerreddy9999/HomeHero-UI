@@ -19,7 +19,7 @@ const SearchModel = () => {
   const [debounceValue, setDebounceValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [noResultsFound, setNoResultsFound] = useState(false);
-  const ScrollHorizantalContainer = useRef<HTMLDivElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
   const { isDarkMode } = useTheme();
   const isMobile = useIsMobile();
   const dispatch = useAppDispatch();
@@ -69,19 +69,6 @@ const SearchModel = () => {
   }, []);
 
   useEffect(() => {
-    const scrollRef = ScrollHorizantalContainer.current;
-    if (!scrollRef) return;
-
-    const handleScroll = () => {
-      if (scrollRef.scrollLeft > 0) {
-      }
-    };
-
-    scrollRef.addEventListener("scroll", handleScroll);
-    return () => scrollRef.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
     if (textInputFeild.length > 0 && serviceSerachItems.length <= 0) {
       setNoResultsFound(true);
     }
@@ -89,6 +76,32 @@ const SearchModel = () => {
       setNoResultsFound(false);
     }
   }, [serviceSerachItems, textInputFeild]);
+
+  useEffect(() => {
+    const div = divRef.current;
+    if (!div) return;
+
+    let isThrottled = false;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        if (isThrottled) return;
+        isThrottled = true;
+        if (e.deltaX > 30) {
+          setCurrentBar((prev) => Math.min(prev + 1, totalPages - 1));
+        } else if (e.deltaX < -30) {
+          setCurrentBar((prev) => Math.max(prev - 1, 0));
+        }
+        setTimeout(() => {
+          isThrottled = false;
+        }, 40);
+      }
+    };
+    div.addEventListener("wheel", handleWheel, { passive: true });
+    return () => {
+      div.removeEventListener("wheel", handleWheel);
+    };
+  }, [totalPages]);
 
   return (
     <>
@@ -139,8 +152,8 @@ const SearchModel = () => {
         <SearchItemSkelton />
       ) : (
         <div
-          ref={ScrollHorizantalContainer}
-          className={`grid  grid-cols-1 sm:grid-cols-3  gap-4 space-y-0.5  items-center mt-2 p-4 px-10  ${
+          ref={divRef}
+          className={`grid  grid-cols-1 sm:grid-cols-3  gap-4 space-y-0.5 items-center mt-2 p-4 px-10  ${
             isMobile && "overflow-auto"
           }`}
         >
@@ -156,7 +169,7 @@ const SearchModel = () => {
                 <div
                   key={index}
                   className={` custom-scrollbar service-card relative ${
-                    isDarkMode ? "bg-gray-700" : "bg-white"
+                    isDarkMode ? "bg-gray-700" : "bg-s"
                   }  rounded-2xl flex  shadow-2xl   h-[90px] overflow-hidden transition-transform duration-300 hover:-translate-y- p-2 cursor-pointer`}
                 >
                   <div>
