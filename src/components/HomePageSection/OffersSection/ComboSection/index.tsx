@@ -7,6 +7,7 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { getTrendingServices } from "@/store/actions/services";
 import { ServiceItem } from "@/types/serviceTypes";
 import ServiceItemModel from "@/components/Category/ServiceItemModel";
+import { ComboPackagesSkeleton } from "@/components/skeletons";
 
 const ComboPackages = () => {
   const [serviceModelItem, setServiceItemModel] = useState<ServiceItem>();
@@ -43,17 +44,17 @@ const ComboPackages = () => {
           <h2 className="text-xl sm:text-2xl font-semibold mb-4">
             Combo Packages
           </h2>
-          <div
-            className={`${
-              isMobile
-                ? " flex w-full overflow-x-scroll custom-scrollbar"
-                : "grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-            }  gap-6`}
-          >
+          <div>
             {trending.length <= 0 ? (
-              <>Loading</>
+              <ComboPackagesSkeleton />
             ) : (
-              <>
+              <div
+                className={`${
+                  isMobile
+                    ? " flex w-full overflow-x-scroll custom-scrollbar"
+                    : "grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                }  gap-6`}
+              >
                 {" "}
                 {trending.slice(6).map((combo: ServiceItem, index) => {
                   // const saved =
@@ -157,7 +158,7 @@ const ComboPackages = () => {
                             </span>
                           </div>
                           <button
-                          onClick={()=>handleBookNow(combo)}
+                            onClick={() => handleBookNow(combo)}
                             className={`bg-[#53c9c2] text-white ${
                               isMobile ? "py-2 px-2 text-xs" : "py-2 px-4"
                             }  rounded-lg cursor-pointer hover:-translate-y-1 transition-colors`}
@@ -169,7 +170,7 @@ const ComboPackages = () => {
                     </div>
                   );
                 })}
-              </>
+              </div>
             )}
           </div>
         </div>

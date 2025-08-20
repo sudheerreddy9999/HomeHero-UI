@@ -3,6 +3,7 @@ import {
   getCategoryReducer,
   getTrendingItems,
   getServiceSearchItems,
+  setSearchLoading
 } from "../reducers/services";
 import { apiEndpoints } from "@/utils/apiEndpoints";
 import { get } from "@/utils/constants";
@@ -39,9 +40,13 @@ export const getTrendingServices = () => async (dispatch: AppDispatch) => {
 
 export const getSearchServiceItems =
   (payload: GetServiceSearch) => async (dispatch: AppDispatch) => {
+    dispatch(setSearchLoading(true));
     await handleApiCall(
       dispatch,
       () => get(apiEndpoints.SEARCH_SERVICES, payload),
-      (data) => dispatch(getServiceSearchItems(data))
+      (data) => {
+        dispatch(getServiceSearchItems(data));
+        dispatch(setSearchLoading(false));
+      }
     );
   };

@@ -4,9 +4,11 @@ import useIsMobile from "@/hooks/useIsMobile";
 import { IoArrowBack } from "react-icons/io5";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { FiArrowUpRight } from "react-icons/fi";
+import { IoIosTrendingUp } from "react-icons/io";
 import Image from "@/components/Image/image";
 import { ServiceItem } from "@/types/serviceTypes";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { SearchItemSkelton } from "@/components/skeletons";
 import {
   getTrendingServices,
   getSearchServiceItems,
@@ -34,7 +36,7 @@ const MobileHomeSearch: React.FC<MobileHomeSearchProps> = ({
     if (textInputFeild.length > 0 && serviceSerachItems.length > 0) {
       setCurrentItems(serviceSerachItems);
     } else {
-      setCurrentItems(trending);
+      // setCurrentItems(trending);
     }
   }, [textInputFeild, trending, serviceSerachItems]);
   useEffect(() => {
@@ -102,52 +104,63 @@ const MobileHomeSearch: React.FC<MobileHomeSearchProps> = ({
             <FiArrowUpRight size={24} />
           </div>
         </div>
-        <div
-          className={`flex  flex-col  sm:gap-4 space-y-2  mt-2 p-4 px-2 overflow-auto h-[90vh] `}
-        >
-          {currentItems.slice(0,4).map((item: ServiceItem, index) => (
-            <div
-              key={index}
-              className={` custom-scrollbar service-card relative ${
-                isDarkMode ? "bg-gray-700" : "bg-white"
-              } ${
-                isMobile ? "h-[65px]" : "h-[90px]"
-              }   flex  border-b-1  border-gray-600 overflow-hidden transition-transform duration-300 hover:scale-[1.02] p-2`}
-            >
-              <div>
-                <Image
-                  src={item.service_type_image_url}
-                  alt={item.service_name}
-                  width={200}
-                  height={30}
-                  className={`${
-                    isMobile ? "w-16" : "w-32"
-                  } h-full object-fit rounded-md`}
-                />
-              </div>
 
-              <div
-                className={`  flex  justify-between  px-auto  ${
-                  isDarkMode
-                    ? " text-white"
-                    : "bg-white text-gray-800"
-                }    p-1 px-4`}
-              >
-                <div>
-                  {" "}
-                  <div className="flex justify-between items-center">
-                    <p className=" dark:text-white mb-1 text-xs font-bold">
-                      {item.service_type_name}
-                    </p>
+        {currentItems.length == 0 ? (
+          <SearchItemSkelton />
+        ) : (
+          <>
+            {textInputFeild.length <= 0 && (
+              <p className="flex items-center p-2  pb-0 font-bold text-sm">
+                Trending Services{" "}
+                <IoIosTrendingUp size={20} className="mx-2 font-bold" />
+              </p>
+            )}
+            <div
+              className={`flex  flex-col  sm:gap-4 space-y-2  p-2 px-2 overflow-auto h-[90vh] `}
+            >
+              {currentItems.slice(0, 6).map((item: ServiceItem, index) => (
+                <div
+                  key={index}
+                  className={` custom-scrollbar service-card relative ${
+                    isDarkMode ? "bg-gray-700" : "bg-white"
+                  } ${
+                    isMobile ? "h-[65px]" : "h-[90px]"
+                  }   flex  border-b-1  border-gray-600 overflow-hidden transition-transform duration-300 hover:scale-[1.02] p-2`}
+                >
+                  <div>
+                    <Image
+                      src={item.service_type_image_url}
+                      alt={item.service_name}
+                      width={200}
+                      height={30}
+                      className={`${
+                        isMobile ? "w-16" : "w-32"
+                      } h-full object-fit rounded-md`}
+                    />
                   </div>
-                  <p className="text-[10px] pb-3 text-start">
-                    {item.service_type_description}
-                  </p>
+
+                  <div
+                    className={`  flex  justify-between  px-auto  ${
+                      isDarkMode ? " text-white" : "bg-white text-gray-800"
+                    }    p-1 px-4`}
+                  >
+                    <div>
+                      {" "}
+                      <div className="flex justify-between items-center">
+                        <p className=" dark:text-white mb-1 text-xs font-bold">
+                          {item.service_type_name}
+                        </p>
+                      </div>
+                      <p className="text-[10px] pb-3 text-start">
+                        {item.service_type_description}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

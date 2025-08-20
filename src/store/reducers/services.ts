@@ -5,6 +5,7 @@ const initialState = {
   categoryItems: [],
   trending:[],
   serviceSerachItems:[],
+  searchLoading: false,
   error: null as string | null,
 };
 
@@ -33,7 +34,10 @@ export const servicesSlice = createSlice({
     },
     getServiceSearchItems:(state,action)=>{
       state.serviceSerachItems=action.payload
-    }
+    },
+    setSearchLoading: (state, action) => {
+      state.searchLoading = action.payload;
+    },
   },
 });
 
@@ -43,6 +47,7 @@ export const {
   fetchStart,
   fetchFailure,
   getTrendingItems,
-  getServiceSearchItems
+  getServiceSearchItems,
+  setSearchLoading
 } = servicesSlice.actions;
 export default servicesSlice.reducer;

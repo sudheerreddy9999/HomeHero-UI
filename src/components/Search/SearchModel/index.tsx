@@ -4,12 +4,13 @@ import useIsMobile from "@/hooks/useIsMobile";
 import Image from "@/components/Image/image";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useTheme } from "@/context/ThemeContext";
-import { ServiceItem } from "@/types/serviceTypes";
+import { ServiceItem, serviceTypes } from "@/types/serviceTypes";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { FiArrowUpRight } from "react-icons/fi";
 import { IoIosTrendingUp } from "react-icons/io";
 import noResults from "@/assets/no-results-found.png";
 import { SearchItemSkelton } from "@/components/skeletons";
+import { useRouter } from "next/router";
 import {
   getTrendingServices,
   getSearchServiceItems,
@@ -19,11 +20,16 @@ const SearchModel = () => {
   const [debounceValue, setDebounceValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [noResultsFound, setNoResultsFound] = useState(false);
+  const { services } = useAppSelector((state) => state.services) as {
+    services: serviceTypes[];
+  };
+
   const divRef = useRef<HTMLDivElement>(null);
   const { isDarkMode } = useTheme();
   const isMobile = useIsMobile();
+  const router = useRouter();
   const dispatch = useAppDispatch();
-  const { trending, serviceSerachItems } = useAppSelector(
+  const { trending, serviceSerachItems, searchLoading } = useAppSelector(
     (state) => state.services
   );
   const [currentBar, setCurrentBar] = useState(0);
@@ -39,6 +45,21 @@ const SearchModel = () => {
   );
   const handleTabChange = (index: number) => {
     setCurrentBar(index);
+  };
+
+  const handleSeviceItemClick = (
+    service_id: number,
+    service_type_id: number
+  ) => {
+    const match = services.find((c) => Number(c.id) === Number(service_id));
+    if (!match || !("route" in match)) return;
+    router.push({
+      pathname: (match as { route: string }).route,
+      query: {
+        serviceItem: service_type_id,
+        ref: "homepage",
+      },
+    });
   };
   useEffect(() => {
     if (trending.length <= 0) dispatch(getTrendingServices());
@@ -151,74 +172,98 @@ const SearchModel = () => {
       {currentItems.length == 0 ? (
         <SearchItemSkelton />
       ) : (
-        <div
-          ref={divRef}
-          className={`grid  grid-cols-1 sm:grid-cols-3  gap-4 space-y-0.5 items-center mt-2 p-4 px-10  ${
-            isMobile && "overflow-auto"
-          }`}
-        >
-          {noResultsFound ? (
-            <Image
-              src={noResults}
-              alt="noResultsFound"
-              className="size-32 lg:size-44 ml-[120%]"
-            />
+        <div>
+          {noResultsFound || searchLoading ? (
+            <div>
+              {searchLoading ? (
+                <div className="flex  w-full justify-center items-center min-h-[200px]">
+                  <p
+                    className={`text-xl ${
+                      isDarkMode ? "text-gray-100" : "text-gray-600 "
+                    } px-2 font-semibold`}
+                  >
+                    Loading
+                  </p>
+                  <span className="loading loading-dots  loading-xl"></span>
+                </div>
+              ) : (
+                <div className="flex  w-full justify-center items-center min-h-[200px]">
+                  <Image
+                    src={noResults}
+                    alt="noResultsFound"
+                    className="size-32 lg:size-44 "
+                  />
+                </div>
+              )}
+            </div>
           ) : (
             <>
-              {currentItems.map((item: ServiceItem, index) => (
-                <div
-                  key={index}
-                  className={` custom-scrollbar service-card relative ${
-                    isDarkMode ? "bg-gray-700" : "bg-s"
-                  }  rounded-2xl flex  shadow-2xl   h-[90px] overflow-hidden transition-transform duration-300 hover:-translate-y- p-2 cursor-pointer`}
-                >
-                  <div>
-                    <Image
-                      src={item.service_type_image_url}
-                      alt={item.service_name}
-                      width={200}
-                      height={30}
-                      className="w-32 h-full object-cover rounded-md"
-                    />
-                  </div>
-
+              <div
+                ref={divRef}
+                className={`grid  grid-cols-1 sm:grid-cols-3  gap-4 space-y-0.5 items-center mt-2 p-4 px-10  ${
+                  isMobile && "overflow-auto"
+                }`}
+              >
+                {currentItems.map((item: ServiceItem, index) => (
                   <div
-                    className={`  flex  justify-between  px-auto  ${
-                      isDarkMode ? " text-gray-300" : "bg-white text-gray-800"
-                    }    p-1 px-4`}
+                    key={index}
+                    onClick={() =>
+                      handleSeviceItemClick(
+                        item.service_id,
+                        item.service_type_id
+                      )
+                    }
+                    className={` custom-scrollbar service-card relative ${
+                      isDarkMode ? "bg-gray-700" : "bg-s"
+                    }  rounded-2xl flex  shadow-2xl   h-[90px] overflow-hidden transition-transform duration-300 hover:-translate-y- p-2 cursor-pointer`}
                   >
                     <div>
-                      {" "}
-                      <div className="flex justify-between items-center">
-                        <p className=" dark:text-white mb-1 text-xs font-bold">
-                          {item.service_type_name}
+                      <Image
+                        src={item.service_type_image_url}
+                        alt={item.service_name}
+                        width={200}
+                        height={30}
+                        className="w-32 h-full object-cover rounded-md"
+                      />
+                    </div>
+
+                    <div
+                      className={`  flex  justify-between  px-auto  ${
+                        isDarkMode ? " text-gray-300" : "bg-white text-gray-800"
+                      }    p-1 px-4`}
+                    >
+                      <div>
+                        {" "}
+                        <div className="flex justify-between items-center">
+                          <p className=" dark:text-white mb-1 text-xs font-bold">
+                            {item.service_type_name}
+                          </p>
+                        </div>
+                        <p className="text-[10px] mb-1">
+                          {item.service_type_description}
                         </p>
                       </div>
-                      <p className="text-[10px] mb-1">
-                        {item.service_type_description}
-                      </p>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <div className="w-full flex justify-center items-center space-x-2 mt-3">
+                {[...Array(totalPages)].map((_, index) => (
+                  <div
+                    key={index}
+                    className={`${
+                      currentBar === index
+                        ? `${isDarkMode ? "bg-gray-300" : "bg-gray-600"} `
+                        : `${isDarkMode ? "bg-gray-600" : "bg-gray-300"} `
+                    }  h-1 w-9 rounded-2xl cursor-pointer`}
+                    onClick={() => handleTabChange(index)}
+                  ></div>
+                ))}
+              </div>
             </>
           )}
         </div>
       )}
-
-      <div className="w-full flex justify-center items-center space-x-2 mt-3">
-        {[...Array(totalPages)].map((_, index) => (
-          <div
-            key={index}
-            className={`${
-              currentBar === index
-                ? `${isDarkMode ? "bg-gray-300" : "bg-gray-600"} `
-                : `${isDarkMode ? "bg-gray-600" : "bg-gray-300"} `
-            }  h-1 w-9 rounded-2xl cursor-pointer`}
-            onClick={() => handleTabChange(index)}
-          ></div>
-        ))}
-      </div>
     </>
   );
 };
